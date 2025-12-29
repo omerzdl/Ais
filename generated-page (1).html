@@ -1,0 +1,543 @@
+<html lang="tr" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ais Liquid Clarity - Temizlik Çözümleri</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                },
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Glass Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .glass-button {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .glass-input {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Water Droplet Styling */
+        .water-droplet {
+            position: absolute;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Slightly tear-drop shape */
+            background: radial-gradient(
+                circle at 30% 30%, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(255, 255, 255, 0.1) 20%, 
+                rgba(14, 165, 233, 0.1) 50%,
+                rgba(14, 165, 233, 0.3) 100%
+            );
+            box-shadow: 
+                inset 10px 10px 20px rgba(255, 255, 255, 0.5),
+                inset -5px -5px 15px rgba(0, 0, 0, 0.05),
+                5px 15px 20px rgba(0, 0, 0, 0.05),
+                0px 0px 0px 1px rgba(255,255,255,0.2); /* Subtle rim */
+            backdrop-filter: blur(3px); /* Refraction effect */
+            z-index: 0;
+            opacity: 0.8;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        /* Shine reflection on droplet */
+        .water-droplet::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 15%;
+            width: 25%;
+            height: 15%;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(-45deg);
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        ::selection {
+            background-color: #bae6fd;
+            color: #0c4a6e;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-600 font-sans antialiased text-lg relative overflow-x-hidden">
+
+    <!-- WATER DROPLETS CONTAINER (Fixed background layer) -->
+    <div id="droplet-layer" class="fixed inset-0 w-full h-full pointer-events-none overflow-hidden z-0">
+        <!-- Droplets will be animated via JS based on scroll -->
+        <!-- Large one top right -->
+        <div class="water-droplet w-32 h-32 md:w-64 md:h-64 top-20 -right-10 md:right-[5%]" data-speed="-0.2"></div>
+        
+        <!-- Medium one floating near text -->
+        <div class="water-droplet w-16 h-16 md:w-24 md:h-24 top-[40%] left-[10%]" data-speed="-0.5"></div>
+        
+        <!-- Small fast one -->
+        <div class="water-droplet w-8 h-8 md:w-12 md:h-12 top-[15%] left-[20%]" data-speed="-0.8"></div>
+        
+        <!-- Bottom area droplets -->
+        <div class="water-droplet w-20 h-20 md:w-40 md:h-40 top-[80%] left-[80%]" data-speed="-0.3"></div>
+        <div class="water-droplet w-10 h-10 top-[60%] right-[30%]" data-speed="-0.6"></div>
+        <div class="water-droplet w-14 h-14 top-[90%] left-[15%]" data-speed="-0.4"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto rounded-2xl glass-panel px-6 py-3 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="text-blue-600 font-semibold text-2xl tracking-tighter group-hover:opacity-80 transition">Ais</div>
+                <div class="h-2 w-2 rounded-full bg-blue-500 mt-1 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+                <a href="#hero" class="hover:text-blue-600 transition-colors">Ana Sayfa</a>
+                <a href="#about" class="hover:text-blue-600 transition-colors">Hakkımızda</a>
+                <a href="#products" class="hover:text-blue-600 transition-colors">Temizlik Ürünleri</a>
+                <a href="#catalog" class="hover:text-blue-600 transition-colors">Katalog</a>
+                <a href="#contact" class="hover:text-blue-600 transition-colors">İletişim</a>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button class="text-slate-500 hover:text-slate-800 transition">
+                    <i data-lucide="droplets" class="w-5 h-5 stroke-[1.5]"></i>
+                </button>
+                <a href="tel:+905556211529" class="hidden sm:flex items-center gap-2 glass-button px-5 py-2 rounded-full text-sm font-semibold text-blue-900 hover:text-blue-700">
+                    Teklif Al
+                    <i data-lucide="arrow-right" class="w-4 h-4 stroke-[1.5]"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative w-full min-h-screen pt-32 pb-20 overflow-hidden flex items-center z-10">
+        <!-- Background Logic -->
+        <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-blue-100 via-blue-200 to-white z-[-1] opacity-60"></div>
+        <div class="absolute top-0 left-0 w-[100%] lg:w-[60%] h-full bg-slate-50/80 backdrop-blur-sm rounded-br-[150px] lg:rounded-br-[300px] z-[-1] shadow-xl border-r border-white/50"></div>
+
+        <div class="relative max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12">
+            
+            <div class="flex flex-col justify-center items-start pt-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold tracking-wide mb-8 border border-blue-100 shadow-sm">
+                    <div class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
+                    PROFESYONEL TEMİZLİK TEKNOLOJİLERİ
+                </div>
+
+                <h1 class="text-6xl md:text-7xl lg:text-8xl font-semibold text-slate-900 tracking-tighter leading-[0.95] mb-8">
+                    Derinlemesine <br>
+                    <span class="text-slate-900 relative">
+                        Saf Temizlik
+                        <!-- Subtle underline splash -->
+                        <svg class="absolute w-full h-3 -bottom-1 left-0 text-blue-300 opacity-50" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="2" fill="none"></path></svg>
+                    </span> <br>
+                    <span class="text-blue-500">Ais</span> Farkıyla.
+                </h1>
+
+                <p class="text-xl text-slate-500 max-w-md leading-relaxed mb-10 font-medium">
+                    Endüstriyel hijyen ve kurumsal temizlikte sıvı dinamiğinin gücünü keşfedin. Doğadan ilham alan, teknolojiyle güçlendirilmiş çözümler.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-4">
+                    <button class="group flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-semibold transition-all shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50">
+                        Ürünleri Keşfet
+                        <i data-lucide="sparkles" class="w-5 h-5 stroke-[1.5] group-hover:rotate-12 transition-transform"></i>
+                    </button>
+                    
+                    <button class="flex items-center gap-2 glass-button bg-white text-slate-700 px-8 py-4 rounded-full font-semibold hover:bg-slate-50">
+                        Nasıl Çalışır?
+                        <i data-lucide="play-circle" class="w-5 h-5 stroke-[1.5]"></i>
+                    </button>
+                </div>
+
+                <div class="mt-12 flex items-center gap-4 text-sm font-medium text-slate-400">
+                    <div class="flex -space-x-3">
+                        <div class="w-10 h-10 rounded-full border-2 border-white bg-blue-100 flex items-center justify-center text-blue-600">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        </div>
+                         <div class="w-10 h-10 rounded-full border-2 border-white bg-green-100 flex items-center justify-center text-green-600">
+                            <i data-lucide="leaf" class="w-5 h-5"></i>
+                        </div>
+                         <div class="w-10 h-10 rounded-full border-2 border-white bg-purple-100 flex items-center justify-center text-purple-600">
+                            <i data-lucide="award" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <span>%100 Hijyen Garantisi</span>
+                </div>
+            </div>
+
+            <!-- Floating Card Right -->
+            <div class="hidden lg:flex flex-col justify-end items-end pb-20 px-10">
+                <div class="glass-panel p-6 rounded-2xl max-w-xs w-full animate-float backdrop-blur-md bg-white/40">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                            <i data-lucide="spray-can" class="w-6 h-6 stroke-[1.5]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-slate-900 font-semibold leading-tight">Nano Teknoloji</h3>
+                            <p class="text-xs text-slate-600">Yüzey koruma kalkanı</p>
+                        </div>
+                    </div>
+                    <div class="h-2 w-full bg-white/50 rounded-full overflow-hidden">
+                        <div class="h-full bg-blue-500 w-[85%] rounded-full shadow-[0_0_10px_rgba(59,130,246,0.8)]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="relative group">
+                <!-- Image with subtle float animation -->
+                <div class="relative overflow-hidden rounded-3xl shadow-2xl h-[500px]">
+                     <img src="https://images.unsplash.com/photo-1584622050111-993a426fbf0a?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Cleaning Bubbles" class="object-cover h-full w-full group-hover:scale-110 transition-transform duration-1000 ease-out">
+                     <div class="absolute inset-0 bg-blue-500/10 mix-blend-overlay"></div>
+                </div>
+                
+                <div class="absolute -bottom-10 -right-10 glass-panel p-8 rounded-2xl max-w-xs hidden md:block">
+                    <p class="text-3xl font-semibold text-slate-900 mb-1">1500+</p>
+                    <p class="text-sm text-slate-600">Kurumsal Müşteri</p>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-sm font-semibold text-blue-600 uppercase tracking-widest mb-2">Hakkımızda</h2>
+                <h3 class="text-4xl md:text-5xl font-semibold text-slate-900 tracking-tight mb-6">Pırıl Pırıl Bir Gelecek.</h3>
+                <p class="text-slate-500 text-lg mb-6 leading-relaxed">
+                    Ais Temizlik, klasik temizlik anlayışını bilimsel verilerle yeniden yorumluyor. Leke çıkarma teknolojilerinden yüzey koruyucu polimerlere kadar, her damlasında mükemmellik var.
+                </p>
+                <p class="text-slate-500 text-lg mb-8 leading-relaxed">
+                    Sadece kiri yok etmiyoruz, yaşam alanlarınıza ferahlık ve sağlık katıyoruz.
+                </p>
+                <a href="#production" class="text-blue-600 font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all">
+                    Süreçlerimizi İnceleyin
+                    <i data-lucide="arrow-right" class="w-4 h-4 stroke-[1.5]"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTS SECTION -->
+    <section id="products" class="py-32 bg-slate-100/80 backdrop-blur-sm px-6 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-20">
+                <h2 class="text-4xl font-semibold text-blue-600 tracking-tight mb-4">Professional Products</h2>
+                <p class="text-slate-500">Special formulas for every surface, from home to office, from factory to school.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Product 1 -->
+                <div class="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-white">
+                    <div class="aspect-[4/3] overflow-hidden bg-slate-200 relative">
+                        <img src="https://images.unsplash.com/photo-1628102491629-778571d893a3?auto=format&amp;fit=crop&amp;w=600&amp;q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Surface Cleaner">
+                        <div class="absolute inset-0 bg-blue-900/0 group-hover:bg-blue-900/10 transition-colors duration-300"></div>
+                    </div>
+                    <div class="p-8">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+                            <i data-lucide="sparkles" class="w-6 h-6 stroke-[1.5]"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-blue-600 mb-2">Toz Deterjan</h3>
+                        <p class="text-slate-500 text-base mb-6">Endüstriyel ve evsel kullanım için yüksek performanslı toz deterjan. Güçlü temizleme özelliği ile en zorlu kirleri çıkarır.</p>
+                        <a href="#" class="text-sm font-semibold text-slate-900 flex items-center gap-1 group-hover:gap-2 transition-all">
+                            İncele <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-white">
+                    <div class="aspect-[4/3] overflow-hidden bg-slate-200 relative">
+                        <img src="https://images.unsplash.com/photo-1585833807663-1498064d762e?auto=format&amp;fit=crop&amp;w=600&amp;q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Liquid Detergent">
+                    </div>
+                    <div class="p-8">
+                        <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4">
+                            <i data-lucide="droplets" class="w-6 h-6 stroke-[1.5]"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-900 mb-2">Sıvı Deterjan</h3>
+                        <p class="text-slate-500 text-base mb-6">Konsantre formülü ile düşük dozajda yüksek performans. Özel enzim teknolojisi ile lekeleri derinlemesine temizler.</p>
+                        <a href="#" class="text-sm font-semibold text-slate-900 flex items-center gap-1 group-hover:gap-2 transition-all">
+                            İncele <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="group relative rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-white">
+                    <div class="aspect-[4/3] overflow-hidden bg-slate-200 relative">
+                        <img src="https://images.unsplash.com/photo-1528740561666-dc2479dc08ab?auto=format&amp;fit=crop&amp;w=600&amp;q=80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Disinfection">
+                    </div>
+                    <div class="p-8">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+                            <i data-lucide="shield-plus" class="w-6 h-6 stroke-[1.5]"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-900 mb-2">Islak Mendil</h3>
+                        <p class="text-slate-500 text-base mb-6">Yumuşak dokulu, alkol bazlı dezenfektan içerikli ıslak mendiller. Her yaş grubu için güvenle kullanılabilir.</p>
+                        <a href="#" class="text-sm font-semibold text-slate-900 flex items-center gap-1 group-hover:gap-2 transition-all">
+                            İncele <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTION SECTION -->
+    <section id="production" class="py-32 px-6 bg-slate-900 text-white relative overflow-hidden z-10">
+        <div class="absolute top-0 left-0 w-1/2 h-full bg-blue-900/30 blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div>
+                    <h2 class="text-sm font-semibold text-blue-400 uppercase tracking-widest mb-2">Üretim</h2>
+                    <h3 class="text-4xl md:text-5xl font-semibold text-white tracking-tight mb-6">Steril Dolum<br>Tesisleri.</h3>
+                    <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+                        Tesislerimiz, en yüksek hijyen standartlarında çalışmaktadır. İnsan sağlığına zararlı hiçbir katkı maddesi kullanmadan, tam otomasyonlu hatlarda üretim yapıyoruz.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3 text-slate-300">
+                            <i data-lucide="check-circle-2" class="text-blue-500 w-6 h-6"></i>
+                            ISO 9001 &amp; GMP Sertifikalı
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-300">
+                            <i data-lucide="check-circle-2" class="text-blue-500 w-6 h-6"></i>
+                            Dermatolojik Olarak Test Edilmiş
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-300">
+                            <i data-lucide="check-circle-2" class="text-blue-500 w-6 h-6"></i>
+                            Geri Dönüştürülebilir Ambalaj
+                        </li>
+                    </ul>
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-cyan-500/20 rounded-3xl transform rotate-3"></div>
+                    <img src="https://images.unsplash.com/photo-1563811655225-d72545d15a51?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Factory Line" class="relative rounded-3xl shadow-2xl border border-white/10 w-full object-cover h-[500px] hover:scale-[1.02] transition duration-700">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATALOG SECTION -->
+    <section id="catalog" class="py-32 px-6 bg-slate-50 relative z-10">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-semibold text-slate-900 tracking-tight mb-4">Ürün Kataloğu</h2>
+                <p class="text-slate-500">2024 Hijyen ve Temizlik Koleksiyonu.</p>
+            </div>
+            
+            <div class="glass-panel p-2 rounded-2xl shadow-xl overflow-hidden relative group">
+                <div class="bg-slate-800 text-white p-3 flex justify-between items-center rounded-t-xl mb-1">
+                    <span class="text-sm font-medium pl-2">Ais_Temizlik_Katalog_2024.pdf</span>
+                    <div class="flex gap-3">
+                        <i data-lucide="zoom-in" class="w-4 h-4 cursor-pointer hover:text-blue-400"></i>
+                        <i data-lucide="download" class="w-4 h-4 cursor-pointer hover:text-blue-400"></i>
+                    </div>
+                </div>
+                
+                <div class="w-full h-[600px] bg-slate-200 relative flex items-center justify-center">
+                    <div class="absolute inset-0 flex items-center justify-center flex-col gap-4 text-slate-400 bg-white/50 backdrop-blur-sm">
+                         <div class="p-6 rounded-full bg-blue-50 text-blue-500 mb-2">
+                            <i data-lucide="file-text" class="w-12 h-12 stroke-1"></i>
+                         </div>
+                         <p class="font-medium text-slate-600">Kataloğu Görüntülemek İçin Tıklayın</p>
+                         <button class="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 transition shadow-lg shadow-blue-500/30 flex items-center gap-2">
+                             <i data-lucide="download-cloud" class="w-4 h-4"></i> PDF İndir
+                         </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-32 px-6 bg-white relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div class="flex flex-col justify-center">
+                    <h2 class="text-4xl font-semibold text-slate-900 tracking-tight mb-2">Bize Ulaşın</h2>
+                    <p class="text-slate-500 mb-10 text-lg">Toptan siparişler ve bayilik başvuruları için formu doldurun.</p>
+
+                    <form action="#" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-slate-700 ml-1">Ad Soyad</label>
+                                <input type="text" placeholder="Adınız" class="w-full rounded-xl px-4 py-3 glass-input text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-sm">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-slate-700 ml-1">E-posta</label>
+                                <input type="email" placeholder="ornek@sirket.com" class="w-full rounded-xl px-4 py-3 glass-input text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-sm">
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-slate-700 ml-1">Departman</label>
+                            <select class="w-full rounded-xl px-4 py-3 glass-input text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-sm bg-white/50">
+                                <option>Satış ve Pazarlama</option>
+                                <option>Bayilik Başvurusu</option>
+                                <option>Teknik Destek</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-slate-700 ml-1">Mesajınız</label>
+                            <textarea rows="4" placeholder="Talebinizi buraya yazın..." class="w-full rounded-xl px-4 py-3 glass-input text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-sm resize-none"></textarea>
+                        </div>
+
+                        <button type="button" class="w-full bg-slate-900 text-white font-semibold py-4 rounded-xl hover:bg-blue-600 transition-colors duration-300 shadow-lg shadow-slate-900/20 hover:shadow-blue-600/30 flex justify-center items-center gap-2">
+                            Gönder
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="relative h-full min-h-[500px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
+                    <div class="absolute top-6 left-6 z-10 glass-panel p-6 rounded-2xl max-w-xs shadow-lg">
+                        <div class="flex items-start gap-3 mb-4">
+                            <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-900">Fabrika &amp; Merkez</h4>
+                                <p class="text-sm text-slate-500 mt-1">Organize Sanayi Bölgesi 4. Cadde<br>34000 İstanbul</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                             <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                                <i data-lucide="phone" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-900">Müşteri Hattı</h4>
+                                <p class="text-sm text-slate-500">444 0 123</p>
+                            </div>
+                        </div>
+                    </div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d192698.55213238692!2d28.871754593417725!3d41.00532148784157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa7040068086b%3A0xe1ccfe98bc01b0d0!2zxLBzdGFuYnVs!5e0!3m2!1str!2str!4v1698765432100!5m2!1str!2str" width="100%" height="100%" style="border:0; filter: grayscale(1) contrast(1.2) opacity(0.8);" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-200 pt-20 pb-10 px-6 relative z-10" style="background-color: #255ff1;">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mb-16">
+                <div class="col-span-2 lg:col-span-2">
+                    <a href="#" class="flex items-center gap-2 mb-6">
+                        <div class="text-white font-bold text-2xl tracking-tighter">Ais</div>
+                        <div class="h-2 w-2 rounded-full bg-blue-500 mt-1"></div>
+                    </a>
+                    <p class="text-white max-w-sm mb-6">
+                        Temizlikte yeni nesil teknoloji. Eviniz ve iş yeriniz için en saf, en etkili çözümler.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-200 transition">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold text-white mb-6">Kurumsal</h4>
+                    <ul class="space-y-4 text-white text-base">
+                        <li><a href="#about" class="hover:text-blue-600 transition">Hakkımızda</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition">Kariyer</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition">Sürdürülebilirlik</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition">Basın Odası</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-white mb-6">Ürünler</h4>
+                    <ul class="space-y-4 text-white text-base">
+                        <li><a href="#products" class="hover:text-blue-600 transition">Ev Temizliği</a></li>
+                        <li><a href="#products" class="hover:text-blue-600 transition">Endüstriyel</a></li>
+                        <li><a href="#catalog" class="hover:text-blue-600 transition">Oto Bakım</a></li>
+                        <li><a href="#" class="hover:text-blue-600 transition">Yeni Çıkanlar</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white">
+                <p>© 2024 Ais Temizlik A.Ş. Tüm hakları saklıdır.</p>
+                <a href="https://www.praksistech.com/" target="_blank" rel="noopener noreferrer" class="text-white hover:text-blue-600 transition">
+                    Powered by Praksis.
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Parallax Effect for Water Droplets
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const droplets = document.querySelectorAll('.water-droplet');
+            
+            droplets.forEach(droplet => {
+                const speed = parseFloat(droplet.getAttribute('data-speed'));
+                // Apply translation based on scroll position and speed factor
+                // Also adding a slight easing feel by dividing scrollY
+                droplet.style.transform = `translateY(${scrollY * speed}px)`;
+            });
+        });
+    </script>
+
+</body></html>

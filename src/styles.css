@@ -1,0 +1,968 @@
+/* Glass Utilities */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+.glass-button {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.glass-button:hover {
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Glassmorphism Button Style */
+.glassmorphism-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 9999px; /* Pill-shaped */
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Glass border */
+    background: rgba(255, 255, 255, 0.25); /* Semi-transparent white/gray */
+    backdrop-filter: blur(20px) saturate(180%); /* High blur + saturate */
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1), /* Soft, wide shadow */
+        0 2px 8px rgba(0, 0, 0, 0.05);
+    color: #1A2F25;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.glassmorphism-button:hover {
+    background: rgba(255, 255, 255, 0.4); /* Increased opacity on hover */
+    filter: brightness(1.1); /* Slight brightness increase */
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.15),
+        0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+    color: #0061FF; /* Blue text on hover */
+}
+
+.glassmorphism-button:active {
+    transform: translateY(0);
+    filter: brightness(0.95);
+}
+
+.glassmorphism-button-lg {
+    height: 3.5rem;
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+}
+
+.glassmorphism-button-md {
+    height: 2.5rem;
+    padding: 0.625rem 1.5rem;
+    font-size: 0.875rem;
+}
+
+.glassmorphism-button-sm {
+    height: 2rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+}
+
+.glassmorphism-button-full {
+    width: 100%;
+}
+
+.glassmorphism-button svg,
+.glassmorphism-button i {
+    pointer-events: none;
+    flex-shrink: 0;
+}
+
+
+.glass-input {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 3D Hygienic Bubble Styling */
+.water-droplet {
+    position: absolute;
+    border-radius: 50%;
+    /* 3D gradient with hygienic blue-white tones */
+    background: 
+        radial-gradient(
+            circle at 25% 25%, 
+            rgba(255, 255, 255, 1) 0%, 
+            rgba(240, 248, 255, 0.95) 10%,
+            rgba(230, 240, 255, 0.9) 20%,
+            rgba(200, 230, 255, 0.85) 35%,
+            rgba(180, 220, 255, 0.75) 50%,
+            rgba(150, 200, 255, 0.65) 70%,
+            rgba(120, 180, 255, 0.5) 100%
+        ),
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(240, 248, 255, 0.8) 50%,
+            rgba(200, 230, 255, 0.7) 100%
+        );
+    /* Enhanced 3D shadows for depth */
+    box-shadow: 
+        /* Inner highlights for 3D effect */
+        inset -15px -15px 30px rgba(255, 255, 255, 0.95),
+        inset 15px 15px 30px rgba(200, 230, 255, 0.6),
+        inset 0 0 40px rgba(255, 255, 255, 0.8),
+        /* Outer 3D shadow */
+        0 15px 35px rgba(0, 97, 255, 0.25),
+        0 5px 15px rgba(0, 97, 255, 0.2),
+        /* Glow effect for hygienic appearance */
+        0 0 30px rgba(150, 200, 255, 0.4),
+        0 0 60px rgba(100, 180, 255, 0.2),
+        /* Border highlight */
+        0 0 0 2px rgba(255, 255, 255, 0.95),
+        0 0 0 4px rgba(150, 200, 255, 0.3),
+        /* Sparkle glow effects */
+        0 0 20px rgba(255, 255, 255, 0.6),
+        0 0 40px rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(3px) saturate(180%);
+    -webkit-backdrop-filter: blur(3px) saturate(180%);
+    z-index: 0;
+    opacity: 1;
+    pointer-events: none;
+    will-change: transform;
+    filter: brightness(1.15) contrast(1.1);
+    /* 3D transform perspective */
+    transform-style: preserve-3d;
+    animation: bubbleFloat 8s ease-in-out infinite, sparklePulse 4s ease-in-out infinite;
+}
+
+/* Different animation speeds for different bubble sizes */
+.water-droplet.w-8,
+.water-droplet.w-10,
+.water-droplet.w-12 {
+    animation: bubbleFloatFast 6s ease-in-out infinite;
+    animation-delay: 0s;
+}
+
+.water-droplet.w-14,
+.water-droplet.w-16,
+.water-droplet.w-20 {
+    animation: bubbleFloat 8s ease-in-out infinite;
+    animation-delay: 1s;
+}
+
+.water-droplet.w-24,
+.water-droplet.w-32,
+.water-droplet.w-40,
+.water-droplet.w-64 {
+    animation: bubbleFloatSlow 12s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+/* Staggered delays for more natural movement */
+.water-droplet:nth-child(1) { animation-delay: 0s; }
+.water-droplet:nth-child(2) { animation-delay: 1.5s; }
+.water-droplet:nth-child(3) { animation-delay: 0.5s; }
+.water-droplet:nth-child(4) { animation-delay: 2.5s; }
+.water-droplet:nth-child(5) { animation-delay: 1s; }
+.water-droplet:nth-child(6) { animation-delay: 2s; }
+
+/* 3D floating animation - different speeds for different sizes */
+@keyframes bubbleFloat {
+    0%, 100% {
+        transform: translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg);
+    }
+    25% {
+        transform: translateY(-15px) translateZ(10px) rotateX(5deg) rotateY(5deg);
+    }
+    50% {
+        transform: translateY(-25px) translateZ(15px) rotateX(-5deg) rotateY(-5deg);
+    }
+    75% {
+        transform: translateY(-15px) translateZ(10px) rotateX(3deg) rotateY(-3deg);
+    }
+}
+
+@keyframes bubbleFloatSlow {
+    0%, 100% {
+        transform: translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg);
+    }
+    33% {
+        transform: translateY(-20px) translateZ(12px) rotateX(4deg) rotateY(4deg);
+    }
+    66% {
+        transform: translateY(-30px) translateZ(18px) rotateX(-4deg) rotateY(-4deg);
+    }
+}
+
+@keyframes bubbleFloatFast {
+    0%, 100% {
+        transform: translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg);
+    }
+    20% {
+        transform: translateY(-10px) translateZ(8px) rotateX(6deg) rotateY(6deg);
+    }
+    40% {
+        transform: translateY(-18px) translateZ(12px) rotateX(-6deg) rotateY(-6deg);
+    }
+    60% {
+        transform: translateY(-12px) translateZ(10px) rotateX(4deg) rotateY(-4deg);
+    }
+    80% {
+        transform: translateY(-8px) translateZ(6px) rotateX(-3deg) rotateY(3deg);
+    }
+}
+
+/* Enhanced shine reflection for 3D effect */
+.water-droplet::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    width: 35%;
+    height: 25%;
+    border-radius: 50%;
+    background: radial-gradient(
+        ellipse at center, 
+        rgba(255, 255, 255, 1) 0%, 
+        rgba(255, 255, 255, 0.9) 20%,
+        rgba(240, 248, 255, 0.7) 40%, 
+        rgba(200, 230, 255, 0.4) 60%,
+        rgba(255, 255, 255, 0) 80%
+    );
+    transform: rotate(-35deg) translateZ(20px);
+    box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.9),
+        0 0 40px rgba(200, 230, 255, 0.6);
+    filter: blur(1px);
+    z-index: 2;
+    /* Sparkle shimmer animation */
+    animation: sparkleShimmer 3s ease-in-out infinite;
+}
+
+/* Sparkle particles around the bubble */
+.water-droplet::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    pointer-events: none;
+    /* Multiple sparkle particles using box-shadow */
+    box-shadow: 
+        /* Top sparkles */
+        0 -120% 0 2px rgba(255, 255, 255, 0.9),
+        0 -120% 0 0 rgba(255, 255, 255, 0.6),
+        /* Right sparkles */
+        120% 0 0 2px rgba(255, 255, 255, 0.9),
+        120% 0 0 0 rgba(255, 255, 255, 0.6),
+        /* Bottom sparkles */
+        0 120% 0 2px rgba(255, 255, 255, 0.9),
+        0 120% 0 0 rgba(255, 255, 255, 0.6),
+        /* Left sparkles */
+        -120% 0 0 2px rgba(255, 255, 255, 0.9),
+        -120% 0 0 0 rgba(255, 255, 255, 0.6),
+        /* Diagonal sparkles */
+        85% -85% 0 1.5px rgba(255, 255, 255, 0.8),
+        -85% 85% 0 1.5px rgba(255, 255, 255, 0.8),
+        85% 85% 0 1.5px rgba(255, 255, 255, 0.8),
+        -85% -85% 0 1.5px rgba(255, 255, 255, 0.8);
+    animation: sparkleTwinkle 2s ease-in-out infinite;
+    filter: blur(0.5px);
+}
+
+/* Sparkle shimmer animation - moves across the bubble */
+@keyframes sparkleShimmer {
+    0%, 100% {
+        opacity: 0.6;
+        transform: rotate(-35deg) translateZ(20px) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: rotate(-35deg) translateZ(20px) scale(1.2);
+    }
+}
+
+/* Sparkle twinkle animation - particles fade in and out */
+@keyframes sparkleTwinkle {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+    25% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.1) rotate(90deg);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+    }
+    75% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.1) rotate(270deg);
+    }
+}
+
+/* Sparkle pulse animation for the bubble itself */
+@keyframes sparklePulse {
+    0%, 100% {
+        filter: brightness(1.15) contrast(1.1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    }
+    50% {
+        filter: brightness(1.3) contrast(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 30px rgba(150, 200, 255, 0.6));
+    }
+}
+
+/* Hover effect for interactivity (if needed) */
+.water-droplet:hover {
+    transform: scale(1.1) translateZ(30px);
+    filter: brightness(1.3) contrast(1.2);
+    box-shadow: 
+        inset -15px -15px 30px rgba(255, 255, 255, 0.95),
+        inset 15px 15px 30px rgba(200, 230, 255, 0.6),
+        inset 0 0 40px rgba(255, 255, 255, 0.8),
+        0 20px 45px rgba(0, 97, 255, 0.35),
+        0 8px 20px rgba(0, 97, 255, 0.25),
+        0 0 40px rgba(150, 200, 255, 0.5),
+        0 0 80px rgba(100, 180, 255, 0.3),
+        0 0 0 2px rgba(255, 255, 255, 0.95),
+        0 0 0 4px rgba(150, 200, 255, 0.4),
+        /* Enhanced sparkles on hover */
+        0 0 30px rgba(255, 255, 255, 0.9),
+        0 0 60px rgba(255, 255, 255, 0.5);
+}
+
+.no-scrollbar::-webkit-scrollbar { 
+    display: none; 
+}
+
+::selection {
+    background-color: #bae6fd;
+    color: #0c4a6e;
+}
+
+/* Corporate Tab Styles - Glass Radio Group */
+.glass-radio-group-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.glass-radio-group {
+    --bg: rgba(255, 255, 255, 0.3);
+    --text: #1B1B1B;
+    display: flex;
+    position: relative;
+    background: var(--bg);
+    border-radius: 1rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 
+        inset 1px 1px 4px rgba(255, 255, 255, 0.4),
+        inset -1px -1px 6px rgba(0, 0, 0, 0.1),
+        0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.glass-radio-group input[type="radio"] {
+    display: none;
+}
+
+.glass-radio-group label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 105px;
+    font-size: 14px;
+    padding: 0.8rem 1.2rem;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--text);
+    position: relative;
+    z-index: 10;
+    transition: color 0.3s ease-in-out;
+    white-space: nowrap;
+    pointer-events: auto;
+}
+
+.glass-radio-group label:hover {
+    color: #0061FF;
+}
+
+.glass-radio-group input[type="radio"]:checked + label {
+    color: #fff;
+}
+
+.glass-glider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: calc(100% / 5);
+    border-radius: 1rem;
+    z-index: 1;
+    transition: transform 0.5s cubic-bezier(0.37, 1.95, 0.66, 0.56),
+                background 0.4s ease-in-out,
+                box-shadow 0.4s ease-in-out;
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.3), #0061FF);
+    box-shadow: 
+        0 0 18px rgba(0, 97, 255, 0.5),
+        0 0 10px rgba(90, 149, 255, 0.4) inset;
+}
+
+/* Tab positions */
+#corporate-about:checked ~ .glass-glider {
+    transform: translateX(0%);
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.3), #0061FF);
+    box-shadow: 
+        0 0 18px rgba(0, 97, 255, 0.5),
+        0 0 10px rgba(90, 149, 255, 0.4) inset;
+}
+
+#corporate-mission-vision:checked ~ .glass-glider {
+    transform: translateX(100%);
+    background: linear-gradient(135deg, rgba(90, 149, 255, 0.3), #5A95FF);
+    box-shadow: 
+        0 0 18px rgba(90, 149, 255, 0.5),
+        0 0 10px rgba(167, 193, 255, 0.4) inset;
+}
+
+#corporate-career:checked ~ .glass-glider {
+    transform: translateX(200%);
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.3), #0061FF);
+    box-shadow: 
+        0 0 18px rgba(0, 97, 255, 0.5),
+        0 0 10px rgba(90, 149, 255, 0.4) inset;
+}
+
+#corporate-culture:checked ~ .glass-glider {
+    transform: translateX(300%);
+    background: linear-gradient(135deg, rgba(90, 149, 255, 0.3), #5A95FF);
+    box-shadow: 
+        0 0 18px rgba(90, 149, 255, 0.5),
+        0 0 10px rgba(167, 193, 255, 0.4) inset;
+}
+
+#corporate-application:checked ~ .glass-glider {
+    transform: translateX(400%);
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.3), #0061FF);
+    box-shadow: 
+        0 0 18px rgba(0, 97, 255, 0.5),
+        0 0 10px rgba(90, 149, 255, 0.4) inset;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .glass-radio-group {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .glass-radio-group label {
+        min-width: 84px;
+        padding: 0.6rem 0.8rem;
+        font-size: 12px;
+    }
+}
+
+.corporate-tab-content {
+    animation: fadeIn 0.3s ease-in;
+}
+
+.corporate-tab-content.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Product Tab Styles - Glassmorphism */
+.product-tab {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #1B1B1B;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-tab:hover {
+    background: rgba(237, 242, 251, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: #0061FF;
+    border-color: rgba(167, 193, 255, 0.6);
+    box-shadow: 0 8px 24px rgba(0, 97, 255, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+}
+
+.product-tab.active {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    color: #0061FF;
+    border-color: rgba(90, 149, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 97, 255, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+}
+
+.product-content {
+    animation: fadeIn 0.3s ease-in;
+}
+
+.product-image {
+    transition: transform 0.3s ease-out;
+}
+
+/* Liquid Button Styles */
+.liquid-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    border: none;
+    background: transparent;
+    color: #0061FF;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.liquid-button:hover {
+    transform: scale(1.05);
+}
+
+.liquid-button:active {
+    transform: scale(0.98);
+}
+
+.liquid-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: inherit;
+    box-shadow: 
+        0 0 6px rgba(0, 0, 0, 0.03),
+        0 2px 6px rgba(0, 0, 0, 0.08),
+        inset 3px 3px 0.5px -3px rgba(0, 0, 0, 0.9),
+        inset -3px -3px 0.5px -3px rgba(0, 0, 0, 0.85),
+        inset 1px 1px 1px -0.5px rgba(0, 0, 0, 0.6),
+        inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.6),
+        inset 0 0 6px 6px rgba(0, 0, 0, 0.12),
+        inset 0 0 2px 2px rgba(0, 0, 0, 0.06),
+        0 0 12px rgba(255, 255, 255, 0.15);
+    transition: all 0.3s ease;
+}
+
+.liquid-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.1), rgba(90, 149, 255, 0.15));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.liquid-button > * {
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.liquid-button svg,
+.liquid-button i {
+    pointer-events: none;
+    flex-shrink: 0;
+}
+
+/* Liquid Button Variants */
+.liquid-button-primary {
+    background: linear-gradient(135deg, #0061FF, #0052E6);
+    color: white;
+}
+
+.liquid-button-primary::after {
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.2), rgba(90, 149, 255, 0.25));
+}
+
+.liquid-button-primary::before {
+    box-shadow: 
+        0 0 6px rgba(0, 97, 255, 0.2),
+        0 2px 6px rgba(0, 97, 255, 0.3),
+        inset 3px 3px 0.5px -3px rgba(0, 0, 0, 0.3),
+        inset -3px -3px 0.5px -3px rgba(255, 255, 255, 0.2),
+        inset 1px 1px 1px -0.5px rgba(0, 0, 0, 0.2),
+        inset -1px -1px 1px -0.5px rgba(255, 255, 255, 0.15),
+        inset 0 0 6px 6px rgba(0, 97, 255, 0.2),
+        inset 0 0 2px 2px rgba(0, 97, 255, 0.1),
+        0 0 12px rgba(90, 149, 255, 0.3);
+}
+
+.liquid-button-primary:hover {
+    background: linear-gradient(135deg, #0052E6, #0047CC);
+}
+
+.liquid-button-full {
+    width: 100%;
+}
+
+.liquid-button-lg {
+    height: 3.5rem;
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+}
+
+.liquid-button-md {
+    height: 2.5rem;
+    padding: 0.625rem 1.5rem;
+    font-size: 0.875rem;
+}
+
+.liquid-button-sm {
+    height: 2rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+}
+
+.liquid-button-rounded {
+    border-radius: 9999px;
+}
+
+.liquid-button-rounded::before,
+.liquid-button-rounded::after {
+    border-radius: 9999px;
+}
+
+/* Glassmorphism Button on Blue Background */
+.glassmorphism-button-on-blue {
+    background: rgba(255, 255, 255, 0.25) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: #ffffff !important;
+}
+
+.glassmorphism-button-on-blue:hover {
+    background: rgba(255, 255, 255, 0.4) !important;
+    color: #ffffff !important;
+    filter: brightness(1.1);
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.15),
+        0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+/* Glassmorphism Button Blue - Solid Blue Background with White Text */
+.glassmorphism-button-blue {
+    background: #0061FF !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(0, 97, 255, 0.5) !important;
+    color: #ffffff !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 97, 255, 0.3),
+        0 2px 8px rgba(0, 97, 255, 0.2);
+}
+
+.glassmorphism-button-blue:hover {
+    background: #0052D9 !important;
+    color: #ffffff !important;
+    filter: brightness(1.1);
+    box-shadow: 
+        0 12px 40px rgba(0, 97, 255, 0.4),
+        0 4px 12px rgba(0, 97, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.glassmorphism-button-blue:active {
+    transform: translateY(0);
+    filter: brightness(0.95);
+}
+
+/* Navbar Animations */
+@keyframes fade-in-down {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-down {
+    animation: fade-in-down 0.3s ease-out;
+}
+
+/* Dropdown Menu Styles */
+.nav-dropdown .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10000;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    display: block;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    transform: translateY(-10px);
+    margin-top: 4px;
+}
+
+.nav-dropdown .dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+/* Ensure parent container doesn't clip dropdown */
+.nav-dropdown {
+    position: relative;
+    overflow: visible !important;
+}
+
+/* Fix for rounded-full container clipping - CRITICAL */
+#desktop-menu {
+    overflow: visible !important;
+}
+
+#desktop-menu > div {
+    overflow: visible !important;
+}
+
+#desktop-menu > div > div {
+    overflow: visible !important;
+}
+
+/* Force all ancestors to have visible overflow */
+#navbar,
+#navbar > * {
+    overflow: visible !important;
+}
+
+/* Make sure the inner div is also visible when parent is shown */
+.nav-dropdown .dropdown-menu.show > div {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Dropdown trigger cursor */
+.nav-dropdown > a {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Mobile Menu Styles */
+#mobile-menu-portal {
+    transition: opacity 0.3s ease;
+}
+
+#mobile-menu-portal.show {
+    display: block !important;
+}
+
+#mobile-menu-portal.hidden {
+    display: none !important;
+}
+
+.mobile-dropdown-content.show {
+    display: block !important;
+}
+
+.mobile-dropdown-toggle.active i {
+    transform: rotate(180deg);
+}
+
+/* Custom Product Packaging Dropdown */
+.packaging-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.packaging-dropdown-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 
+        0 4px 16px rgba(0, 97, 255, 0.1),
+        inset 0 1px 2px rgba(255, 255, 255, 0.9);
+    color: #0061FF;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+}
+
+.packaging-dropdown-trigger:hover {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 
+        0 8px 24px rgba(0, 97, 255, 0.15),
+        inset 0 1px 2px rgba(255, 255, 255, 1);
+    transform: translateY(-1px);
+}
+
+.packaging-dropdown-trigger svg {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.packaging-dropdown-trigger.active svg {
+    transform: rotate(180deg);
+}
+
+.packaging-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    min-width: 160px;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 
+        0 10px 40px rgba(0, 97, 255, 0.15),
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.95);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+}
+
+.packaging-dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.packaging-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    color: #1B1B1B;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.packaging-dropdown-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.1), rgba(90, 149, 255, 0.05));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    border-radius: inherit;
+}
+
+.packaging-dropdown-item:hover {
+    color: #0061FF;
+}
+
+.packaging-dropdown-item:hover::before {
+    opacity: 1;
+}
+
+.packaging-dropdown-item.selected {
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.15), rgba(90, 149, 255, 0.1));
+    color: #0061FF;
+}
+
+.packaging-dropdown-item .check-icon {
+    width: 1rem;
+    height: 1rem;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s ease;
+    color: #0061FF;
+}
+
+.packaging-dropdown-item.selected .check-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.packaging-dropdown-item .item-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: currentColor;
+    opacity: 0.7;
+}
+
+.packaging-dropdown-item:hover .item-icon {
+    opacity: 1;
+}
+

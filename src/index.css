@@ -1,0 +1,424 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #EDF2FB;
+    --foreground: #1B1B1B;
+    --primary: #0061FF;
+    --primary-foreground: #EDF2FB;
+    --secondary: #5A95FF;
+    --secondary-foreground: #1B1B1B;
+    --accent: #A7C1FF;
+    --accent-foreground: #1B1B1B;
+    --muted: #A7C1FF;
+    --muted-foreground: #1B1B1B;
+    --border: #A7C1FF;
+  }
+}
+
+/* Glass Utilities */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+.glass-button {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.glass-button:hover {
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    transform: translateY(-1px);
+}
+
+.glass-input {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Water Droplet Styling */
+.water-droplet {
+    position: absolute;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: radial-gradient(
+        circle at 30% 30%, 
+        rgba(255, 255, 255, 1) 0%, 
+        rgba(255, 255, 255, 0.85) 15%, 
+        rgba(255, 255, 255, 0.65) 35%,
+        rgba(255, 255, 255, 0.5) 60%,
+        rgba(255, 255, 255, 0.4) 100%
+    );
+    box-shadow: 
+        inset 12px 12px 25px rgba(255, 255, 255, 0.9),
+        inset -8px -8px 20px rgba(0, 0, 0, 0.1),
+        8px 20px 30px rgba(0, 0, 0, 0.12),
+        0px 0px 0px 2px rgba(255, 255, 255, 0.9),
+        0px 0px 0px 3px rgba(0, 97, 255, 0.25),
+        0px 0px 20px rgba(255, 255, 255, 0.6),
+        0px 0px 40px rgba(0, 97, 255, 0.15);
+    backdrop-filter: blur(2px);
+    z-index: 0;
+    opacity: 1;
+    pointer-events: none;
+    will-change: transform;
+    filter: brightness(1.1);
+}
+
+.water-droplet::after {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 30%;
+    height: 18%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,0) 80%);
+    transform: rotate(-45deg);
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+}
+
+.no-scrollbar::-webkit-scrollbar { 
+    display: none; 
+}
+
+::selection {
+    background-color: #A7C1FF;
+    color: #1B1B1B;
+}
+
+/* Corporate Tab Styles - Glass Radio Group */
+.glass-radio-group-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.glass-radio-group {
+    --bg: rgba(255, 255, 255, 0.3);
+    --text: #1B1B1B;
+    display: flex;
+    position: relative;
+    background: var(--bg);
+    border-radius: 1rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 
+        inset 1px 1px 4px rgba(255, 255, 255, 0.4),
+        inset -1px -1px 6px rgba(0, 0, 0, 0.1),
+        0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.glass-radio-group input[type="radio"] {
+    display: none;
+}
+
+.glass-radio-group label {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 105px;
+    font-size: 14px;
+    padding: 0.8rem 1.2rem;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--text);
+    position: relative;
+    z-index: 2;
+    transition: color 0.3s ease-in-out;
+    white-space: nowrap;
+}
+
+.glass-radio-group label:hover {
+    color: #0061FF;
+}
+
+.glass-radio-group input[type="radio"]:checked + label {
+    color: #fff;
+}
+
+.glass-glider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: calc(100% / 5);
+    border-radius: 1rem;
+    z-index: 1;
+    transition: transform 0.5s cubic-bezier(0.37, 1.95, 0.66, 0.56),
+                background 0.4s ease-in-out,
+                box-shadow 0.4s ease-in-out;
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.3), #0061FF);
+    box-shadow: 
+        0 0 18px rgba(0, 97, 255, 0.5),
+        0 0 10px rgba(90, 149, 255, 0.4) inset;
+}
+
+#corporate-about:checked ~ .glass-glider {
+    transform: translateX(0%);
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.3), #0061FF);
+    box-shadow: 
+        0 0 18px rgba(0, 97, 255, 0.5),
+        0 0 10px rgba(90, 149, 255, 0.4) inset;
+}
+
+#corporate-mission-vision:checked ~ .glass-glider {
+    transform: translateX(100%);
+    background: linear-gradient(135deg, rgba(90, 149, 255, 0.3), #5A95FF);
+    box-shadow: 
+        0 0 18px rgba(90, 149, 255, 0.5),
+        0 0 10px rgba(167, 193, 255, 0.4) inset;
+}
+
+#corporate-career:checked ~ .glass-glider {
+    transform: translateX(200%);
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.3), #0061FF);
+    box-shadow: 
+        0 0 18px rgba(0, 97, 255, 0.5),
+        0 0 10px rgba(90, 149, 255, 0.4) inset;
+}
+
+#corporate-culture:checked ~ .glass-glider {
+    transform: translateX(300%);
+    background: linear-gradient(135deg, rgba(90, 149, 255, 0.3), #5A95FF);
+    box-shadow: 
+        0 0 18px rgba(90, 149, 255, 0.5),
+        0 0 10px rgba(167, 193, 255, 0.4) inset;
+}
+
+#corporate-application:checked ~ .glass-glider {
+    transform: translateX(400%);
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.3), #0061FF);
+    box-shadow: 
+        0 0 18px rgba(0, 97, 255, 0.5),
+        0 0 10px rgba(90, 149, 255, 0.4) inset;
+}
+
+@media (max-width: 768px) {
+    .glass-radio-group {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .glass-radio-group label {
+        min-width: 84px;
+        padding: 0.6rem 0.8rem;
+        font-size: 12px;
+    }
+}
+
+.corporate-tab-content {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Product Tab Styles - Glassmorphism */
+.product-tab {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #1B1B1B;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-tab:hover {
+    background: rgba(237, 242, 251, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: #0061FF;
+    border-color: rgba(167, 193, 255, 0.6);
+    box-shadow: 0 8px 24px rgba(0, 97, 255, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+}
+
+.product-tab.active {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    color: #0061FF;
+    border-color: rgba(90, 149, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 97, 255, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+}
+
+.product-content {
+    animation: fadeIn 0.3s ease-in;
+}
+
+.product-image {
+    transition: transform 0.3s ease-out;
+}
+
+/* Liquid Button Styles */
+.liquid-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 0.375rem;
+    text-sm: 0.875rem;
+    font-medium: 500;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    border: none;
+    background: transparent;
+    color: #0061FF;
+    padding: 0.875rem 1.75rem;
+    height: 3.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.liquid-button:hover {
+    transform: scale(1.05);
+}
+
+.liquid-button:active {
+    transform: scale(0.98);
+}
+
+.liquid-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 9999px;
+    box-shadow: 
+        0 0 6px rgba(0, 0, 0, 0.03),
+        0 2px 6px rgba(0, 0, 0, 0.08),
+        inset 3px 3px 0.5px -3px rgba(0, 0, 0, 0.9),
+        inset -3px -3px 0.5px -3px rgba(0, 0, 0, 0.85),
+        inset 1px 1px 1px -0.5px rgba(0, 0, 0, 0.6),
+        inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.6),
+        inset 0 0 6px 6px rgba(0, 0, 0, 0.12),
+        inset 0 0 2px 2px rgba(0, 0, 0, 0.06),
+        0 0 12px rgba(255, 255, 255, 0.15);
+    transition: all 0.3s ease;
+}
+
+.liquid-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 0.375rem;
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.1), rgba(90, 149, 255, 0.15));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.liquid-button > * {
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.liquid-button svg,
+.liquid-button i {
+    pointer-events: none;
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+.liquid-button-primary {
+    background: linear-gradient(135deg, #0061FF, #0052E6);
+    color: white;
+}
+
+.liquid-button-primary::after {
+    background: linear-gradient(135deg, rgba(0, 97, 255, 0.2), rgba(90, 149, 255, 0.25));
+}
+
+.liquid-button-primary::before {
+    box-shadow: 
+        0 0 6px rgba(0, 97, 255, 0.2),
+        0 2px 6px rgba(0, 97, 255, 0.3),
+        inset 3px 3px 0.5px -3px rgba(0, 0, 0, 0.3),
+        inset -3px -3px 0.5px -3px rgba(255, 255, 255, 0.2),
+        inset 1px 1px 1px -0.5px rgba(0, 0, 0, 0.2),
+        inset -1px -1px 1px -0.5px rgba(255, 255, 255, 0.15),
+        inset 0 0 6px 6px rgba(0, 97, 255, 0.2),
+        inset 0 0 2px 2px rgba(0, 97, 255, 0.1),
+        0 0 12px rgba(90, 149, 255, 0.3);
+}
+
+.liquid-button-primary:hover {
+    background: linear-gradient(135deg, #0052E6, #0047CC);
+}
+
+.liquid-button-full {
+    width: 100%;
+}
+
+.liquid-button-lg {
+    height: 3rem;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+}
+
+.liquid-button-md {
+    height: 2.5rem;
+    padding: 0.625rem 1.5rem;
+    font-size: 0.875rem;
+}
+
+.liquid-button-sm {
+    height: 2rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+}
+
+.liquid-button-rounded {
+    border-radius: 9999px;
+}
+
+.liquid-button-rounded::before,
+.liquid-button-rounded::after {
+    border-radius: 9999px;
+}
+

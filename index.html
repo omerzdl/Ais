@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIS</title>
+    <link rel="icon" type="image/png" href="/Ais.png">
+    
+    <!-- Google Fonts: Syne, Montserrat, Playfair Display & EB Garamond -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=EB+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: {
+                    sans: ['Syne', 'sans-serif'],
+                    heading: ['Syne', 'sans-serif'],
+                    subheading: ['EB Garamond', 'serif'],
+                },
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body class="bg-slate-50 text-slate-600 font-sans antialiased text-lg relative overflow-x-hidden">
+
+    <!-- WATER DROPLETS CONTAINER (Fixed background layer) -->
+    <div id="droplet-layer" class="fixed inset-0 w-full h-full pointer-events-none overflow-hidden z-0">
+        <!-- Droplets will be animated via JS based on scroll -->
+        <!-- Large one top right -->
+        <div class="water-droplet w-32 h-32 md:w-64 md:h-64 top-20 -right-10 md:right-[5%]" data-speed="-0.2"></div>
+        
+        <!-- Medium one floating near text -->
+        <div class="water-droplet w-16 h-16 md:w-24 md:h-24 top-[40%] left-[10%]" data-speed="-0.5"></div>
+        
+        <!-- Small fast one -->
+        <div class="water-droplet w-8 h-8 md:w-12 md:h-12 top-[15%] left-[20%]" data-speed="-0.8"></div>
+        
+        <!-- Bottom area droplets -->
+        <div class="water-droplet w-20 h-20 md:w-40 md:h-40 top-[80%] left-[80%]" data-speed="-0.3"></div>
+        <div class="water-droplet w-10 h-10 top-[60%] right-[30%]" data-speed="-0.6"></div>
+        <div class="water-droplet w-14 h-14 top-[90%] left-[15%]" data-speed="-0.4"></div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-[100] py-4 md:py-6 px-4 md:px-8">
+        <!-- Logo (Fixed Position) -->
+        <div id="logo-container" class="fixed left-4 md:left-8 top-4 md:top-6 z-[100]">
+            <div class="rounded-full w-16 h-16 md:w-24 md:h-24 flex items-center justify-center p-2 md:p-3 overflow-hidden border border-white/30 bg-white/25 backdrop-blur-[20px] backdrop-saturate-[180%] shadow-[0_8px_32px_rgba(0,0,0,0.1),0_2px_8px_rgba(0,0,0,0.05)]">
+                <img 
+                    src="/Ais.png" 
+                    alt="Ais Logo" 
+                    class="w-full h-full object-cover rounded-full"
+                    width="96"
+                    height="96"
+                />
+            </div>
+        </div>
+
+        <!-- Desktop Menu (Centered) -->
+        <div id="desktop-menu" class="hidden md:block w-fit mx-auto">
+            <div class="bg-white/30 backdrop-blur-md rounded-full px-6 py-3 shadow-lg border border-[#8FA895]/20">
+                <div class="flex items-center gap-8 text-blue-600 text-sm font-bold" style="font-family: 'Syne', sans-serif;">
+                    <a href="#hero" class="hover:text-[#0061FF] transition-colors">Home</a>
+                    
+                    <!-- Corporate Dropdown -->
+                    <div class="relative nav-dropdown" data-dropdown="corporate">
+                        <a href="#corporate" class="hover:text-[#0061FF] transition-colors flex items-center gap-1 cursor-pointer">
+                            Corporate
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
+                        </a>
+                        <div class="dropdown-menu absolute top-full left-0 pt-2 w-56 opacity-0 invisible pointer-events-none transition-all duration-300">
+                            <div class="rounded-2xl p-2 shadow-xl bg-white border border-[#8FA895]/30">
+                                <a href="#about" class="block px-4 py-2 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">About Us</a>
+                                <a href="#mission-vision" class="block px-4 py-2 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Mission & Vision</a>
+                                <a href="#career" class="block px-4 py-2 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Career</a>
+                                <a href="#culture" class="block px-4 py-2 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Our Culture</a>
+                                <a href="#application" class="block px-4 py-2 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Job Application</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Products Dropdown -->
+                    <div class="relative nav-dropdown" data-dropdown="products">
+                        <a href="#products" class="hover:text-[#0061FF] transition-colors flex items-center gap-1 cursor-pointer">
+                            Products
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
+                        </a>
+                        <div class="dropdown-menu absolute top-full left-0 pt-2 w-56 opacity-0 invisible pointer-events-none transition-all duration-300">
+                            <div class="rounded-2xl p-2 shadow-xl bg-white border border-[#8FA895]/30">
+                                <a href="#products-surface-cleaners" class="block px-4 py-2 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Powder Detergent</a>
+                                <a href="#products-concentrated-detergents" class="block px-4 py-2 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Liquid Detergent</a>
+                                <a href="#products-disinfectants" class="block px-4 py-2 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Wet Wipes</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#production" class="hover:text-[#0061FF] transition-colors">Quality</a>
+                    <a href="/catalog" class="hover:text-[#0061FF] transition-colors">E-Catalog</a>
+                    <a href="#contact" class="hover:text-[#0061FF] transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Icon -->
+        <button id="mobile-menu-button" class="md:hidden fixed right-4 top-4 z-[9998] bg-white rounded-full w-16 h-16 border-4 border-[#8FA895] shadow-2xl flex items-center justify-center" aria-expanded="false" aria-label="Open/Close Menu" type="button">
+            <i data-lucide="menu" id="menu-icon" class="w-6 h-6 text-[#1A2F25]"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Portal (will be rendered to body via JS) -->
+    <div id="mobile-menu-portal" class="fixed inset-0 z-[9999] hidden">
+        <!-- Backdrop -->
+        <div id="mobile-menu-backdrop" class="absolute inset-0 bg-black/20 backdrop-blur-sm"></div>
+        
+        <!-- Menu Content -->
+        <div class="absolute top-20 right-4 left-4 bg-white rounded-3xl p-6 shadow-xl border border-[#8FA895]/30 animate-fade-in-down max-h-[calc(100vh-7rem)] overflow-y-auto">
+            <!-- Mobile Menu Items -->
+            <div id="mobile-menu-items" class="space-y-2" style="font-family: 'Syne', sans-serif; font-weight: 400;">
+                <a href="#hero" class="block px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors border-b border-[#8FA895]/10">Anasayfa</a>
+                
+                <!-- Corporate Mobile Dropdown -->
+                <div class="mobile-dropdown">
+                    <button class="mobile-dropdown-toggle w-full flex items-center justify-between px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors border-b border-[#8FA895]/10">
+                        <span>Kurumsal</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ml-4 mt-2 space-y-2">
+                        <a href="#about" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Hakkımızda</a>
+                        <a href="#mission-vision" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Misyon & Vizyon</a>
+                        <a href="#career" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Kariyer</a>
+                        <a href="#culture" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Kültürümüz</a>
+                        <a href="#application" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">İş Başvurusu</a>
+                    </div>
+                </div>
+                
+                <!-- Products Mobile Dropdown -->
+                <div class="mobile-dropdown">
+                    <button class="mobile-dropdown-toggle w-full flex items-center justify-between px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors border-b border-[#8FA895]/10">
+                        <span>Ürünlerimiz</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
+                    </button>
+                    <div class="mobile-dropdown-content hidden ml-4 mt-2 space-y-2">
+                        <a href="#products-surface-cleaners" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Yüzey Parlatıcılar</a>
+                        <a href="#products-concentrated-detergents" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Konsantre Deterjanlar</a>
+                        <a href="#products-disinfectants" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Dezenfektan Grubu</a>
+                    </div>
+                </div>
+                
+                <a href="#production" class="block px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors border-b border-[#8FA895]/10">Kalite</a>
+                <a href="/catalog" class="block px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors border-b border-[#8FA895]/10">E-Katalog</a>
+                <a href="#contact" class="block px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">İletişim</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative w-full min-h-screen pt-28 md:pt-32 pb-20 overflow-hidden flex items-center z-10">
+        <!-- Background Logic -->
+        <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-[#A7C1FF] via-[#5A95FF] to-[#0061FF] z-[-1] opacity-50"></div>
+        <div class="absolute top-0 left-0 w-[100%] lg:w-[60%] h-full bg-slate-50/80 backdrop-blur-sm rounded-br-[150px] lg:rounded-br-[300px] z-[-1] shadow-xl border-r border-white/50"></div>
+
+        <div class="relative max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12">
+            
+            <div class="flex flex-col justify-center items-start pt-10">
+                <h1 class="text-[3rem] md:text-[3.6rem] lg:text-[4.8rem] font-subheading font-bold text-slate-900 tracking-tighter leading-[0.95] mb-8">
+                    Deep Pure <br>
+                    <span class="text-slate-900">
+                        Cleanliness
+                    </span> <br>
+                    With the <span class="text-blue-500">Ais</span> Difference.
+                </h1>
+
+                <p class="text-xl text-slate-500 max-w-md leading-relaxed mb-10 font-sans font-normal">
+                    Discover the power of fluid dynamics in industrial hygiene and corporate cleaning. Solutions inspired by nature, enhanced by technology.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="/catalog" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue">
+                        <span>Product Catalog</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                </div>
+
+                <div class="mt-12 flex items-center gap-4 text-sm font-medium text-slate-400">
+                    <div class="flex -space-x-3">
+                        <div class="w-10 h-10 rounded-full border-2 border-white bg-blue-100 flex items-center justify-center text-blue-600">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        </div>
+                         <div class="w-10 h-10 rounded-full border-2 border-white bg-green-100 flex items-center justify-center text-green-600">
+                            <i data-lucide="leaf" class="w-5 h-5"></i>
+                        </div>
+                         <div class="w-10 h-10 rounded-full border-2 border-white bg-purple-100 flex items-center justify-center text-purple-600">
+                            <i data-lucide="award" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <span>100% Hygiene Guarantee</span>
+                </div>
+            </div>
+
+            <!-- Floating Card Right -->
+            <div class="hidden lg:flex flex-col justify-end items-end pb-20 px-10">
+                <a href="tel:+905556211529" class="glass-panel p-6 rounded-2xl max-w-xs w-full animate-float backdrop-blur-md bg-white/40 cursor-pointer hover:bg-white/50 transition-all duration-300 block">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                            <i data-lucide="phone" class="w-6 h-6 stroke-[1.5]"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-slate-900 font-sans font-bold leading-tight">Contact Us!</h3>
+                            <p class="text-xs text-slate-600">Get in touch now</p>
+                        </div>
+                    </div>
+                    <div class="h-2 w-full bg-white/50 rounded-full overflow-hidden">
+                        <div class="h-full bg-blue-500 w-[85%] rounded-full shadow-[0_0_10px_rgba(59,130,246,0.8)]"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CORPORATE SECTION (Tab-based) -->
+    <section id="about" class="py-4 md:py-4 pb-20 md:pb-32 px-6 bg-[#EDF2FB] relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-4xl md:text-5xl font-subheading font-bold text-[#0061FF] mb-4">Corporate</h2>
+                <p class="text-lg text-[#1B1B1B]/80 leading-relaxed font-sans font-normal max-w-2xl mx-auto">
+                    Discover our company values, mission, and opportunities. Learn about our culture and join our team.
+                </p>
+            </div>
+
+            <!-- Tab Navigation - Glass Radio Group Style -->
+            <div id="corporate-tabs" class="glass-radio-group-wrapper flex justify-center mb-12 md:mb-16">
+                <div class="glass-radio-group">
+                    <input type="radio" name="corporate-tab" id="corporate-about" value="about" checked>
+                    <label for="corporate-about" data-tab="about">About Us</label>
+                    
+                    <input type="radio" name="corporate-tab" id="corporate-mission-vision" value="mission-vision">
+                    <label for="corporate-mission-vision" data-tab="mission-vision">Mission & Vision</label>
+                    
+                    <input type="radio" name="corporate-tab" id="corporate-career" value="career">
+                    <label for="corporate-career" data-tab="career">Career</label>
+                    
+                    <input type="radio" name="corporate-tab" id="corporate-culture" value="culture">
+                    <label for="corporate-culture" data-tab="culture">Our Culture</label>
+                    
+                    <input type="radio" name="corporate-tab" id="corporate-application" value="application">
+                    <label for="corporate-application" data-tab="application">Job Application</label>
+                    
+                    <div class="glass-glider"></div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="max-w-4xl mx-auto">
+                <!-- About Tab Content -->
+                <div id="tab-content-about" class="corporate-tab-content hidden text-center">
+                    <h2 class="text-4xl md:text-5xl font-subheading font-bold text-[#0061FF] mb-8">About Us</h2>
+                    <div class="space-y-6 mb-12">
+                        <p class="text-lg text-[#1B1B1B]/80 leading-relaxed font-sans font-normal">
+                            Ais Cleaning reinterprets the classic understanding of cleaning with scientific data. From stain removal technologies to surface-protective polymers, there is excellence in every drop.
+                        </p>
+                        <p class="text-lg text-[#1B1B1B]/80 leading-relaxed font-sans font-normal">
+                            We don't just eliminate dirt, we add freshness and health to your living spaces.
+                        </p>
+                        <p class="text-lg text-[#1B1B1B]/80 leading-relaxed font-sans font-normal">
+                            We serve more than 1500 corporate customers, helping them discover the power of fluid dynamics in industrial hygiene and corporate cleaning.
+                        </p>
+                    </div>
+
+                    <!-- Feature Items -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                        <div class="glass-panel p-6 rounded-2xl text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i data-lucide="award" class="w-8 h-8 text-[#0061FF]"></i>
+                </div>
+                            <h3 class="text-xl font-subheading font-bold text-[#0061FF] mb-3">Excellence</h3>
+                            <p class="text-sm text-[#1B1B1B]/70 leading-relaxed font-sans font-normal">
+                                Scientific data-driven solutions with cutting-edge technology in every product.
+                            </p>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i data-lucide="users" class="w-8 h-8 text-[#0061FF]"></i>
+                            </div>
+                            <h3 class="text-xl font-subheading font-bold text-[#0061FF] mb-3">Trusted Partner</h3>
+                            <p class="text-sm text-[#1B1B1B]/70 leading-relaxed font-sans font-normal">
+                                Serving over 1500 corporate customers with reliable and effective cleaning solutions.
+                        </p>
+                    </div>
+                        <div class="glass-panel p-6 rounded-2xl text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i data-lucide="leaf" class="w-8 h-8 text-[#0061FF]"></i>
+                            </div>
+                            <h3 class="text-xl font-subheading font-bold text-[#0061FF] mb-3">Sustainability</h3>
+                            <p class="text-sm text-[#1B1B1B]/70 leading-relaxed font-sans font-normal">
+                                Environmentally friendly solutions that protect both your spaces and our planet.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mission & Vision Tab Content -->
+                <div id="tab-content-mission-vision" class="corporate-tab-content hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-center mb-12">
+                        <div>
+                            <h3 class="text-3xl md:text-4xl font-subheading font-bold text-[#0061FF] mb-6">Our Mission</h3>
+                            <p class="text-lg text-[#1B1B1B]/80 leading-relaxed font-sans font-normal">
+                                To make people's living spaces healthier and fresher by offering cleaning solutions inspired by nature and enhanced by technology. Our pursuit of excellence in every product comes to life through our formulas supported by scientific data.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl md:text-4xl font-subheading font-bold text-[#0061FF] mb-6">Our Vision</h3>
+                            <p class="text-lg text-[#1B1B1B]/80 leading-relaxed font-sans font-normal">
+                                To become Turkey's leading cleaning technologies company and be a pioneer in the global market with our sustainable, environmentally friendly solutions. We work to leave a cleaner world for future generations.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Feature Items -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+                        <div class="glass-panel p-6 rounded-2xl text-left">
+                            <div class="w-12 h-12 mb-4 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i data-lucide="target" class="w-6 h-6 text-[#0061FF]"></i>
+                            </div>
+                            <h3 class="text-lg font-subheading font-bold text-[#0061FF] mb-2">Innovation</h3>
+                            <p class="text-sm text-[#1B1B1B]/70 leading-relaxed font-sans font-normal">
+                                Continuously developing new technologies and formulas to meet evolving cleaning needs.
+                            </p>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl text-left">
+                            <div class="w-12 h-12 mb-4 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i data-lucide="globe" class="w-6 h-6 text-[#0061FF]"></i>
+                            </div>
+                            <h3 class="text-lg font-subheading font-bold text-[#0061FF] mb-2">Global Reach</h3>
+                            <p class="text-sm text-[#1B1B1B]/70 leading-relaxed font-sans font-normal">
+                                Expanding our presence in international markets with sustainable and effective solutions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Career Tab Content -->
+                <div id="tab-content-career" class="corporate-tab-content hidden text-center">
+                    <h2 class="text-4xl md:text-5xl font-subheading font-bold text-[#0061FF] mb-8">Together we are stronger!</h2>
+                    <div class="space-y-6 mb-12">
+                        <p class="text-lg text-[#1B1B1B]/80 leading-relaxed font-sans font-normal">
+                            Would you like to join the Ais Cleaning family? We are looking for talented, passionate and innovative thinking individuals.
+                        </p>
+                        <p class="text-lg text-[#1B1B1B]/80 leading-relaxed font-sans font-normal">
+                            Our career opportunities include positions in R&D, Production, Sales and Marketing, Quality Control and Human Resources.
+                        </p>
+                        <p class="text-lg text-[#1B1B1B]/80 leading-relaxed font-sans font-normal">
+                            Every employee who joins us plays an important role in our company's growth and success. If you would like to join this journey, you can submit your application by filling out the form below.
+                        </p>
+                    </div>
+
+                    <!-- Feature Items -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+                        <div class="glass-panel p-6 rounded-2xl text-left">
+                            <div class="w-12 h-12 mb-4 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i data-lucide="briefcase" class="w-6 h-6 text-[#0061FF]"></i>
+                            </div>
+                            <h3 class="text-lg font-subheading font-bold text-[#0061FF] mb-2">Open Positions</h3>
+                            <p class="text-sm text-[#1B1B1B]/70 leading-relaxed font-sans font-normal">
+                                R&D, Production, Sales & Marketing, Quality Control, and Human Resources positions available.
+                            </p>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl text-left">
+                            <div class="w-12 h-12 mb-4 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i data-lucide="trending-up" class="w-6 h-6 text-[#0061FF]"></i>
+                            </div>
+                            <h3 class="text-lg font-subheading font-bold text-[#0061FF] mb-2">Growth Opportunities</h3>
+                            <p class="text-sm text-[#1B1B1B]/70 leading-relaxed font-sans font-normal">
+                                Be part of a growing company where your contributions directly impact our success.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Culture Tab Content -->
+                <div id="tab-content-culture" class="corporate-tab-content hidden text-center">
+                    <h2 class="text-4xl md:text-5xl font-subheading font-bold text-[#0061FF] mb-8">Our Culture</h2>
+                    <div class="space-y-6 mb-12">
+                        <p class="text-lg text-[#1B1B1B]/80 leading-relaxed font-sans font-normal">
+                            As Ais Cleaning, we work with our values of transparency, honesty and customer focus. In every decision we make, we prioritize the satisfaction of both our employees and our customers.
+                        </p>
+                        <p class="text-lg text-[#1B1B1B]/80 leading-relaxed font-sans font-normal">
+                            Innovation and continuous improvement are the cornerstones of our culture. We work to do better every day, and we value teamwork and knowledge sharing.
+                        </p>
+                        <p class="text-lg text-[#1B1B1B]/80 leading-relaxed font-sans font-normal">
+                            Our environmental awareness and understanding of sustainability manifests itself in every area, from our production processes to our packaging solutions.
+                        </p>
+                    </div>
+
+                    <!-- Feature Items -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                        <div class="glass-panel p-6 rounded-2xl text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i data-lucide="heart" class="w-8 h-8 text-[#0061FF]"></i>
+                            </div>
+                            <h3 class="text-xl font-subheading font-bold text-[#0061FF] mb-3">Transparency</h3>
+                            <p class="text-sm text-[#1B1B1B]/70 leading-relaxed font-sans font-normal">
+                                Open communication and honest practices in everything we do.
+                            </p>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i data-lucide="lightbulb" class="w-8 h-8 text-[#0061FF]"></i>
+                            </div>
+                            <h3 class="text-xl font-subheading font-bold text-[#0061FF] mb-3">Innovation</h3>
+                            <p class="text-sm text-[#1B1B1B]/70 leading-relaxed font-sans font-normal">
+                                Continuous improvement and creative problem-solving drive our success.
+                            </p>
+                        </div>
+                        <div class="glass-panel p-6 rounded-2xl text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center">
+                                <i data-lucide="users-round" class="w-8 h-8 text-[#0061FF]"></i>
+                            </div>
+                            <h3 class="text-xl font-subheading font-bold text-[#0061FF] mb-3">Teamwork</h3>
+                            <p class="text-sm text-[#1B1B1B]/70 leading-relaxed font-sans font-normal">
+                                Collaborative environment where knowledge sharing and mutual support thrive.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Application Tab Content -->
+                <div id="tab-content-application" class="corporate-tab-content hidden text-center">
+                    <h2 class="text-4xl md:text-5xl font-subheading font-bold text-[#0061FF] mb-8">Job Application</h2>
+                    <div class="space-y-6 mb-10">
+                        <p class="text-lg text-[#1B1B1B]/80 leading-relaxed font-sans font-normal">
+                            Fill out the form below to join the Ais Cleaning family. We will get back to you as soon as possible after your application is reviewed.
+                        </p>
+                    </div>
+
+                    <!-- Application Form -->
+                    <form id="application-form" class="text-left max-w-2xl mx-auto space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="app-name" class="block text-sm font-medium text-[#1B1B1B] mb-2">Full Name <span class="text-[#0061FF]">*</span></label>
+                                <input type="text" id="app-name" name="name" autocomplete="name" required class="w-full rounded-xl px-4 py-3 glass-input text-[#1B1B1B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0061FF] transition-all shadow-sm">
+                            </div>
+                            <div>
+                                <label for="app-email" class="block text-sm font-medium text-[#1B1B1B] mb-2">Email <span class="text-[#0061FF]">*</span></label>
+                                <input type="email" id="app-email" name="email" autocomplete="email" required class="w-full rounded-xl px-4 py-3 glass-input text-[#1B1B1B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0061FF] transition-all shadow-sm">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="app-phone" class="block text-sm font-medium text-[#1B1B1B] mb-2">Phone <span class="text-[#0061FF]">*</span></label>
+                                <input type="tel" id="app-phone" name="phone" autocomplete="tel" required pattern="[0-9]+" class="w-full rounded-xl px-4 py-3 glass-input text-[#1B1B1B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0061FF] transition-all shadow-sm">
+                            </div>
+                            <div>
+                                <label for="app-position" class="block text-sm font-medium text-[#1B1B1B] mb-2">Position</label>
+                                <input type="text" id="app-position" name="position" autocomplete="organization-title" class="w-full rounded-xl px-4 py-3 glass-input text-[#1B1B1B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0061FF] transition-all shadow-sm">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-[#1B1B1B] mb-2">Upload CV <span class="text-[#0061FF]">*</span></label>
+                            <div class="flex items-center gap-3">
+                                <label for="app-cv" id="app-cv-label" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0061FF] text-white text-sm font-medium cursor-pointer hover:bg-[#0050DD] transition-colors duration-200">
+                                    <i data-lucide="upload" class="w-4 h-4"></i>
+                                    <span>Select File</span>
+                                </label>
+                                <span id="app-cv-text" class="text-sm text-[#1B1B1B]/70"></span>
+                            </div>
+                            <input type="file" id="app-cv" name="cv" autocomplete="off" required accept=".pdf,.doc,.docx" class="sr-only">
+                            <p class="text-xs text-[#1B1B1B]/60 mt-2">PDF, DOC or DOCX format, max 10MB</p>
+                            <p id="app-cv-error" class="text-xs text-red-500 mt-1 hidden"></p>
+                        </div>
+                        <div>
+                            <label for="app-message" class="block text-sm font-medium text-[#1B1B1B] mb-2">Message</label>
+                            <textarea id="app-message" name="message" rows="4" maxlength="500" class="w-full rounded-xl px-4 py-3 glass-input text-[#1B1B1B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0061FF] transition-all shadow-sm resize-none"></textarea>
+                            <p class="text-xs text-[#1B1B1B]/60 mt-2"><span id="char-count">0</span>/500 characters</p>
+                        </div>
+                        <div class="pt-4">
+                            <button type="submit" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-full">
+                                <span>Submit Application</span>
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTS SECTION (Tab-based) -->
+    <section id="products" class="py-4 md:py-4 pb-20 md:pb-32 px-6 bg-gradient-to-br from-[#A7C1FF]/30 via-[#5A95FF]/20 to-[#0061FF]/10 backdrop-blur-sm relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-4xl font-subheading font-bold text-black tracking-tight mb-4" data-i18n="products.title">Professional Products</h2>
+                <p class="text-slate-500 font-sans font-normal" data-i18n="products.subtitle">Special formulas for every surface, from home to office, factory to school.</p>
+            </div>
+
+            <!-- Mobile Dropdown (only visible on mobile) -->
+            <div id="products-mobile-dropdown" class="lg:hidden mb-8">
+                <select id="products-mobile-select" name="product-category" class="w-full rounded-xl px-4 py-3 bg-white border border-slate-300 text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="surface-cleaners" data-i18n="products.surface-cleaners">Powder Detergent</option>
+                    <option value="concentrated-detergents" data-i18n="products.concentrated-detergents">Liquid Detergent</option>
+                    <option value="disinfectants" data-i18n="products.disinfectants">Wet Wipes</option>
+                </select>
+            </div>
+
+            <!-- Desktop Layout: Tab Navigation + Content -->
+            <div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8 lg:gap-12">
+                <!-- Left Column: Tab Navigation (Desktop only) -->
+                <div class="hidden lg:block">
+                    <div id="products-tabs" class="space-y-2 sticky top-24">
+                        <button class="product-tab w-full text-left px-4 py-3 rounded-xl font-medium transition-all" data-product="surface-cleaners" data-href="#products-surface-cleaners">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="sparkles" class="w-5 h-5"></i>
+                                <span data-i18n="products.surface-cleaners">Powder Detergent</span>
+                            </div>
+                        </button>
+                        <button class="product-tab w-full text-left px-4 py-3 rounded-xl font-medium transition-all" data-product="concentrated-detergents" data-href="#products-concentrated-detergents">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="droplets" class="w-5 h-5"></i>
+                                <span data-i18n="products.concentrated-detergents">Liquid Detergent</span>
+                            </div>
+                        </button>
+                        <button class="product-tab w-full text-left px-4 py-3 rounded-xl font-medium transition-all" data-product="disinfectants" data-href="#products-disinfectants">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="shield-plus" class="w-5 h-5"></i>
+                                <span data-i18n="products.disinfectants">Wet Wipes</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Column: Content Display -->
+                <div class="flex-1">
+                    <!-- Surface Cleaners Content -->
+                    <div id="product-content-surface-cleaners" class="product-content hidden">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-3xl md:text-4xl font-subheading font-bold text-[#0061FF]">Powder Detergent</h3>
+                            <div class="packaging-dropdown-wrapper" data-dropdown="surface">
+                                <button type="button" class="packaging-dropdown-trigger" aria-expanded="false" aria-haspopup="listbox">
+                                    <i data-lucide="package" class="w-4 h-4"></i>
+                                    <span class="selected-text">Bottle</span>
+                                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                                </button>
+                                <div class="packaging-dropdown-menu" role="listbox">
+                                    <div class="packaging-dropdown-item selected" data-value="bottle" role="option">
+                                        <i data-lucide="flask-conical" class="item-icon"></i>
+                                        <span>Bottle</span>
+                                        <i data-lucide="check" class="check-icon ml-auto"></i>
+                                    </div>
+                                    <div class="packaging-dropdown-item" data-value="container" role="option">
+                                        <i data-lucide="flask-round" class="item-icon"></i>
+                                        <span>Container</span>
+                                        <i data-lucide="check" class="check-icon ml-auto"></i>
+                                    </div>
+                                    <div class="packaging-dropdown-item" data-value="drum" role="option">
+                                        <i data-lucide="cylinder" class="item-icon"></i>
+                                        <span>Drum</span>
+                                        <i data-lucide="check" class="check-icon ml-auto"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-lg text-slate-600 mb-8 font-sans font-normal leading-relaxed">
+                            Our specially formulated, streak-free surface polishers for wood, marble, and granite surfaces. Our nano-technology enhanced formula creates a protective layer on surfaces, delaying dirt buildup and maintaining shine for extended periods.
+                        </p>
+                        <div class="relative rounded-3xl overflow-hidden shadow-2xl mb-8 h-[400px] md:h-[500px]">
+                            <img src="https://images.unsplash.com/photo-1563453392212-326f5e854473?auto=format&fit=crop&w=1200&q=80" alt="Surface Cleaners" class="w-full h-full object-cover product-image" data-parallax="true" data-i18n-alt="products.surface-cleaners">
+                        </div>
+                        <div class="flex justify-center">
+                            <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
+                                <span>Get Quote</span>
+                                <i data-lucide="arrow-right" class="w-5 h-5 stroke-[1.5]"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Concentrated Detergents Content -->
+                    <div id="product-content-concentrated-detergents" class="product-content hidden">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-3xl md:text-4xl font-subheading font-bold text-[#0061FF]" data-i18n="products.concentrated-detergents">Liquid Detergent</h3>
+                            <div class="packaging-dropdown-wrapper" data-dropdown="concentrated">
+                                <button type="button" class="packaging-dropdown-trigger" aria-expanded="false" aria-haspopup="listbox">
+                                    <i data-lucide="package" class="w-4 h-4"></i>
+                                    <span class="selected-text">Bottle</span>
+                                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                                </button>
+                                <div class="packaging-dropdown-menu" role="listbox">
+                                    <div class="packaging-dropdown-item selected" data-value="bottle" role="option">
+                                        <i data-lucide="flask-conical" class="item-icon"></i>
+                                        <span>Bottle</span>
+                                        <i data-lucide="check" class="check-icon ml-auto"></i>
+                                    </div>
+                                    <div class="packaging-dropdown-item" data-value="container" role="option">
+                                        <i data-lucide="flask-round" class="item-icon"></i>
+                                        <span>Container</span>
+                                        <i data-lucide="check" class="check-icon ml-auto"></i>
+                                    </div>
+                                    <div class="packaging-dropdown-item" data-value="drum" role="option">
+                                        <i data-lucide="cylinder" class="item-icon"></i>
+                                        <span>Drum</span>
+                                        <i data-lucide="check" class="check-icon ml-auto"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-lg text-slate-600 mb-8 font-sans font-normal leading-relaxed" data-i18n="products.concentrated-detergents.description">
+                            Our industrial concentrated detergents providing high performance at low dosage. With our special formula, you achieve the same cleaning results with 50% less usage. An effective and sustainable solution with environmentally friendly and biodegradable content.
+                        </p>
+                        <div class="relative rounded-3xl overflow-hidden shadow-2xl mb-8 h-[400px] md:h-[500px]">
+                            <img src="https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=1200&q=80" alt="Concentrated Detergents" class="w-full h-full object-cover product-image" data-parallax="true" data-i18n-alt="products.concentrated-detergents">
+                        </div>
+                        <div class="flex justify-center">
+                            <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
+                                <span data-i18n="products.get-quote">Get Quote</span>
+                                <i data-lucide="arrow-right" class="w-5 h-5 stroke-[1.5]"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Disinfectants Content -->
+                    <div id="product-content-disinfectants" class="product-content hidden">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-3xl md:text-4xl font-subheading font-bold text-[#0061FF]" data-i18n="products.disinfectants">Wet Wipes</h3>
+                            <div class="packaging-dropdown-wrapper" data-dropdown="wipes">
+                                <button type="button" class="packaging-dropdown-trigger" aria-expanded="false" aria-haspopup="listbox">
+                                    <i data-lucide="package" class="w-4 h-4"></i>
+                                    <span class="selected-text">Pouch</span>
+                                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                                </button>
+                                <div class="packaging-dropdown-menu" role="listbox">
+                                    <div class="packaging-dropdown-item selected" data-value="pouch" role="option">
+                                        <i data-lucide="package-open" class="item-icon"></i>
+                                        <span>Pouch</span>
+                                        <i data-lucide="check" class="check-icon ml-auto"></i>
+                                    </div>
+                                    <div class="packaging-dropdown-item" data-value="canister" role="option">
+                                        <i data-lucide="cylinder" class="item-icon"></i>
+                                        <span>Canister</span>
+                                        <i data-lucide="check" class="check-icon ml-auto"></i>
+                                    </div>
+                                    <div class="packaging-dropdown-item" data-value="box" role="option">
+                                        <i data-lucide="box" class="item-icon"></i>
+                                        <span>Box</span>
+                                        <i data-lucide="check" class="check-icon ml-auto"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-lg text-slate-600 mb-8 font-sans font-normal leading-relaxed" data-i18n="products.disinfectants.description">
+                            Our soft-textured wet wipes with alcohol-based disinfectant content. Safe to use for all ages from babies to adults. With 70% alcohol content, it effectively eliminates bacteria, viruses, and fungi. An ideal, practical, and hygienic solution for surface cleaning, hand hygiene, and general use.
+                        </p>
+                        <div class="relative rounded-3xl overflow-hidden shadow-2xl mb-8 h-[400px] md:h-[500px]">
+                            <img src="https://images.unsplash.com/photo-1584813470613-5b1c1cad3d69?auto=format&fit=crop&w=1200&q=80" alt="Disinfectant Products" class="w-full h-full object-cover product-image" data-parallax="true" data-i18n-alt="products.disinfectants">
+                        </div>
+                        <div class="flex justify-center">
+                            <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
+                                <span data-i18n="products.get-quote">Get Quote</span>
+                                <i data-lucide="arrow-right" class="w-5 h-5 stroke-[1.5]"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTION SECTION -->
+    <section id="production" class="py-32 px-6 bg-slate-900 text-white relative overflow-hidden z-10">
+        <div class="absolute top-0 left-0 w-1/2 h-full bg-blue-900/30 blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div>
+                    <h2 class="text-sm font-semibold text-blue-400 uppercase tracking-widest mb-2">Production</h2>
+                    <h3 class="text-4xl md:text-5xl font-subheading font-bold text-white tracking-tight mb-6 whitespace-nowrap">Sterile Filling Facilities.</h3>
+                    <p class="text-slate-400 text-lg mb-8 leading-relaxed font-sans font-normal">
+                        Our facilities operate at the highest hygiene standards. We produce on fully automated lines without using any additives harmful to human health.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3 text-slate-300">
+                            <i data-lucide="check-circle-2" class="text-blue-500 w-6 h-6"></i>
+                            ISO 9001 & GMP Certified
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-300">
+                            <i data-lucide="check-circle-2" class="text-blue-500 w-6 h-6"></i>
+                            Dermatologically Tested
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-300">
+                            <i data-lucide="check-circle-2" class="text-blue-500 w-6 h-6"></i>
+                            Recyclable Packaging
+                        </li>
+                    </ul>
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-cyan-500/20 rounded-3xl transform rotate-3"></div>
+                    <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=800&q=80" alt="Detergent Factory" class="relative rounded-3xl shadow-2xl border border-white/10 w-full object-cover h-[500px] hover:scale-[1.02] transition duration-700">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-32 px-6 bg-white relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                <div class="flex flex-col justify-center">
+                    <h2 class="text-4xl font-subheading font-bold text-[#0061FF] tracking-tight mb-2">Contact Us</h2>
+                    <p class="text-slate-500 mb-10 text-lg font-sans font-normal">Fill out the form for wholesale orders and dealership applications.</p>
+
+                    <form action="#" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label for="contact-wholesale-name" class="text-sm font-medium text-slate-700 ml-1">Full Name</label>
+                                <input type="text" id="contact-wholesale-name" name="name" placeholder="Your Name" class="w-full rounded-xl px-4 py-3 glass-input text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-sm">
+                            </div>
+                            <div class="space-y-2">
+                                <label for="contact-wholesale-email" class="text-sm font-medium text-slate-700 ml-1">Email</label>
+                                <input type="email" id="contact-wholesale-email" name="email" placeholder="example@company.com" class="w-full rounded-xl px-4 py-3 glass-input text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-sm">
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="contact-wholesale-phone" class="text-sm font-medium text-slate-700 ml-1">Phone</label>
+                            <input type="tel" id="contact-wholesale-phone" name="phone" pattern="[0-9]*" inputmode="numeric" placeholder="Your Phone Number" class="w-full rounded-xl px-4 py-3 glass-input text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-sm" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="contact-wholesale-message" class="text-sm font-medium text-slate-700 ml-1">Your Message</label>
+                            <textarea id="contact-wholesale-message" name="message" rows="4" placeholder="Write your request here..." class="w-full rounded-xl px-4 py-3 glass-input text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-sm resize-none"></textarea>
+                        </div>
+
+                        <button type="button" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-full glassmorphism-button-blue flex justify-center items-center gap-2">
+                            <span>Send</span>
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                        </form>
+                            </div>
+
+                <div class="relative h-full min-h-[500px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200">
+                    <div class="absolute top-6 left-6 z-10 glass-panel p-6 rounded-2xl max-w-xs shadow-lg">
+                        <div class="flex items-start gap-3 mb-4">
+                            <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-900">Factory & Headquarters</h4>
+                                <p class="text-sm text-slate-500 mt-1">Organized Industrial Zone 4th Street<br>34000 Istanbul</p>
+                        </div>
+                    </div>
+                        <div class="flex items-center gap-3">
+                             <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                                <i data-lucide="phone" class="w-5 h-5"></i>
+                </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-900">Customer Line</h4>
+                                <p class="text-sm text-slate-500">444 0 123</p>
+            </div>
+        </div>
+            </div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d192698.55213238692!2d28.871754593417725!3d41.00532148784157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa7040068086b%3A0xe1ccfe98bc01b0d0!2zxLBzdGFuYnVs!5e0!3m2!1str!2str!4v1698765432100!5m2!1str!2str" width="100%" height="100%" style="border:0; filter: grayscale(1) contrast(1.2) opacity(0.8);" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0061FF] pt-20 pb-10 px-6 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mb-16">
+                <div class="col-span-2 lg:col-span-2">
+                    <a href="#" class="flex items-center gap-2 mb-6">
+                        <img src="/Ais.png" alt="Ais Logo" class="h-8 w-8 rounded-full object-cover">
+                    </a>
+                    <p class="text-white max-w-sm mb-6 font-sans font-normal">
+                        Next generation technology in cleaning. The purest, most effective solutions for your home and workplace.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white hover:bg-white/30 hover:border-white/50 transition">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="text-right md:col-start-4 lg:col-start-5">
+                    <h4 class="font-semibold text-white mb-6">Products</h4>
+                    <ul class="space-y-4 text-white text-base font-sans font-normal">
+                        <li><a href="#products" class="hover:text-white/80 transition">Home Cleaning</a></li>
+                        <li><a href="#products" class="hover:text-white/80 transition">Industrial</a></li>
+                        <li><a href="#catalog" class="hover:text-white/80 transition">Auto Care</a></li>
+                        <li><a href="#" class="hover:text-white/80 transition">New Releases</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/80">
+                <p class="font-bold">© 2026 Ais Cleaning Inc. All rights reserved.</p>
+                <a href="https://www.praksistech.com/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition font-bold">
+                    Powered by Praksis.
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- React root for catalog page -->
+    <div id="root"></div>
+    <script type="module">
+        // Check if we're on the catalog route
+        if (window.location.pathname === '/catalog') {
+            // Hide all static HTML content
+            const staticContent = document.querySelector('body > *:not(#root):not(script)');
+            if (staticContent) {
+                Array.from(document.body.children).forEach(child => {
+                    if (child.id !== 'root' && child.tagName !== 'SCRIPT') {
+                        child.style.display = 'none';
+                    }
+                });
+            }
+            // Load React app
+            import('/src/main.tsx');
+        } else {
+            // Load static JS for home page
+            import('/src/main.js');
+        }
+    </script>
+</body>
+</html>
+
