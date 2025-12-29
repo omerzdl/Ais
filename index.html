@@ -135,7 +135,7 @@
         </div>
 
         <!-- Mobile Menu Icon -->
-        <button id="mobile-menu-button" class="md:hidden fixed right-4 top-4 z-[9998] bg-white rounded-full w-16 h-16 border-4 border-[#8FA895] shadow-2xl flex items-center justify-center" aria-expanded="false" aria-label="Open/Close Menu" type="button">
+        <button id="mobile-menu-button" class="md:hidden fixed right-4 top-4 z-[9998] bg-white/30 backdrop-blur-xl rounded-full w-16 h-16 shadow-2xl flex items-center justify-center transition-all duration-300 hover:bg-white/50 hover:scale-105" aria-expanded="false" aria-label="Open/Close Menu" type="button">
             <i data-lucide="menu" id="menu-icon" class="w-6 h-6 text-[#1A2F25]"></i>
         </button>
     </nav>
@@ -149,39 +149,39 @@
         <div class="absolute top-20 right-4 left-4 bg-white rounded-3xl p-6 shadow-xl border border-[#8FA895]/30 animate-fade-in-down max-h-[calc(100vh-7rem)] overflow-y-auto">
             <!-- Mobile Menu Items -->
             <div id="mobile-menu-items" class="space-y-2" style="font-family: 'Syne', sans-serif; font-weight: 400;">
-                <a href="#hero" class="block px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors border-b border-[#8FA895]/10">Anasayfa</a>
+                <a href="#hero" class="block px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors border-b border-[#8FA895]/10">Home</a>
                 
                 <!-- Corporate Mobile Dropdown -->
                 <div class="mobile-dropdown">
                     <button class="mobile-dropdown-toggle w-full flex items-center justify-between px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors border-b border-[#8FA895]/10">
-                        <span>Kurumsal</span>
+                        <span>Corporate</span>
                         <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
                     </button>
                     <div class="mobile-dropdown-content hidden ml-4 mt-2 space-y-2">
-                        <a href="#about" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Hakkımızda</a>
-                        <a href="#mission-vision" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Misyon & Vizyon</a>
-                        <a href="#career" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Kariyer</a>
-                        <a href="#culture" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Kültürümüz</a>
-                        <a href="#application" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">İş Başvurusu</a>
+                        <a href="#about" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">About Us</a>
+                        <a href="#mission-vision" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Mission & Vision</a>
+                        <a href="#career" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Career</a>
+                        <a href="#culture" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Our Culture</a>
+                        <a href="#application" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Job Application</a>
                     </div>
                 </div>
                 
                 <!-- Products Mobile Dropdown -->
                 <div class="mobile-dropdown">
                     <button class="mobile-dropdown-toggle w-full flex items-center justify-between px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors border-b border-[#8FA895]/10">
-                        <span>Ürünlerimiz</span>
+                        <span>Products</span>
                         <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
                     </button>
                     <div class="mobile-dropdown-content hidden ml-4 mt-2 space-y-2">
-                        <a href="#products-surface-cleaners" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Yüzey Parlatıcılar</a>
-                        <a href="#products-concentrated-detergents" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Konsantre Deterjanlar</a>
-                        <a href="#products-disinfectants" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Dezenfektan Grubu</a>
+                        <a href="#products-surface-cleaners" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Powder Detergent</a>
+                        <a href="#products-concentrated-detergents" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Liquid Detergent</a>
+                        <a href="#products-disinfectants" class="block px-4 py-2 rounded-xl text-sm text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Wet Wipes</a>
                     </div>
                 </div>
                 
-                <a href="#production" class="block px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors border-b border-[#8FA895]/10">Kalite</a>
-                <a href="/catalog" class="block px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors border-b border-[#8FA895]/10">E-Katalog</a>
-                <a href="#contact" class="block px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">İletişim</a>
+                <a href="#production" class="block px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors border-b border-[#8FA895]/10">Quality</a>
+                <a href="/catalog" class="block px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors border-b border-[#8FA895]/10">E-Catalog</a>
+                <a href="#contact" class="block px-4 py-3 rounded-xl text-[#1A2F25] hover:text-[#0061FF] hover:bg-[#EDF2FB] transition-colors">Contact</a>
             </div>
         </div>
     </div>
@@ -262,22 +262,22 @@
             </div>
 
             <!-- Tab Navigation - Glass Radio Group Style -->
-            <div id="corporate-tabs" class="glass-radio-group-wrapper flex justify-center mb-12 md:mb-16">
-                <div class="glass-radio-group">
+            <div id="corporate-tabs" class="glass-radio-group-wrapper flex justify-center mb-12 md:mb-16 px-4 md:px-0">
+                <div class="glass-radio-group flex-shrink-0">
                     <input type="radio" name="corporate-tab" id="corporate-about" value="about" checked>
-                    <label for="corporate-about" data-tab="about">About Us</label>
+                    <label for="corporate-about" data-tab="about">About<br class="mobile-br"> Us</label>
                     
                     <input type="radio" name="corporate-tab" id="corporate-mission-vision" value="mission-vision">
-                    <label for="corporate-mission-vision" data-tab="mission-vision">Mission & Vision</label>
+                    <label for="corporate-mission-vision" data-tab="mission-vision">Mission &<br class="mobile-br"> Vision</label>
                     
                     <input type="radio" name="corporate-tab" id="corporate-career" value="career">
                     <label for="corporate-career" data-tab="career">Career</label>
                     
                     <input type="radio" name="corporate-tab" id="corporate-culture" value="culture">
-                    <label for="corporate-culture" data-tab="culture">Our Culture</label>
+                    <label for="corporate-culture" data-tab="culture">Our<br class="mobile-br"> Culture</label>
                     
                     <input type="radio" name="corporate-tab" id="corporate-application" value="application">
-                    <label for="corporate-application" data-tab="application">Job Application</label>
+                    <label for="corporate-application" data-tab="application">Job<br class="mobile-br"> Application</label>
                     
                     <div class="glass-glider"></div>
                 </div>
@@ -529,11 +529,28 @@
 
             <!-- Mobile Dropdown (only visible on mobile) -->
             <div id="products-mobile-dropdown" class="lg:hidden mb-8">
-                <select id="products-mobile-select" name="product-category" class="w-full rounded-xl px-4 py-3 bg-white border border-slate-300 text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="surface-cleaners" data-i18n="products.surface-cleaners">Powder Detergent</option>
-                    <option value="concentrated-detergents" data-i18n="products.concentrated-detergents">Liquid Detergent</option>
-                    <option value="disinfectants" data-i18n="products.disinfectants">Wet Wipes</option>
-                </select>
+                <div class="products-mobile-dropdown-wrapper relative w-full">
+                    <button type="button" id="products-mobile-trigger" class="products-mobile-trigger w-full flex items-center justify-between gap-2 px-4 py-3 rounded-2xl bg-white/80 backdrop-blur-md border border-[#8FA895]/30 text-[#1A2F25] text-sm font-medium shadow-lg transition-all duration-300 hover:bg-white hover:shadow-xl" aria-expanded="false" aria-haspopup="listbox">
+                        <span class="selected-text truncate">Powder Detergent</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
+                    </button>
+                    <div id="products-mobile-menu" class="products-mobile-menu absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl border border-[#8FA895]/20 shadow-2xl z-50 max-h-[280px] overflow-y-auto overscroll-contain opacity-0 invisible transform translate-y-[-10px] transition-all duration-300" role="listbox">
+                        <div class="p-2 space-y-1">
+                            <button type="button" class="products-mobile-item w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-3 bg-[#0061FF] text-white" data-value="surface-cleaners" role="option" aria-selected="true">
+                                <i data-lucide="sparkles" class="w-4 h-4 flex-shrink-0"></i>
+                                <span>Powder Detergent</span>
+                            </button>
+                            <button type="button" class="products-mobile-item w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-3 text-[#1A2F25]/80 hover:bg-[#EDF2FB] hover:text-[#0061FF]" data-value="concentrated-detergents" role="option" aria-selected="false">
+                                <i data-lucide="droplets" class="w-4 h-4 flex-shrink-0"></i>
+                                <span>Liquid Detergent</span>
+                            </button>
+                            <button type="button" class="products-mobile-item w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-3 text-[#1A2F25]/80 hover:bg-[#EDF2FB] hover:text-[#0061FF]" data-value="disinfectants" role="option" aria-selected="false">
+                                <i data-lucide="shield-plus" class="w-4 h-4 flex-shrink-0"></i>
+                                <span>Wet Wipes</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Desktop Layout: Tab Navigation + Content -->
@@ -814,7 +831,7 @@
                     </div>
                 </div>
 
-                <div class="text-right md:col-start-4 lg:col-start-5">
+                <div class="hidden md:block text-right md:col-start-4 lg:col-start-5">
                     <h4 class="font-semibold text-white mb-6">Products</h4>
                     <ul class="space-y-4 text-white text-base font-sans font-normal">
                         <li><a href="#products" class="hover:text-white/80 transition">Home Cleaning</a></li>

@@ -329,7 +329,7 @@ function toggleMobileMenu() {
     }
 }
 
-function closeMobileMenu() {
+function closeMobileMenu(restoreScroll = true) {
     const portal = document.getElementById('mobile-menu-portal');
     const button = document.getElementById('mobile-menu-button');
     const menuIcon = document.getElementById('menu-icon');
@@ -338,12 +338,14 @@ function closeMobileMenu() {
     
     mobileMenuOpen = false;
     
-    // Restore scroll
+    // Restore scroll position only if requested (not when navigating)
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.width = '';
     document.body.style.overflow = '';
-    window.scrollTo(0, scrollPosition);
+    if (restoreScroll) {
+        window.scrollTo(0, scrollPosition);
+    }
     
     // Hide menu
     portal.classList.remove('show');
@@ -371,11 +373,12 @@ function initMobileMenu() {
     if (button) {
         button.addEventListener('click', toggleMobileMenu);
         
-        // Touch event handling
+        // Touch event handling - call toggleMobileMenu on touch
         button.addEventListener('touchstart', (e) => {
             e.preventDefault();
             e.stopPropagation();
-        });
+            toggleMobileMenu();
+        }, { passive: false });
     }
     
     // Mobile dropdown toggles
@@ -414,12 +417,12 @@ function initMobileMenu() {
         });
     });
     
-    // Close mobile menu when clicking a link
+    // Close mobile menu when clicking a link (don't restore scroll since we're navigating)
     const mobileLinks = document.querySelectorAll('#mobile-menu-items a');
     mobileLinks.forEach(link => {
         link.addEventListener('click', () => {
             setTimeout(() => {
-                closeMobileMenu();
+                closeMobileMenu(false);
             }, 300);
         });
     });
@@ -433,9 +436,9 @@ function initEnhancedNavigation() {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
             
-            // Close mobile menu if open
+            // Close mobile menu if open (don't restore scroll since we're navigating)
             if (mobileMenuOpen) {
-                closeMobileMenu();
+                closeMobileMenu(false);
             }
             
             // Handle /catalog and other path-based routes
@@ -453,9 +456,9 @@ function initEnhancedNavigation() {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
             
-            // Close mobile menu if open
+            // Close mobile menu if open (don't restore scroll since we're navigating)
             if (mobileMenuOpen) {
-                closeMobileMenu();
+                closeMobileMenu(false);
             }
             
             // Corporate tab hash'leri için özel işlem (about, mission-vision, career, culture, application)
@@ -548,6 +551,8 @@ function handleCorporateTabNavigation(hash) {
         // Activate tab after scroll
         setTimeout(() => {
             switchTab(tabId);
+            // Update glider position for mobile
+            updateGliderPosition(tabId);
         }, 500);
     }
 }
@@ -593,8 +598,70 @@ function switchTab(tabId) {
         if (window.location.hash !== `#${tabId}`) {
             history.pushState(null, null, `#${tabId}`);
         }
+        
+        // Update glider position (important for mobile)
+        setTimeout(() => {
+            updateGliderPosition(tabId);
+        }, 50);
     } else {
         console.error('Tab content not found for:', `tab-content-${tabId}`);
+    }
+}
+
+// Update glider position dynamically for mobile responsive
+function updateGliderPosition(tabId) {
+    const glider = document.querySelector('.glass-glider');
+    const activeLabel = document.querySelector(`.glass-radio-group label[data-tab="${tabId}"]`);
+    const radioGroup = document.querySelector('.glass-radio-group');
+    
+    if (!glider || !activeLabel || !radioGroup) {
+        console.log('updateGliderPosition: missing elements', { glider, activeLabel, radioGroup });
+        return;
+    }
+    
+    console.log('updateGliderPosition called for:', tabId, 'window.innerWidth:', window.innerWidth);
+    
+    // Use dynamic positioning on mobile (< 768px)
+    if (window.innerWidth < 768) {
+        const labelRect = activeLabel.getBoundingClientRect();
+        const groupRect = radioGroup.getBoundingClientRect();
+        
+        // Calculate position relative to the group (accounting for padding)
+        const groupPadding = parseFloat(getComputedStyle(radioGroup).paddingLeft) || 0;
+        const left = labelRect.left - groupRect.left;
+        const width = labelRect.width;
+        
+        console.log('Glider position:', { left, width, labelRect, groupRect });
+        
+        // Apply dynamic positioning with inline styles (override CSS)
+        glider.style.cssText = `
+            width: ${width}px !important;
+            transform: translateX(${left}px) !important;
+            left: 0 !important;
+            transition: transform 0.3s cubic-bezier(0.37, 1.95, 0.66, 0.56), width 0.3s ease !important;
+        `;
+    } else {
+        // Reset to CSS-based positioning on desktop
+        glider.style.cssText = '';
+    }
+}
+
+// Scroll active tab into view on mobile
+function scrollTabIntoView(tabId) {
+    const wrapper = document.querySelector('.glass-radio-group-wrapper');
+    const activeLabel = document.querySelector(`.glass-radio-group label[data-tab="${tabId}"]`);
+    
+    if (!wrapper || !activeLabel) return;
+    
+    // Only scroll on mobile
+    if (window.innerWidth < 768) {
+        const labelRect = activeLabel.getBoundingClientRect();
+        const wrapperRect = wrapper.getBoundingClientRect();
+        
+        // Check if label is not fully visible
+        if (labelRect.left < wrapperRect.left || labelRect.right > wrapperRect.right) {
+            activeLabel.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
     }
 }
 
@@ -614,6 +681,8 @@ function initCorporateTabs() {
             const tabId = this.value;
             console.log('Radio change event:', tabId);
             switchTab(tabId);
+            updateGliderPosition(tabId);
+            scrollTabIntoView(tabId);
         });
     });
     
@@ -632,8 +701,22 @@ function initCorporateTabs() {
                 }
                 // Switch tab immediately
                 switchTab(tabId);
+                updateGliderPosition(tabId);
+                scrollTabIntoView(tabId);
             }
         });
+    });
+    
+    // Handle resize to update glider position
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            const checkedInput = document.querySelector('.glass-radio-group input[type="radio"]:checked');
+            if (checkedInput) {
+                updateGliderPosition(checkedInput.value);
+            }
+        }, 100);
     });
     
     // Check initial hash
@@ -642,8 +725,12 @@ function initCorporateTabs() {
     
     if (CORPORATE_TABS.includes(initialHash)) {
         switchTab(initialHash);
+        // Delay glider update to ensure DOM is ready
+        setTimeout(() => updateGliderPosition(initialHash), 100);
+    } else {
+        // Update glider for default tab
+        setTimeout(() => updateGliderPosition('about'), 100);
     }
-    // About tab is visible by default in HTML, no need to call switchTab('about')
 }
 
 // Application Form Handling - Enhanced with Netlify Integration
@@ -955,11 +1042,8 @@ function switchProduct(productId) {
         content.classList.add('hidden');
     });
     
-    // Update mobile dropdown
-    const mobileSelect = document.getElementById('products-mobile-select');
-    if (mobileSelect) {
-        mobileSelect.value = productId;
-    }
+    // Update mobile custom dropdown
+    updateMobileProductDropdown(productId);
     
     // Activate selected product
     const selectedTab = document.querySelector(`[data-product="${productId}"]`);
@@ -979,10 +1063,44 @@ function switchProduct(productId) {
     }
 }
 
+// Update mobile product dropdown UI
+function updateMobileProductDropdown(productId) {
+    const trigger = document.getElementById('products-mobile-trigger');
+    const items = document.querySelectorAll('.products-mobile-item');
+    
+    // Update trigger text
+    if (trigger) {
+        const selectedItem = document.querySelector(`.products-mobile-item[data-value="${productId}"]`);
+        if (selectedItem) {
+            // Get text from the span inside the button (not the icon)
+            const textSpan = selectedItem.querySelector('span:not([class])') || selectedItem.querySelector('span');
+            const text = textSpan?.textContent || productId;
+            const selectedText = trigger.querySelector('.selected-text');
+            if (selectedText) {
+                selectedText.textContent = text;
+            }
+        }
+    }
+    
+    // Update item styles
+    items.forEach(item => {
+        const isSelected = item.getAttribute('data-value') === productId;
+        item.setAttribute('aria-selected', String(isSelected));
+        
+        // Remove all state classes first
+        item.classList.remove('selected', 'bg-[#0061FF]', 'text-white', 'text-[#1A2F25]/80', 'hover:bg-[#EDF2FB]', 'hover:text-[#0061FF]');
+        
+        if (isSelected) {
+            item.classList.add('selected', 'bg-[#0061FF]', 'text-white');
+        } else {
+            item.classList.add('text-[#1A2F25]/80', 'hover:bg-[#EDF2FB]', 'hover:text-[#0061FF]');
+        }
+    });
+}
+
 // Initialize products tabs
 function initProductsTabs() {
     const tabs = document.querySelectorAll('.product-tab');
-    const mobileSelect = document.getElementById('products-mobile-select');
     
     tabs.forEach(tab => {
         tab.addEventListener('click', function() {
@@ -991,12 +1109,8 @@ function initProductsTabs() {
         });
     });
     
-    // Mobile dropdown handler
-    if (mobileSelect) {
-        mobileSelect.addEventListener('change', function() {
-            switchProduct(this.value);
-        });
-    }
+    // Initialize custom mobile dropdown
+    initMobileProductDropdown();
     
     // Check initial hash
     const initialHash = window.location.hash.slice(1);
@@ -1014,6 +1128,84 @@ function initProductsTabs() {
     
     // Initialize packaging dropdowns
     initPackagingDropdowns();
+}
+
+// Initialize Mobile Product Custom Dropdown
+function initMobileProductDropdown() {
+    const trigger = document.getElementById('products-mobile-trigger');
+    const menu = document.getElementById('products-mobile-menu');
+    const items = document.querySelectorAll('.products-mobile-item');
+    
+    if (!trigger || !menu) return;
+    
+    // Toggle dropdown on trigger click
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = menu.classList.contains('show');
+        
+        if (isOpen) {
+            closeMobileProductDropdown();
+        } else {
+            openMobileProductDropdown();
+        }
+    });
+    
+    // Handle item selection
+    items.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const productId = item.getAttribute('data-value');
+            
+            // Close dropdown
+            closeMobileProductDropdown();
+            
+            // Switch product
+            switchProduct(productId);
+        });
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.products-mobile-dropdown-wrapper')) {
+            closeMobileProductDropdown();
+        }
+    });
+    
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeMobileProductDropdown();
+        }
+    });
+}
+
+// Open mobile product dropdown
+function openMobileProductDropdown() {
+    const trigger = document.getElementById('products-mobile-trigger');
+    const menu = document.getElementById('products-mobile-menu');
+    
+    if (!trigger || !menu) return;
+    
+    menu.classList.add('show');
+    trigger.classList.add('active');
+    trigger.setAttribute('aria-expanded', 'true');
+    
+    // Re-initialize icons
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
+// Close mobile product dropdown
+function closeMobileProductDropdown() {
+    const trigger = document.getElementById('products-mobile-trigger');
+    const menu = document.getElementById('products-mobile-menu');
+    
+    if (!trigger || !menu) return;
+    
+    menu.classList.remove('show');
+    trigger.classList.remove('active');
+    trigger.setAttribute('aria-expanded', 'false');
 }
 
 // Custom Packaging Dropdown
