@@ -368,9 +368,14 @@ function closeMobileMenu(restoreScroll = true) {
 }
 
 // Mobile Menu Button
+// Use WeakSet to track initialized elements and prevent duplicate event listeners
+const initializedMobileMenuButton = new WeakSet();
+const initializedMobileDropdowns = new WeakSet();
+
 function initMobileMenu() {
     const button = document.getElementById('mobile-menu-button');
-    if (button) {
+    if (button && !initializedMobileMenuButton.has(button)) {
+        initializedMobileMenuButton.add(button);
         button.addEventListener('click', toggleMobileMenu);
         
         // Touch event handling - call toggleMobileMenu on touch
@@ -384,6 +389,12 @@ function initMobileMenu() {
     // Mobile dropdown toggles
     const mobileDropdowns = document.querySelectorAll('.mobile-dropdown-toggle');
     mobileDropdowns.forEach(toggle => {
+        // Skip if already initialized
+        if (initializedMobileDropdowns.has(toggle)) {
+            return;
+        }
+        initializedMobileDropdowns.add(toggle);
+        
         toggle.addEventListener('click', () => {
             const content = toggle.nextElementSibling;
             const chevron = toggle.querySelector('i[data-lucide="chevron-down"]');
@@ -418,8 +429,15 @@ function initMobileMenu() {
     });
     
     // Close mobile menu when clicking a link (don't restore scroll since we're navigating)
+    const initializedMobileLinks = new WeakSet();
     const mobileLinks = document.querySelectorAll('#mobile-menu-items a');
     mobileLinks.forEach(link => {
+        // Skip if already initialized
+        if (initializedMobileLinks.has(link)) {
+            return;
+        }
+        initializedMobileLinks.add(link);
+        
         link.addEventListener('click', () => {
             setTimeout(() => {
                 closeMobileMenu(false);
@@ -1255,12 +1273,6 @@ function switchProduct(productId) {
         
         // Re-initialize icons
         lucide.createIcons();
-        
-        // Re-initialize packaging dropdowns for the newly shown product content
-        // Use setTimeout to ensure DOM is updated
-        setTimeout(() => {
-            initPackagingDropdowns();
-        }, 50);
     }
 }
 
@@ -1332,6 +1344,9 @@ function initProductsTabs() {
 }
 
 // Initialize Mobile Product Custom Dropdown
+// Use WeakSet to track initialized elements and prevent duplicate event listeners
+const initializedMobileProductDropdown = new WeakSet();
+
 function initMobileProductDropdown() {
     const trigger = document.getElementById('products-mobile-trigger');
     const menu = document.getElementById('products-mobile-menu');
@@ -1341,6 +1356,13 @@ function initMobileProductDropdown() {
         console.warn('Mobile product dropdown elements not found');
         return;
     }
+    
+    // Skip if already initialized
+    if (initializedMobileProductDropdown.has(trigger)) {
+        console.log('Mobile product dropdown already initialized');
+        return;
+    }
+    initializedMobileProductDropdown.add(trigger);
     
     console.log('Initializing mobile product dropdown');
     
@@ -1556,27 +1578,16 @@ function closeMobileProductDropdown() {
 }
 
 // Custom Packaging Dropdown
-// Use a Set to track initialized dropdowns to prevent duplicate event listeners
-const initializedPackagingDropdowns = new WeakSet();
-
 function initPackagingDropdowns() {
     const dropdownWrappers = document.querySelectorAll('.packaging-dropdown-wrapper');
     
     dropdownWrappers.forEach(wrapper => {
-        // Skip if already initialized
-        if (initializedPackagingDropdowns.has(wrapper)) {
-            return;
-        }
-        
         const trigger = wrapper.querySelector('.packaging-dropdown-trigger');
         const menu = wrapper.querySelector('.packaging-dropdown-menu');
         const items = wrapper.querySelectorAll('.packaging-dropdown-item');
         const selectedText = trigger?.querySelector('.selected-text');
         
         if (!trigger || !menu) return;
-        
-        // Mark as initialized
-        initializedPackagingDropdowns.add(wrapper);
         
         // Toggle dropdown on click
         trigger.addEventListener('click', (e) => {
