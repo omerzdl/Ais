@@ -1700,6 +1700,18 @@ section[id] {
     flex-shrink: 0;
 }
 
+/* Mobil görünümde dil seçim butonlarını %10 küçült - scrollbar'ı engellemek için */
+@media (max-width: 768px) {
+    #language-switcher-mobile .lang-btn {
+        padding: 0.45rem 0.9rem !important; /* py-2 ve px-4'ün %90'ı */
+        font-size: 0.7875rem !important; /* text-sm (0.875rem)'in %90'ı */
+    }
+    
+    #language-switcher-mobile > div {
+        gap: 0.45rem !important; /* gap-2 (0.5rem)'in %90'ı */
+    }
+}
+
 /* E-Katalog Sayfası - Mobil Görünümde Buton Font Boyutları */
 @media (max-width: 768px) {
     /* E-katalog sayfasındaki butonların font boyutunu küçült */
