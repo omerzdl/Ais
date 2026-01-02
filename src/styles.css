@@ -55,6 +55,18 @@ h1, h2, h3 {
     width: 100%;
 }
 
+/* Hero section titles - Mobile font size increase */
+@media (max-width: 768px) {
+    #hero h1 div[class*="hero-brand-title"],
+    #hero h1 div[class*="bg-clip-text"],
+    #hero h1 div[class*="bg-gradient"],
+    #hero h1 div[data-i18n="hero.brand"],
+    #hero h1 div[data-i18n="hero.title1"],
+    #hero h1 div[data-i18n="hero.title2"] {
+        font-size: clamp(1.75rem, 5vw, 2.5rem) !important;
+    }
+}
+
 /* Scroll offset for fixed navbar - ensures sections are not covered by navbar */
 section[id] {
     scroll-margin-top: 150px;
@@ -1060,7 +1072,7 @@ section[id] {
         0 4px 16px rgba(255, 140, 0, 0.1),
         inset 0 1px 2px rgba(255, 255, 255, 0.9);
     color: #FF8C00;
-    font-size: 0.875rem;
+    font-size: 0.7rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1076,8 +1088,8 @@ section[id] {
 }
 
 .packaging-dropdown-trigger svg {
-    width: 1rem;
-    height: 1rem;
+    width: 0.8rem;
+    height: 0.8rem;
     transition: transform 0.3s ease;
 }
 
@@ -1107,6 +1119,116 @@ section[id] {
     z-index: 100;
 }
 
+/* Mobile view: Keep absolute positioning but fix overflow issues */
+@media (max-width: 767px) {
+    .packaging-dropdown-menu {
+        position: absolute !important;
+        top: calc(100% + 0.5rem) !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: auto !important;
+        max-height: calc(100vh - 200px) !important;
+        overflow-y: auto !important;
+        overscroll-behavior: contain;
+        z-index: 1000 !important;
+    }
+    
+    .packaging-dropdown-menu.show {
+        transform: translateY(0) scale(1) !important;
+    }
+    
+    /* Ensure wrapper doesn't clip dropdown in mobile */
+    .packaging-dropdown-wrapper {
+        overflow: visible !important;
+        position: relative !important;
+    }
+    
+    /* Ensure parent containers don't clip - critical for mobile */
+    #products {
+        overflow: visible !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+    }
+    
+    #products > div,
+    #products .max-w-7xl,
+    #products .grid,
+    #products .flex-1,
+    .product-content,
+    .product-content > div,
+    .product-content .flex,
+    .product-content .items-center,
+    .product-content .justify-between {
+        overflow: visible !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+    }
+    
+    /* Ensure flex containers don't clip */
+    .flex,
+    .flex-1,
+    .items-center,
+    .justify-between {
+        overflow: visible !important;
+    }
+    
+    /* Make dropdown items larger and more touch-friendly on mobile */
+    .packaging-dropdown-menu {
+        padding: 0.75rem !important;
+    }
+    
+    .packaging-dropdown-item {
+        font-size: 0.9rem !important;
+        padding: 1.125rem 1.5rem !important;
+        gap: 1rem !important;
+        min-height: 56px !important;
+        line-height: 1.5 !important;
+    }
+    
+    .packaging-dropdown-item span {
+        font-size: 0.9rem !important;
+        font-weight: 500 !important;
+    }
+    
+    .packaging-dropdown-item .item-icon {
+        width: 1.2rem !important;
+        height: 1.2rem !important;
+        min-width: 1.2rem !important;
+        min-height: 1.2rem !important;
+    }
+    
+    .packaging-dropdown-item .check-icon {
+        width: 1.1rem !important;
+        height: 1.1rem !important;
+        min-width: 1.1rem !important;
+        min-height: 1.1rem !important;
+    }
+    
+    /* Make trigger button larger on mobile */
+    .packaging-dropdown-trigger {
+        font-size: 0.9rem !important;
+        padding: 0.875rem 1.5rem !important;
+        min-height: 52px !important;
+        gap: 0.75rem !important;
+    }
+    
+    .packaging-dropdown-trigger .selected-text {
+        font-size: 0.9rem !important;
+        font-weight: 600 !important;
+    }
+    
+    .packaging-dropdown-trigger svg,
+    .packaging-dropdown-trigger i,
+    .packaging-dropdown-trigger [data-lucide] {
+        width: 1.1rem !important;
+        height: 1.1rem !important;
+        min-width: 1.1rem !important;
+        min-height: 1.1rem !important;
+    }
+}
+
 .packaging-dropdown-menu.show {
     opacity: 1;
     visibility: visible;
@@ -1120,7 +1242,7 @@ section[id] {
     padding: 0.75rem 1rem;
     border-radius: 0.75rem;
     color: #1B1B1B;
-    font-size: 0.875rem;
+    font-size: 0.7rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1152,8 +1274,8 @@ section[id] {
 }
 
 .packaging-dropdown-item .check-icon {
-    width: 1rem;
-    height: 1rem;
+    width: 0.8rem;
+    height: 0.8rem;
     opacity: 0;
     transform: scale(0.5);
     transition: all 0.2s ease;
@@ -1166,8 +1288,8 @@ section[id] {
 }
 
 .packaging-dropdown-item .item-icon {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 1rem;
+    height: 1rem;
     color: currentColor;
     opacity: 0.7;
 }
@@ -1180,6 +1302,29 @@ section[id] {
 .products-mobile-dropdown-wrapper {
     position: relative;
     width: 100%;
+    overflow: visible !important;
+    z-index: 10000 !important;
+}
+
+/* Ensure products section doesn't clip dropdown on mobile */
+@media (max-width: 1023px) {
+    #products-mobile-dropdown,
+    #products-mobile-dropdown > div {
+        overflow: visible !important;
+        position: relative !important;
+        z-index: 10000 !important;
+    }
+    
+    #products {
+        overflow: visible !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+    }
+    
+    #products > div,
+    #products .max-w-7xl {
+        overflow: visible !important;
+    }
 }
 
 .products-mobile-trigger {
@@ -1208,13 +1353,19 @@ section[id] {
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 10000 !important;
+    position: absolute !important;
 }
 
 .products-mobile-menu.show {
     opacity: 1 !important;
     visibility: visible !important;
     transform: translateY(0) !important;
+    pointer-events: auto !important;
+    z-index: 10000 !important;
+    position: absolute !important;
 }
 
 .products-mobile-item {
@@ -1637,17 +1788,19 @@ section[id] {
     }
 }
 
-/* CV Upload Button - Mobile Shadow Fix */
+/* Glassmorphism Buttons - Mobile Shadow Fix */
 @media (max-width: 768px) {
-    /* Ensure parent form container doesn't clip shadows */
-    #application-form {
+    /* Ensure parent form containers don't clip shadows */
+    #application-form,
+    form[action="#"] {
         overflow: visible !important;
         padding-left: 1rem !important;
         padding-right: 1rem !important;
     }
     
     /* All form sections - allow overflow for shadows */
-    #application-form > div {
+    #application-form > div,
+    form[action="#"] > div {
         overflow: visible !important;
     }
     
@@ -1658,18 +1811,46 @@ section[id] {
         padding: 0.5rem 0 !important;
     }
     
-    /* CV Upload button - ensure shadows are visible on mobile */
-    #app-cv-label .glassmorphism-button {
+    /* All glassmorphism buttons - ensure shadows are visible on mobile */
+    .glassmorphism-button {
         box-shadow: 
             0 8px 32px rgba(0, 0, 0, 0.1),
             0 2px 8px rgba(0, 0, 0, 0.05) !important;
     }
     
-    /* CV Upload button hover state - ensure shadows show */
-    #app-cv-label .glassmorphism-button:hover {
+    /* Glassmorphism button hover state - ensure shadows show */
+    .glassmorphism-button:hover {
         box-shadow: 
             0 12px 40px rgba(0, 0, 0, 0.15),
             0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    }
+    
+    /* Blue glassmorphism buttons - ensure shadows show */
+    .glassmorphism-button-blue {
+        box-shadow: 
+            0 8px 32px rgba(255, 140, 0, 0.3),
+            0 2px 8px rgba(255, 140, 0, 0.2),
+            0 0 20px rgba(128, 224, 255, 0.2) !important;
+    }
+    
+    /* Blue glassmorphism button hover state */
+    .glassmorphism-button-blue:hover {
+        box-shadow: 
+            0 12px 40px rgba(255, 140, 0, 0.4),
+            0 4px 12px rgba(255, 140, 0, 0.25),
+            0 0 30px rgba(128, 224, 255, 0.3) !important;
+    }
+    
+    /* Hero section - ensure buttons have space for shadows */
+    #hero .flex.flex-wrap {
+        overflow: visible !important;
+        padding: 0.5rem 0 !important;
+    }
+    
+    /* Products section - ensure buttons have space for shadows */
+    #products .flex.justify-center {
+        overflow: visible !important;
+        padding: 0.5rem 0 !important;
     }
     
     /* Corporate section - ensure it doesn't clip shadows */
@@ -1680,6 +1861,23 @@ section[id] {
     /* Tab content area - ensure overflow visible */
     .corporate-tab-content {
         overflow: visible !important;
+    }
+    
+    /* Contact section - ensure buttons have space for shadows */
+    #contact {
+        overflow: visible !important;
+    }
+    
+    /* Contact form button container */
+    #contact form > div:last-child {
+        overflow: visible !important;
+        padding: 0.5rem 0 !important;
+    }
+    
+    /* Application form submit button container */
+    #application-form > div.pt-4 {
+        overflow: visible !important;
+        padding: 0.5rem 0 !important;
     }
 }
 

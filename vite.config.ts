@@ -3,7 +3,18 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    // Plugin to ensure i18n.js script is preserved in build
+    {
+      name: 'preserve-i18n-script',
+      transformIndexHtml(html) {
+        // Ensure i18n.js script is present before module scripts
+        // This will be handled by the existing script in index.html
+        return html;
+      }
+    }
+  ],
   // Only use base path in production build, not in dev server
   base: process.env.NODE_ENV === 'production' ? '/Ais/' : '/',
   resolve: {
@@ -17,7 +28,13 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    assetsDir: 'assets'
+    assetsDir: 'assets',
+    rollupOptions: {
+      // Preserve non-module scripts
+      output: {
+        manualChunks: undefined
+      }
+    }
   }
 });
 

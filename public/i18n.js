@@ -122,33 +122,21 @@ async function setLanguage(lang) {
     
     // Re-initialize icons immediately after content update
     // First, ensure all data-lucide attributes are preserved
-    const initIconsSafely = () => {
-        if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-            try {
-                lucide.createIcons();
-            } catch (e) {
-                console.warn('Error initializing icons:', e);
-            }
-        }
-    };
-    
-    // Small delay to ensure DOM is updated
-    setTimeout(() => {
-        initIconsSafely();
-        
-        // Double-check: if icons still don't exist, try again
+    if (typeof lucide !== 'undefined') {
+        // Small delay to ensure DOM is updated
         setTimeout(() => {
-            const missingIcons = document.querySelectorAll('[data-lucide]:not(svg)');
-            if (missingIcons.length > 0) {
-                initIconsSafely();
-            }
-        }, 50);
-        
-        // Final check after a longer delay
-        setTimeout(() => {
-            initIconsSafely();
-        }, 200);
-    }, 10);
+            // Re-create all icons
+            lucide.createIcons();
+            
+            // Double-check: if icons still don't exist, try again
+            setTimeout(() => {
+                const missingIcons = document.querySelectorAll('[data-lucide]:not(svg)');
+                if (missingIcons.length > 0) {
+                    lucide.createIcons();
+                }
+            }, 50);
+        }, 10);
+    }
     
     // Re-initialize all functionality (dropdowns, tabs, etc.)
     // Use longer timeout to ensure DOM updates and icon creation are complete

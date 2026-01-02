@@ -1331,40 +1331,145 @@ function initMobileProductDropdown() {
     const menu = document.getElementById('products-mobile-menu');
     const items = document.querySelectorAll('.products-mobile-item');
     
-    if (!trigger || !menu) return;
+    if (!trigger || !menu) {
+        console.warn('Mobile product dropdown elements not found');
+        return;
+    }
+    
+    console.log('Initializing mobile product dropdown');
+    
+    // Flag to prevent double-triggering on mobile (touch + click)
+    let touchHandled = false;
+    let clickTimeout = null;
     
     // Toggle dropdown on trigger click
-    trigger.addEventListener('click', (e) => {
+    const handleTriggerClick = (e, isTouch = false) => {
+        if (isTouch) {
+            touchHandled = true;
+            // Clear any pending click handlers
+            if (clickTimeout) {
+                clearTimeout(clickTimeout);
+                clickTimeout = null;
+            }
+        } else {
+            // If this is a click and we just handled a touch, ignore it
+            if (touchHandled) {
+                touchHandled = false;
+                return;
+            }
+        }
+        
+        e.preventDefault();
         e.stopPropagation();
         const isOpen = menu.classList.contains('show');
+        console.log('Trigger clicked, isOpen:', isOpen, 'isTouch:', isTouch);
         
         if (isOpen) {
             closeMobileProductDropdown();
         } else {
             openMobileProductDropdown();
         }
+        
+        // Reset touch flag after a delay
+        if (isTouch) {
+            clickTimeout = setTimeout(() => {
+                touchHandled = false;
+            }, 300);
+        }
+    };
+    
+    // Use touchstart instead of touchend for better mobile support
+    trigger.addEventListener('touchstart', (e) => {
+        handleTriggerClick(e, true);
+    }, { passive: false });
+    
+    // Click event for desktop/mouse users
+    trigger.addEventListener('click', (e) => {
+        handleTriggerClick(e, false);
     });
     
     // Handle item selection
     items.forEach(item => {
-        item.addEventListener('click', (e) => {
+        let itemTouchHandled = false;
+        let itemClickTimeout = null;
+        
+        const handleItemClick = (e, isTouch = false) => {
+            if (isTouch) {
+                itemTouchHandled = true;
+                if (itemClickTimeout) {
+                    clearTimeout(itemClickTimeout);
+                    itemClickTimeout = null;
+                }
+            } else {
+                if (itemTouchHandled) {
+                    itemTouchHandled = false;
+                    return;
+                }
+            }
+            
+            e.preventDefault();
             e.stopPropagation();
             const productId = item.getAttribute('data-value');
+            console.log('Item clicked:', productId, 'isTouch:', isTouch);
             
             // Close dropdown
             closeMobileProductDropdown();
             
             // Switch product
             switchProduct(productId);
+            
+            if (isTouch) {
+                itemClickTimeout = setTimeout(() => {
+                    itemTouchHandled = false;
+                }, 300);
+            }
+        };
+        
+        item.addEventListener('touchstart', (e) => {
+            handleItemClick(e, true);
+        }, { passive: false });
+        
+        item.addEventListener('click', (e) => {
+            handleItemClick(e, false);
         });
     });
     
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.products-mobile-dropdown-wrapper')) {
-            closeMobileProductDropdown();
+    // Close dropdown when clicking outside (with delay to allow trigger click to complete)
+    let outsideClickHandler = null;
+    
+    // Use a single event listener that we can remove and re-add
+    const setupOutsideClickHandler = () => {
+        // Remove old handler if exists
+        if (outsideClickHandler) {
+            document.removeEventListener('click', outsideClickHandler, true);
+            document.removeEventListener('touchstart', outsideClickHandler, true);
         }
-    });
+        
+        outsideClickHandler = (e) => {
+            // Don't close if clicking on trigger or menu
+            if (e.target.closest('.products-mobile-dropdown-wrapper')) {
+                return;
+            }
+            
+            // Don't close if clicking on packaging dropdown (web view)
+            if (e.target.closest('.packaging-dropdown-wrapper')) {
+                return;
+            }
+            
+            // Don't close if we just opened the menu
+            if (mobileProductDropdownOpening) {
+                return;
+            }
+            
+            closeMobileProductDropdown();
+        };
+        
+        // Use capture phase to catch events before they bubble
+        document.addEventListener('click', outsideClickHandler, true);
+        document.addEventListener('touchstart', outsideClickHandler, true);
+    };
+    
+    setupOutsideClickHandler();
     
     // Close on Escape key
     document.addEventListener('keydown', (e) => {
@@ -1374,16 +1479,46 @@ function initMobileProductDropdown() {
     });
 }
 
+// Global flag to prevent immediate closing
+let mobileProductDropdownOpening = false;
+
 // Open mobile product dropdown
 function openMobileProductDropdown() {
     const trigger = document.getElementById('products-mobile-trigger');
     const menu = document.getElementById('products-mobile-menu');
     
-    if (!trigger || !menu) return;
+    if (!trigger || !menu) {
+        console.warn('Mobile product dropdown elements not found when opening');
+        return;
+    }
     
+    console.log('Opening mobile product dropdown');
+    
+    // Set flag to prevent immediate closing
+    mobileProductDropdownOpening = true;
+    setTimeout(() => {
+        mobileProductDropdownOpening = false;
+    }, 100);
+    
+    // Remove any conflicting Tailwind classes and inline styles
+    menu.classList.remove('opacity-0', 'invisible', 'hidden');
+    
+    // Add show class
     menu.classList.add('show');
     trigger.classList.add('active');
     trigger.setAttribute('aria-expanded', 'true');
+    
+    // Force visibility with inline styles as backup
+    requestAnimationFrame(() => {
+        if (menu.classList.contains('show')) {
+            menu.style.opacity = '1';
+            menu.style.visibility = 'visible';
+            menu.style.transform = 'translateY(0)';
+            menu.style.display = 'block';
+            menu.style.zIndex = '10000';
+            menu.style.position = 'absolute';
+        }
+    });
     
     // Re-initialize icons
     if (typeof lucide !== 'undefined') {
@@ -1398,9 +1533,20 @@ function closeMobileProductDropdown() {
     
     if (!trigger || !menu) return;
     
+    console.log('Closing mobile product dropdown');
+    
     menu.classList.remove('show');
     trigger.classList.remove('active');
     trigger.setAttribute('aria-expanded', 'false');
+    
+    // Ensure menu is hidden after transition
+    setTimeout(() => {
+        if (!menu.classList.contains('show')) {
+            menu.style.opacity = '';
+            menu.style.visibility = '';
+            menu.style.transform = '';
+        }
+    }, 300); // Wait for transition to complete
 }
 
 // Custom Packaging Dropdown
@@ -1432,7 +1578,8 @@ function initPackagingDropdowns() {
             const isOpen = menu.classList.contains('show');
             menu.classList.toggle('show');
             trigger.classList.toggle('active');
-            trigger.setAttribute('aria-expanded', !isOpen);
+            const willBeOpen = !isOpen;
+            trigger.setAttribute('aria-expanded', willBeOpen);
             
             // Re-initialize icons
             if (typeof lucide !== 'undefined') {
@@ -2123,10 +2270,19 @@ function initLanguageSwitcher() {
 
 // Initialize all functionality
 function initAll() {
-    // Initialize Lucide icons first
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    // Wait for Lucide to be available before initializing icons
+    const initIcons = () => {
+        if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+            try {
+                lucide.createIcons();
+            } catch (e) {
+                console.warn('Error initializing icons:', e);
+            }
+        }
+    };
+    
+    // Try to initialize icons immediately
+    initIcons();
     
     // Initialize language switcher
     initLanguageSwitcher();
@@ -2147,9 +2303,14 @@ function initAll() {
     initContactForm();
     
     // Re-initialize icons for any dynamically added content
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    setTimeout(() => {
+        initIcons();
+    }, 100);
+    
+    // Also initialize after a longer delay to catch any late-loading content
+    setTimeout(() => {
+        initIcons();
+    }, 500);
 }
 
 // Export initAll to window for i18n.js to use
@@ -2168,9 +2329,35 @@ if (typeof window !== 'undefined') {
 // Initialize when DOM is ready
 // Check if DOM is already loaded (for dynamic imports)
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAll);
+    document.addEventListener('DOMContentLoaded', () => {
+        // Wait for Lucide to be available
+        const waitForLucide = () => {
+            if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+                initAll();
+            } else {
+                setTimeout(waitForLucide, 50);
+            }
+        };
+        waitForLucide();
+    });
 } else {
-    // DOM already loaded, run immediately
-    initAll();
+    // DOM already loaded, wait for Lucide
+    const waitForLucide = () => {
+        if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+            initAll();
+        } else {
+            setTimeout(waitForLucide, 50);
+        }
+    };
+    waitForLucide();
 }
+
+// Also initialize on window load as a fallback
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+            lucide.createIcons();
+        }
+    }, 100);
+});
 
