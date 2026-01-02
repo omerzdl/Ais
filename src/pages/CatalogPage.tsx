@@ -21,8 +21,8 @@ export function CatalogPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#4DA8DA] to-[#003399]">
       {/* Header with buttons */}
-      <div className="sticky top-0 z-50 px-6 py-6">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
+      <div className="sticky top-0 z-50 px-4 md:px-6 py-4 md:py-6">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
           {/* Back to Home Button - Left */}
           <button
             onClick={handleGoHome}

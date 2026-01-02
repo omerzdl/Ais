@@ -1637,6 +1637,52 @@ section[id] {
     }
 }
 
+/* CV Upload Button - Mobile Shadow Fix */
+@media (max-width: 768px) {
+    /* Ensure parent form container doesn't clip shadows */
+    #application-form {
+        overflow: visible !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+    /* All form sections - allow overflow for shadows */
+    #application-form > div {
+        overflow: visible !important;
+    }
+    
+    /* CV Upload button container - allow shadows to show */
+    #app-cv-label {
+        display: block !important;
+        overflow: visible !important;
+        padding: 0.5rem 0 !important;
+    }
+    
+    /* CV Upload button - ensure shadows are visible on mobile */
+    #app-cv-label .glassmorphism-button {
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            0 2px 8px rgba(0, 0, 0, 0.05) !important;
+    }
+    
+    /* CV Upload button hover state - ensure shadows show */
+    #app-cv-label .glassmorphism-button:hover {
+        box-shadow: 
+            0 12px 40px rgba(0, 0, 0, 0.15),
+            0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    }
+    
+    /* Corporate section - ensure it doesn't clip shadows */
+    #about {
+        overflow: visible !important;
+    }
+    
+    /* Tab content area - ensure overflow visible */
+    .corporate-tab-content {
+        overflow: visible !important;
+    }
+}
+
 
 /* Mobile Menu Language Switcher - Prevent Scrollbar */
 #language-switcher-mobile {
@@ -1652,6 +1698,27 @@ section[id] {
 
 #language-switcher-mobile .lang-btn {
     flex-shrink: 0;
+}
+
+/* E-Katalog Sayfası - Mobil Görünümde Buton Font Boyutları */
+@media (max-width: 768px) {
+    /* E-katalog sayfasındaki butonların font boyutunu küçült */
+    .min-h-screen.bg-gradient-to-b .glassmorphism-button-md {
+        font-size: 0.75rem !important;
+        padding: 0.5rem 1rem !important;
+        height: 2.25rem !important;
+    }
+    
+    /* E-katalog sayfası butonlarındaki icon boyutlarını küçült */
+    .min-h-screen.bg-gradient-to-b .glassmorphism-button-md svg {
+        width: 1rem !important;
+        height: 1rem !important;
+    }
+    
+    /* E-katalog sayfası başlığı mobil görünümde küçült */
+    .min-h-screen.bg-gradient-to-b h1.text-5xl {
+        font-size: 2rem !important;
+    }
 }
 
 
