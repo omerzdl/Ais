@@ -1733,4 +1733,21 @@ section[id] {
     }
 }
 
+/* Ana Sayfa Butonları - Mobil Görünümde Font Boyutları */
+@media (max-width: 768px) {
+    /* Başvuruyu Gönder, Fiyat Al, Gönder butonlarının font boyutunu küçült */
+    .glassmorphism-button-lg {
+        font-size: 0.875rem !important; /* 1rem'in küçültülmüş hali */
+        padding: 0.75rem 1.5rem !important; /* 0.875rem 2rem'in küçültülmüş hali */
+        height: 3rem !important; /* 3.5rem'in küçültülmüş hali */
+    }
+    
+    /* Ana sayfa butonlarındaki icon boyutlarını küçült */
+    .glassmorphism-button-lg svg,
+    .glassmorphism-button-lg i {
+        width: 1rem !important;
+        height: 1rem !important;
+    }
+}
+
 
