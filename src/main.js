@@ -281,10 +281,10 @@ function setupNavDropdownDelegation() {
         const menu = dropdown.querySelector('.dropdown-menu');
         if (!menu) return;
         
-        // Add a small delay before hiding
+        // Add a slightly longer delay before hiding to allow cursor to enter menu
         navDropdownState.hoverTimeout = setTimeout(() => {
             hideNavDropdown(dropdown, menu);
-        }, 100);
+        }, 250);
     }, true);
     
     // Close dropdowns on escape key
