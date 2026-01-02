@@ -30,8 +30,12 @@ function getBasePath() {
 async function loadTranslations(lang) {
     try {
         const basePath = getBasePath();
-        const response = await fetch(`${basePath}/src/translations/${lang}.json`);
+        // Try public/translations first (for production), fallback to src/translations (for dev)
+        let response = await fetch(`${basePath}/translations/${lang}.json`);
         if (!response.ok) {
+            response = await fetch(`${basePath}/src/translations/${lang}.json`);
+        }
+        if (!response || !response.ok) {
             throw new Error(`Failed to load translations for ${lang}`);
         }
         translations[lang] = await response.json();

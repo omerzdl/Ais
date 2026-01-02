@@ -1,0 +1,177 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "corporate": "Kurumsal",
+    "about": "Hakkımızda",
+    "missionVision": "Misyon & Vizyon",
+    "jobApplication": "İş Başvurusu",
+    "products": "Ürünler",
+    "powderDetergent": "Toz Deterjan",
+    "liquidDetergent": "Sıvı Deterjan",
+    "wetWipe": "Islak Mendil",
+    "liquidSoap": "Sıvı Sabun",
+    "shampoo": "Şampuan",
+    "privateLabel": "Özel Etiket",
+    "eCatalog": "E-Katalog",
+    "contact": "İletişim"
+  },
+  "hero": {
+    "brand": "Ais:",
+    "title1": "Saflığın Derinliği,",
+    "title2": "Temizliğin Yeni Nesli.",
+    "productCatalog": "Ürün Kataloğu",
+    "hygieneGuarantee": "%100 Hijyen Garantisi",
+    "contactUs": "Bize Ulaşın!",
+    "getInTouch": "Hemen iletişime geçin"
+  },
+  "corporate": {
+    "title": "Kurumsal",
+    "subtitle": "Şirket değerlerimizi, misyonumuzu ve fırsatlarımızı keşfedin. Kültürümüzü öğrenin ve ekibimize katılın.",
+    "about": {
+      "title": "Hakkımızda",
+      "description": "Ais'te temizliği sadece yüzeysel bir görev olarak değil, yaşam alanlarının nefes alma şekli olarak görüyoruz. Kimya ve teknolojiyi insan sağlığına titiz bir odakla harmanlayarak, toz deterjanlardan kişisel bakıma kadar her üründe 'derin saflık' standartlarını yeniden tanımlıyoruz. Toz deterjan teknolojisindeki uzmanlık alanımızda, liflere zarar vermeden en zor lekeleri ortadan kaldıran moleküler çözümler sunuyoruz. Ais sadece bir temizlik markası değil; evinizde ve cildinizde hissettiğiniz kusursuz tazeliğin bilimsel somutlaşmasıdır.",
+      "excellence": {
+        "title": "Mükemmellik",
+        "description": "Her üründe son teknoloji ile bilimsel veri odaklı çözümler."
+      },
+      "trustedPartner": {
+        "title": "Güvenilir Ortak",
+        "description": "100'den fazla kurumsal müşteriye güvenilir ve etkili temizlik çözümleri sunuyoruz."
+      },
+      "sustainability": {
+        "title": "Sürdürülebilirlik",
+        "description": "Hem alanlarınızı hem de gezegenimizi koruyan çevre dostu çözümler."
+      }
+    },
+    "missionVision": {
+      "mission": {
+        "title": "Misyonumuz",
+        "description": "Misyonumuz, modern laboratuvar teknikleri ve çevre dostu formüllerle geleneksel temizlik kavramlarını dönüştürmektir. Temizliğin herkes için erişilebilir bir 'yaşam standardı' olması gerektiğine inanıyoruz, sadece bir zorunluluk değil. Bayrak gemisi toz deterjanlarımızdan ıslak mendillere kadar her ürün grubunda yüksek performansı güvenilirlikle birleştirerek, küresel ölçekte hijyenin en saf biçimini temsil etmeye çalışıyoruz."
+      },
+      "vision": {
+        "title": "Vizyonumuz",
+        "description": "Hijyen teknolojilerinde yeniliğin öncüsü olarak, vizyonumuz 'saflık' kriterlerini tanımlayan küresel bir referans noktası olmaktır. Geliştirdiğimiz her formülle temizlik kültürünü daha sürdürülebilir, daha akıllı ve daha etkili bir seviyeye yükselterek, Ais logosunun bulunduğu her yerde mutlak hijyenin kalıcı garantisini kurmayı hedefliyoruz."
+      },
+      "innovation": {
+        "title": "Yenilik",
+        "description": "Gelişen temizlik ihtiyaçlarını karşılamak için sürekli yeni teknolojiler ve formüller geliştiriyoruz."
+      },
+      "globalReach": {
+        "title": "Küresel Erişim",
+        "description": "Sürdürülebilir ve etkili çözümlerle uluslararası pazarlardaki varlığımızı genişletiyoruz."
+      }
+    },
+    "application": {
+      "title": "İş Başvurusu",
+      "subtitle": "Birlikte daha güçlüyüz!",
+      "description": "Ais Temizlik ailesine katılmak için aşağıdaki formu doldurun. Başvurunuz incelendikten sonra en kısa sürede size dönüş yapacağız.",
+      "form": {
+        "fullName": "Ad Soyad",
+        "email": "E-posta",
+        "phone": "Telefon",
+        "position": "Pozisyon",
+        "uploadCV": "CV Yükle",
+        "selectFile": "Dosya Seç",
+        "message": "Mesaj",
+        "characters": "karakter",
+        "submit": "Başvuruyu Gönder",
+        "submitting": "Gönderiliyor...",
+        "fileFormat": "PDF, DOC veya DOCX formatı, maksimum 10MB"
+      }
+    }
+  },
+  "products": {
+    "title": "Profesyonel Ürünler",
+    "subtitle": "Evden ofise, fabrikadan okula kadar her yüzey için özel formüller.",
+    "powderDetergent": {
+      "title": "Toz Deterjan",
+      "description": "Liflerin Derinlerinde Moleküler Güç: Ais'in imza toz teknolojisi temizliği yüzeyin ötesine taşıyarak kumaşın kalbine ulaşır. Lif bütünlüğünü bozmadan en zor lekeleri moleküler seviyede parçalayarak görünür bir saflık ve yenilenmiş bir yumuşaklık bırakır. Profesyonel yıkama gücü artık evinizin yeni standardı.",
+      "getQuote": "Fiyat Al"
+    },
+    "liquidDetergent": {
+      "title": "Sıvı Deterjan",
+      "description": "Akışkan Dinamikleri ile Kusursuz Temizlik: Gelişmiş üretim teknolojileriyle geliştirilen sıvı formülümüz, suyla temas ettiği anda kumaş gözeneklerine nüfuz etmek için anında aktifleşir. Hem renkli hem beyaz için optimize edilmiş, laboratuvar hassasiyetiyle renk canlılığını korur. Derin temizlik ve kalıcı tazelik Ais'in akıllı temizlik formülünde buluşur.",
+      "getQuote": "Fiyat Al"
+    },
+    "wetWipe": {
+      "title": "Islak Mendil",
+      "description": "Cildiniz için Nefes Alabilir Hijyen: Doğanın yumuşak dokusunu bilimsel saflıkla harmanladık. pH dengeli Ais ıslak mendillerimiz, cildinizde ve dokundukları her yüzeyde 'nefes alabilir temizlik' etkisi yaratır. Çevre dostu yapısı ve ferahlatıcı dokunuşuyla, her zaman yanınızda olan hijyenin en zarif biçimidir.",
+      "getQuote": "Fiyat Al"
+    },
+    "liquidSoap": {
+      "title": "Sıvı Sabun",
+      "description": "Botanik Bakım & Moleküler Nem Dengesi: Sadece sabun değil; elleriniz için bir nem banyosu. Doğanın en saf bileşenlerini teknolojiyle birleştiren formülümüz, cildinizi beslerken ve bariyerini yenilerken arındırır. Her kullanımda duyularınızı uyandıran ferahlatıcı ve onarıcı bir hijyen deneyimi sunar.",
+      "getQuote": "Fiyat Al"
+    },
+    "shampoo": {
+      "title": "Şampuan",
+      "description": "Kökten Uca Bilimsel Parlaklık: Özel formülümüz, saç tellerini ağırlaştırmadan derinlemesine arındırırken saç derisinin nefes almasına izin verir. Bilimsel verilerle optimize edilmiş, besleyici yapısı saçın doğal dengesini korurken imza Ais parlaklığını sağlar. Profesyonel saç bakımı, en saf haliyle artık banyonuzda.",
+      "getQuote": "Fiyat Al"
+    }
+  },
+  "privateLabel": {
+    "title": "Sizin Markanız, Bizim Uzmanlığımız: Özel Etiket Çözümleri",
+    "description": "Ais Temizlik'in son teknoloji üretim tesisleriyle temizlik markanızı hayata geçirin. Deterjanlar, sabunlar ve hijyen ürünleri için özel formülasyon, profesyonel ambalajlama ve yüksek kapasiteli üretim dahil kapsamlı özel etiket hizmetleri sunuyoruz.",
+    "customFormulation": {
+      "title": "Özel Formülasyon",
+      "description": "Pazar ihtiyaçlarınıza özel çözümler."
+    },
+    "flexiblePackaging": {
+      "title": "Esnek Ambalajlama",
+      "description": "Geniş şişe ve kutu seçenekleri."
+    },
+    "qualityAssurance": {
+      "title": "Kalite Güvencesi",
+      "description": "ISO ve GMP sertifikalı üretim standartları."
+    },
+    "startPartnership": "Ortaklığınıza Başlayın"
+  },
+  "production": {
+    "label": "Üretim",
+    "title": "Steril Dolum Tesisleri.",
+    "description": "Tesislerimiz en yüksek hijyen standartlarında çalışır. Tam otomatik hatlarda, insan sağlığına zararlı hiçbir katkı maddesi kullanmadan üretim yapıyoruz.",
+    "isoCertified": "ISO 9001 & GMP Sertifikalı",
+    "dermatologicallyTested": "Dermatolojik Test Edilmiş",
+    "recyclablePackaging": "Geri Dönüştürülebilir Ambalaj"
+  },
+  "contact": {
+    "title": "İletişim",
+    "subtitle": "Toptan satış siparişleri ve bayilik başvuruları için formu doldurun.",
+    "form": {
+      "fullName": "Ad Soyad",
+      "email": "E-posta",
+      "phone": "Telefon",
+      "message": "Mesajınız",
+      "send": "Gönder",
+      "placeholderName": "Adınız",
+      "placeholderEmail": "ornek@sirket.com",
+      "placeholderPhone": "Telefon Numaranız",
+      "placeholderMessage": "İsteğinizi buraya yazın..."
+    },
+    "factory": {
+      "title": "Fabrika & Merkez",
+      "address": "Organize Sanayi Bölgesi 4. Cadde<br>34000 İstanbul"
+    },
+    "customerLine": {
+      "title": "Müşteri Hattı",
+      "phone": "444 0 123"
+    }
+  },
+  "footer": {
+    "description": "Temizlikte yeni nesil teknoloji. Eviniz ve iş yeriniz için en saf, en etkili çözümler.",
+    "products": "Ürünler",
+    "homeCleaning": "Ev Temizliği",
+    "industrial": "Endüstriyel",
+    "autoCare": "Oto Bakım",
+    "newReleases": "Yeni Çıkanlar",
+    "copyright": "© 2026 Ais Temizlik A.Ş. Tüm hakları saklıdır.",
+    "poweredBy": "Praksis tarafından desteklenmektedir."
+  },
+  "catalog": {
+    "title": "E-Katalog",
+    "backToHome": "Ana Sayfaya Dön",
+    "downloadPDF": "PDF İndir"
+  }
+}
+
+
