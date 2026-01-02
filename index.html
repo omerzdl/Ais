@@ -16,9 +16,104 @@
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        // Ensure Lucide is loaded and available
+        (function() {
+            let attempts = 0;
+            const maxAttempts = 50;
+            const checkLucide = setInterval(() => {
+                attempts++;
+                if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+                    clearInterval(checkLucide);
+                    // Initialize icons immediately when Lucide is ready
+                    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                        setTimeout(() => {
+                            try {
+                                lucide.createIcons();
+                            } catch (e) {
+                                console.warn('Early icon initialization failed:', e);
+                            }
+                        }, 50);
+                    }
+                } else if (attempts >= maxAttempts) {
+                    clearInterval(checkLucide);
+                    console.warn('Lucide icons library failed to load');
+                }
+            }, 100);
+        })();
+    </script>
     
     <!-- GSAP -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    
+    <!-- Load i18n.js early in head to ensure it's available -->
+    <script>
+        // Get base path for GitHub Pages
+        (function() {
+            const getBasePath = () => {
+                // Check multiple conditions for GitHub Pages
+                if (window.location.hostname === 'omerzdl.github.io' || 
+                    window.location.pathname.startsWith('/Ais')) {
+                    return '/Ais';
+                }
+                return '';
+            };
+            
+            const basePath = getBasePath();
+            const i18nPath = basePath ? `${basePath}/i18n.js` : '/i18n.js';
+            
+            // Create and load script synchronously
+            const script = document.createElement('script');
+            script.src = i18nPath;
+            script.async = false; // Load synchronously to ensure i18n is available
+            script.defer = false;
+            script.onload = function() {
+                // Verify that window.i18n was set
+                if (!window.i18n) {
+                    console.warn('i18n.js loaded but window.i18n not found');
+                } else {
+                    console.log('i18n.js loaded successfully');
+                }
+            };
+            script.onerror = function() {
+                console.warn('Failed to load i18n.js from:', i18nPath);
+                // Try alternative paths
+                const alternativePaths = [
+                    basePath ? `${basePath}/i18n.js` : '/i18n.js',
+                    '/i18n.js'
+                ];
+                
+                let attemptIndex = 0;
+                const tryNextPath = () => {
+                    if (attemptIndex >= alternativePaths.length) {
+                        console.error('Failed to load i18n from all paths');
+                        return;
+                    }
+                    
+                    const fallbackScript = document.createElement('script');
+                    fallbackScript.src = alternativePaths[attemptIndex];
+                    fallbackScript.async = false;
+                    fallbackScript.defer = false;
+                    fallbackScript.onload = function() {
+                        if (window.i18n) {
+                            console.log('i18n.js loaded from fallback path:', alternativePaths[attemptIndex]);
+                        } else {
+                            attemptIndex++;
+                            tryNextPath();
+                        }
+                    };
+                    fallbackScript.onerror = function() {
+                        attemptIndex++;
+                        tryNextPath();
+                    };
+                    document.head.appendChild(fallbackScript);
+                };
+                
+                tryNextPath();
+            };
+            document.head.appendChild(script);
+        })();
+    </script>
 
     <script>
         tailwind.config = {
@@ -248,14 +343,16 @@
 
         <div class="relative max-w-7xl mx-auto px-4 lg:px-8 xl:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 z-10">
             
-            <div class="flex flex-col justify-center items-start pt-10 w-full break-words px-2 md:px-4 lg:px-6 xl:px-8 overflow-visible max-w-full">
-                <h1 class="font-subheading font-bold tracking-tight mb-5 antialiased text-left flex flex-col gap-y-3 w-full break-words">
+            <div class="flex flex-col justify-center items-start pt-10 w-full break-words px-2 md:px-4 lg:px-6 xl:px-8 overflow-visible">
+                <h1 class="font-subheading font-bold tracking-tight mb-5 antialiased text-left flex flex-col gap-y-3 w-[175%] min-w-max" style="max-width: none;">
                     <!-- Satır 1: Ais: -->
-                    <div class="text-[#FF8C00] leading-[1.5] w-full overflow-visible hero-brand-title" style="font-size: clamp(1.25rem, 3.5vw, 2.25rem);" data-i18n="hero.brand">Ais:</div>
+                    <div class="text-[#FF8C00] leading-[1.5] overflow-visible hero-brand-title whitespace-nowrap" style="font-size: clamp(1.125rem, 3.15vw, 2.025rem);" data-i18n="hero.brand">Ais:</div>
                     <!-- Satır 2: The Depth of Purity, -->
-                    <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent leading-[1.5] w-full overflow-visible" style="font-size: clamp(1.25rem, 3.5vw, 2.25rem);" data-i18n="hero.title1">The Depth of Purity,</div>
-                    <!-- Satır 3: The Next Generation of Clean. -->
-                    <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent leading-[1.5] w-full overflow-visible" style="font-size: clamp(1.25rem, 3.5vw, 2.25rem);" data-i18n="hero.title2">The Next Generation of Clean.</div>
+                    <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent leading-[1.5] overflow-visible whitespace-nowrap" style="font-size: clamp(1.125rem, 3.15vw, 2.025rem);" data-i18n="hero.title1">The Depth of Purity,</div>
+                    <!-- Satır 3: The Next Generation -->
+                    <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent leading-[1.5] overflow-visible whitespace-nowrap" style="font-size: clamp(1.125rem, 3.15vw, 2.025rem);" data-i18n="hero.title2">The Next Generation</div>
+                    <!-- Satır 4: of Clean. -->
+                    <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent leading-[1.5] overflow-visible whitespace-nowrap" style="font-size: clamp(1.125rem, 3.15vw, 2.025rem);" data-i18n="hero.title3">of Clean.</div>
                 </h1>
 
                 <div class="flex flex-wrap items-center gap-4">
@@ -489,7 +586,7 @@
                         <span class="selected-text truncate" data-i18n="nav.powderDetergent">Powder Detergent</span>
                         <i data-lucide="chevron-down" class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
                     </button>
-                    <div id="products-mobile-menu" class="products-mobile-menu absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl border border-[#8FA895]/20 shadow-2xl z-50 max-h-[400px] overflow-y-auto overscroll-contain opacity-0 invisible transform translate-y-[-10px] transition-all duration-300" role="listbox">
+                    <div id="products-mobile-menu" class="products-mobile-menu absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl border border-[#8FA895]/20 shadow-2xl max-h-[400px] overflow-y-auto overscroll-contain" role="listbox">
                         <div class="p-2 space-y-1">
                             <button type="button" class="products-mobile-item w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-3 bg-[#FF8C00] text-white" data-value="surface-cleaners" role="option" aria-selected="true">
                                 <i data-lucide="washing-machine" class="w-5 h-5 flex-shrink-0 product-tab-icon"></i>
@@ -982,11 +1079,14 @@
 
     <!-- React root for catalog page -->
     <div id="root"></div>
+    
     <script type="module">
         (async () => {
             // Get base path for GitHub Pages
             const getBasePath = () => {
-                if (window.location.hostname === 'omerzdl.github.io') {
+                // Check multiple conditions for GitHub Pages
+                if (window.location.hostname === 'omerzdl.github.io' || 
+                    window.location.pathname.startsWith('/Ais')) {
                     return '/Ais';
                 }
                 return '';
@@ -994,32 +1094,57 @@
             
             const basePath = getBasePath();
             
-            // Load i18n first
-            try {
-                if (basePath) {
-                    await import(`${basePath}/src/i18n.js`);
-                } else {
-                    // For local development, use absolute path from root
-                    await import('/src/i18n.js');
-                }
-            } catch (error) {
-                console.error('Failed to load i18n:', error);
-                // Continue without i18n - page will still work with default language
+            // Wait for Lucide to be available
+            let lucideAttempts = 0;
+            const maxLucideAttempts = 50; // Wait up to 5 seconds
+            while (typeof lucide === 'undefined' && lucideAttempts < maxLucideAttempts) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                lucideAttempts++;
+            }
+            
+            // Wait for i18n to load (check if window.i18n exists)
+            let attempts = 0;
+            const maxAttempts = 100; // Wait up to 10 seconds (100 * 100ms) - increased timeout
+            
+            while (!window.i18n && attempts < maxAttempts) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                attempts++;
             }
             
             // Initialize language
-            if (window.i18n) {
-                await window.i18n.initLanguage();
+            if (window.i18n && typeof window.i18n.initLanguage === 'function') {
+                try {
+                    await window.i18n.initLanguage();
+                } catch (error) {
+                    console.error('Error initializing i18n:', error);
+                    // Fall through to initialize icons anyway
+                }
             } else {
                 // If i18n failed to load, still initialize icons and functionality
                 console.warn('i18n not loaded, initializing without translations');
-                // Wait a bit for DOM to be ready
-                setTimeout(() => {
-                    if (typeof window !== 'undefined' && window.initAll) {
-                        window.initAll();
-                    }
-                }, 100);
             }
+            
+            // Always initialize icons regardless of i18n status
+            // Wait a bit for DOM to be ready
+            setTimeout(() => {
+                // Initialize icons
+                if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+                    try {
+                        lucide.createIcons();
+                    } catch (e) {
+                        console.warn('Error initializing icons:', e);
+                    }
+                }
+                
+                // Initialize all functionality
+                if (typeof window !== 'undefined' && window.initAll) {
+                    try {
+                        window.initAll();
+                    } catch (e) {
+                        console.warn('Error initializing functionality:', e);
+                    }
+                }
+            }, 100);
             
             // Check if we're on the catalog route
             const catalogPath = basePath ? `${basePath}/catalog` : '/catalog';
@@ -1047,6 +1172,15 @@
                     await import('/src/main.js');
                 }
             }
+            
+            // Ensure icons are initialized after everything loads
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    if (typeof lucide !== 'undefined') {
+                        lucide.createIcons();
+                    }
+                }, 200);
+            });
         })();
     </script>
 </body>
