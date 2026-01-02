@@ -16,7 +16,7 @@ export default defineConfig({
     }
   ],
   // Only use base path in production build, not in dev server
-  base: process.env.NODE_ENV === 'production' ? '/Ais/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/Ais' : '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

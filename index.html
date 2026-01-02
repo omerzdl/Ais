@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIS</title>
-    <link rel="icon" type="image/png" href="/Ais.png">
+    <link rel="icon" type="image/png" href="./Ais.png">
     
     <!-- Google Fonts: Syne, Montserrat, Playfair Display & EB Garamond -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,7 +60,7 @@
             };
             
             const basePath = getBasePath();
-            const i18nPath = basePath ? `${basePath}/i18n.js` : '/i18n.js';
+            const i18nPath = basePath ? `${basePath}/i18n.js` : './i18n.js';
             
             // Create and load script synchronously
             const script = document.createElement('script');
@@ -79,7 +79,8 @@
                 console.warn('Failed to load i18n.js from:', i18nPath);
                 // Try alternative paths
                 const alternativePaths = [
-                    basePath ? `${basePath}/i18n.js` : '/i18n.js',
+                    basePath ? `${basePath}/i18n.js` : './i18n.js',
+                    './i18n.js',
                     '/i18n.js'
                 ];
                 
@@ -146,7 +147,7 @@
         }
     </script>
     
-    <link rel="stylesheet" href="/src/styles.css">
+    <link rel="stylesheet" href="./src/styles.css">
 </head>
     <body class="bg-white text-[#1E293B] font-sans antialiased text-lg relative overflow-x-hidden max-w-full">
 
@@ -196,7 +197,7 @@
         <div id="logo-container" class="fixed left-4 md:left-8 top-4 md:top-6 z-[100]">
             <div class="rounded-full w-16 h-16 md:w-24 md:h-24 flex items-center justify-center p-2 md:p-3 overflow-hidden border border-white/30 bg-white/25 backdrop-blur-[20px] backdrop-saturate-[180%] shadow-[0_8px_32px_rgba(0,0,0,0.1),0_2px_8px_rgba(0,0,0,0.05)]">
                 <img 
-                    src="/Ais.png" 
+                    src="./Ais.png" 
                     alt="Ais Logo" 
                     class="w-full h-full object-cover rounded-full"
                 />
@@ -334,7 +335,7 @@
     </div>
 
     <!-- HERO SECTION -->
-    <section id="hero" class="relative w-full min-h-[600px] lg:min-h-screen pt-28 md:pt-32 pb-20 overflow-hidden flex items-center z-10 max-w-full" style="background-image: url('/hero-background.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <section id="hero" class="relative w-full min-h-[600px] lg:min-h-screen pt-28 md:pt-32 pb-20 overflow-hidden flex items-center z-10 max-w-full" style="background-image: url('./hero-background.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <!-- Overlay for readability -->
         <div class="absolute inset-0 bg-white/10 z-0"></div>
 
@@ -687,7 +688,7 @@
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
                         <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
-                            <img src="/Powder Detergent.png" alt="Surface Cleaners" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.surface-cleaners">
+                            <img src="./Powder Detergent.png" alt="Surface Cleaners" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.surface-cleaners">
                         </div>
                         <div class="flex justify-center">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
@@ -726,7 +727,7 @@
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
                         <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
-                            <img src="/Liquid Detergent.png" alt="Concentrated Detergents" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.concentrated-detergents">
+                            <img src="./Liquid Detergent.png" alt="Concentrated Detergents" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.concentrated-detergents">
                         </div>
                         <div class="flex justify-center">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
@@ -770,7 +771,7 @@
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
                         <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
-                            <img src="/Wet Wipe.png" alt="Disinfectant Products" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.disinfectants">
+                            <img src="./Wet Wipe.png" alt="Disinfectant Products" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.disinfectants">
                         </div>
                         <div class="flex justify-center">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
@@ -814,7 +815,7 @@
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
                         <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
-                            <img src="/Liquid Soap.png" alt="Liquid Soap" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.liquid-soap">
+                            <img src="./Liquid Soap.png" alt="Liquid Soap" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.liquid-soap">
                         </div>
                         <div class="flex justify-center">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
@@ -853,7 +854,7 @@
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
                         <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
-                            <img src="/Shampoo.png" alt="Shampoo" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.shampoo">
+                            <img src="./Shampoo.png" alt="Shampoo" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.shampoo">
                         </div>
                         <div class="flex justify-center">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
@@ -870,7 +871,7 @@
                     <div id="product-image-surface-cleaners" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
                         <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
-                                <img src="/Powder Detergent.png" alt="Surface Cleaners" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.surface-cleaners">
+                                <img src="./Powder Detergent.png" alt="Surface Cleaners" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.surface-cleaners">
                             </div>
                         </div>
                     </div>
@@ -878,7 +879,7 @@
                     <div id="product-image-concentrated-detergents" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
                         <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
-                                <img src="/Liquid Detergent.png" alt="Concentrated Detergents" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.concentrated-detergents">
+                                <img src="./Liquid Detergent.png" alt="Concentrated Detergents" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.concentrated-detergents">
                             </div>
                         </div>
                     </div>
@@ -886,7 +887,7 @@
                     <div id="product-image-disinfectants" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
                         <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
-                                <img src="/Wet Wipe.png" alt="Disinfectant Products" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.disinfectants">
+                                <img src="./Wet Wipe.png" alt="Disinfectant Products" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.disinfectants">
                             </div>
                         </div>
                     </div>
@@ -894,7 +895,7 @@
                     <div id="product-image-liquid-soap" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
                         <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
-                                <img src="/Liquid Soap.png" alt="Liquid Soap" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.liquid-soap">
+                                <img src="./Liquid Soap.png" alt="Liquid Soap" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.liquid-soap">
                             </div>
                         </div>
                     </div>
@@ -902,7 +903,7 @@
                     <div id="product-image-shampoo" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
                         <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
-                                <img src="/Shampoo.png" alt="Shampoo" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.shampoo">
+                                <img src="./Shampoo.png" alt="Shampoo" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.shampoo">
                             </div>
                         </div>
                     </div>
@@ -967,7 +968,7 @@
                 <!-- Right Column: Image -->
                 <div class="relative">
                     <div class="relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] border border-white/30">
-                        <img src="/production.png" alt="Private Label Manufacturing" class="w-full h-full object-cover min-h-[500px]">
+                        <img src="./production.png" alt="Private Label Manufacturing" class="w-full h-full object-cover min-h-[500px]">
                     </div>
                 </div>
             </div>
@@ -1044,7 +1045,7 @@
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mb-16">
                 <div class="col-span-2 lg:col-span-2">
                     <a href="#" class="flex items-center gap-2 mb-6">
-                        <img src="/Ais.png" alt="Ais Logo" class="h-10 w-auto object-contain" style="aspect-ratio: auto;">
+                        <img src="./Ais.png" alt="Ais Logo" class="h-10 w-auto object-contain" style="aspect-ratio: auto;">
                     </a>
                     <p class="text-white max-w-sm mb-6 font-sans font-normal" data-i18n="footer.description">
                         Next generation technology in cleaning. The purest, most effective solutions for your home and workplace.
@@ -1162,14 +1163,14 @@
                 if (basePath) {
                     await import(`${basePath}/src/main.tsx`);
                 } else {
-                    await import('/src/main.tsx');
+                    await import('./src/main.tsx');
                 }
             } else {
                 // Load static JS for home page
                 if (basePath) {
                     await import(`${basePath}/src/main.js`);
                 } else {
-                    await import('/src/main.js');
+                    await import('./src/main.js');
                 }
             }
             
