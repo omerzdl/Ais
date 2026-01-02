@@ -1637,4 +1637,27 @@ section[id] {
     }
 }
 
+/* Mobile Hero Brand Title - 430% larger on mobile */
+@media (max-width: 768px) {
+    .hero-brand-title {
+        font-size: calc(clamp(1.25rem, 3.5vw, 2.25rem) * 4.3) !important;
+    }
+}
+
+/* Mobile Menu Language Switcher - Prevent Scrollbar */
+#language-switcher-mobile {
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+}
+
+#language-switcher-mobile > div {
+    overflow-x: hidden !important;
+    width: 100%;
+    max-width: 100%;
+}
+
+#language-switcher-mobile .lang-btn {
+    flex-shrink: 0;
+}
+
 
