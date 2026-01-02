@@ -142,7 +142,11 @@
       "email": "Е-пошта",
       "phone": "Телефон",
       "message": "Ваша порука",
-      "send": "Пошаљи"
+      "send": "Пошаљи",
+      "placeholderName": "Ваше име",
+      "placeholderEmail": "primer@kompanija.com",
+      "placeholderPhone": "Ваш број телефона",
+      "placeholderMessage": "Напишите ваш захтев овде..."
     },
     "factory": {
       "title": "Фабрика и седиште",
@@ -169,4 +173,5 @@
     "downloadPDF": "Преузми PDF"
   }
 }
+
 

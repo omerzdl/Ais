@@ -142,7 +142,11 @@
       "email": "E-posta",
       "phone": "Telefon",
       "message": "Mesajınız",
-      "send": "Gönder"
+      "send": "Gönder",
+      "placeholderName": "Adınız",
+      "placeholderEmail": "ornek@sirket.com",
+      "placeholderPhone": "Telefon Numaranız",
+      "placeholderMessage": "İsteğinizi buraya yazın..."
     },
     "factory": {
       "title": "Fabrika & Merkez",
@@ -169,4 +173,5 @@
     "downloadPDF": "PDF İndir"
   }
 }
+
 

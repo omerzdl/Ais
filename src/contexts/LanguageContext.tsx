@@ -37,24 +37,81 @@ const translations: Record<Language, any> = {
   ro: roTranslations
 };
 
+const STORAGE_KEY = 'ais_language';
+
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('language') as Language | null;
+      // Ana sayfadaki dil tercihini kontrol et
+      const saved = localStorage.getItem(STORAGE_KEY) as Language | null;
       if (saved && ['en', 'tr', 'ru', 'sr', 'hr', 'ro'].includes(saved)) {
         return saved;
+      }
+      // Tarayıcı dilini kontrol et
+      const browserLang = navigator.language.split('-')[0].toLowerCase();
+      if (['en', 'tr', 'ru', 'sr', 'hr', 'ro'].includes(browserLang)) {
+        return browserLang as Language;
       }
     }
     // Varsayılan dil: İngilizce
     return 'en';
   });
 
+  // Ana sayfadaki dil değişikliklerini dinle
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // Storage event listener (diğer tab'lardaki değişiklikler için)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === STORAGE_KEY && e.newValue) {
+        const newLang = e.newValue as Language;
+        if (['en', 'tr', 'ru', 'sr', 'hr', 'ro'].includes(newLang)) {
+          setLanguageState(newLang);
+        }
+      }
+    };
+
+    // Custom event listener (aynı sayfadaki değişiklikler için)
+    const handleLanguageChange = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      const newLang = customEvent.detail as Language;
+      if (newLang && ['en', 'tr', 'ru', 'sr', 'hr', 'ro'].includes(newLang)) {
+        setLanguageState(newLang);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('languagechange', handleLanguageChange);
+
+    // Sayfa yüklendiğinde tekrar kontrol et
+    const checkLanguage = () => {
+      const saved = localStorage.getItem(STORAGE_KEY) as Language | null;
+      if (saved && ['en', 'tr', 'ru', 'sr', 'hr', 'ro'].includes(saved) && saved !== language) {
+        setLanguageState(saved);
+      }
+    };
+    
+    // İlk yüklemede ve periyodik olarak kontrol et
+    checkLanguage();
+    const interval = setInterval(checkLanguage, 500);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('languagechange', handleLanguageChange as EventListener);
+      clearInterval(interval);
+    };
+  }, [language]);
+
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('language', lang);
-    // Statik HTML sayfası için de güncelle
-    if (typeof window !== 'undefined' && (window as any).updateStaticTranslations) {
-      (window as any).updateStaticTranslations(lang);
+    localStorage.setItem(STORAGE_KEY, lang);
+    // Ana sayfadaki i18n sistemini de güncelle
+    if (typeof window !== 'undefined' && (window as any).i18n) {
+      (window as any).i18n.setLanguage(lang);
+    }
+    // Custom event gönder
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('languagechange', { detail: lang }));
     }
   };
 
@@ -74,4 +131,5 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     </LanguageContext.Provider>
   );
 };
+
 

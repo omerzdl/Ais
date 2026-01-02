@@ -27,6 +27,30 @@ h1, h2, h3 {
     overflow: visible !important;
 }
 
+/* Hero section gradient text - prevent clipping of descenders */
+#hero h1 div[class*="bg-clip-text"],
+#hero h1 div[class*="bg-gradient"] {
+    line-height: 1.5 !important;
+    overflow: visible !important;
+    padding-bottom: 0.2em;
+    padding-top: 0.1em;
+}
+
+/* Hero section text container - allow overflow for descenders */
+#hero .flex.flex-col.gap-y-3 {
+    overflow: visible !important;
+}
+
+/* Scroll offset for fixed navbar - ensures sections are not covered by navbar */
+section[id] {
+    scroll-margin-top: 150px;
+}
+
+/* Specific adjustment for private-label section */
+#private-label {
+    scroll-margin-top: 150px;
+}
+
 /* Glass Utilities */
 .glass-panel {
     background: rgba(255, 255, 255, 0.25);
@@ -837,19 +861,29 @@ h1, h2, h3 {
 /* Glassmorphism Button on Blue Background */
 .glassmorphism-button-on-blue {
     background: rgba(255, 255, 255, 0.25) !important;
-    backdrop-filter: blur(20px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 140, 0, 0.15)) !important;
+    backdrop-filter: blur(30px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(30px) saturate(200%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.15),
+        0 2px 8px rgba(0, 0, 0, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
     color: #ffffff !important;
 }
 
 .glassmorphism-button-on-blue:hover {
-    background: rgba(255, 255, 255, 0.4) !important;
+    background: linear-gradient(135deg, rgba(255, 140, 0, 0.4), rgba(255, 140, 0, 0.5)) !important;
+    backdrop-filter: blur(35px) saturate(220%) !important;
+    -webkit-backdrop-filter: blur(35px) saturate(220%) !important;
+    border: 1px solid rgba(255, 140, 0, 0.6) !important;
     color: #ffffff !important;
     filter: brightness(1.1);
     box-shadow: 
-        0 12px 40px rgba(0, 0, 0, 0.15),
-        0 4px 12px rgba(0, 0, 0, 0.08);
+        0 12px 40px rgba(255, 140, 0, 0.3),
+        0 4px 12px rgba(255, 140, 0, 0.2),
+        inset 0 1px 2px rgba(255, 255, 255, 0.3),
+        0 0 20px rgba(255, 140, 0, 0.4) !important;
     transform: translateY(-1px);
 }
 
@@ -1213,8 +1247,8 @@ h1, h2, h3 {
     height: 100%;
     pointer-events: none;
     overflow: hidden;
-    /* Z-index: Metinlerin ve butonların arkasında süzülmeli */
-    z-index: 5;
+    /* Z-index: İçeriğin üstünde görünmesi için z-index: 50 */
+    z-index: 50;
     /* Görünürlük garantisi */
     display: block !important;
     opacity: 1 !important;
@@ -1228,38 +1262,31 @@ h1, h2, h3 {
     height: 100%;
 }
 
-/* Hygienic Bubble Base Styling - Zarif ama Fark Edilebilir */
+/* Hygienic Bubble Base Styling - Zarif ve Şeffaf (Subtle) */
 .hygienic-bubble {
     position: absolute;
     border-radius: 50%;
     will-change: transform;
     pointer-events: none;
     display: block !important;
-    visibility: visible !important;
-    /* Opacity JavaScript ile rastgele 0.30-0.60 arası atanacak */
-    opacity: 0.40;
+    /* Opacity JavaScript ile rastgele 0.03-0.1 arası atanacak */
+    opacity: 0.06;
     
-    /* İç dolgu: Daha belirgin parıltı */
-    background: radial-gradient(
-        circle at 30% 30%,
-        rgba(255, 255, 255, 0.35) 0%,
-        rgba(255, 255, 255, 0.2) 30%,
-        rgba(200, 230, 255, 0.1) 60%,
-        transparent 100%
-    );
+    /* İç dolgu tamamen şeffaf - sadece kenar highlight */
+    background: transparent;
     
-    /* Daha belirgin beyaz kenar çizgisi */
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    /* Sadece çok ince (0.5px) beyaz kenar parlama */
+    border: 0.5px solid rgba(255, 255, 255, 0.4);
     box-shadow: 
-        /* Daha belirgin dış glow */
-        0 0 15px rgba(128, 224, 255, 0.25),
-        0 0 30px rgba(128, 224, 255, 0.15);
+        /* Çok hafif dış glow - bokeh efekti için */
+        0 0 8px rgba(128, 224, 255, 0.08),
+        0 0 15px rgba(128, 224, 255, 0.04);
     
-    /* Blur azaltıldı - görünürlüğü artırmak için */
-    backdrop-filter: blur(1px) saturate(150%);
-    -webkit-backdrop-filter: blur(1px) saturate(150%);
+    /* Derinlik için blur efekti - "odak dışı" (bokeh) görünümü */
+    backdrop-filter: blur(3px) saturate(150%);
+    -webkit-backdrop-filter: blur(3px) saturate(150%);
     
-    filter: brightness(1.1) contrast(1.0);
+    filter: brightness(1.05) contrast(0.95);
     transform-style: preserve-3d;
     
     /* Scroll transform - JS'den gelen --scroll-y */
@@ -1304,28 +1331,27 @@ h1, h2, h3 {
     }
 }
 
-/* Parlaklık (Shine) - Daha belirgin, parlaklık hissi */
+/* Parlaklık (Shine) - Çok hafif, sadece ışık vurduğunda görünür */
 .hygienic-bubble::before {
     content: '';
     position: absolute;
     top: 20%;
     left: 20%;
-    width: 35%;
-    height: 35%;
+    width: 30%;
+    height: 30%;
     border-radius: 50%;
     background: radial-gradient(
         ellipse at center,
-        rgba(255, 255, 255, 0.6) 0%,
-        rgba(255, 255, 255, 0.4) 30%,
-        rgba(255, 255, 255, 0.2) 60%,
-        transparent 100%
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.15) 40%,
+        transparent 80%
     );
     transform: rotate(-35deg);
-    filter: blur(0.5px);
+    filter: blur(1px);
     z-index: 2;
     pointer-events: none;
     animation: shineShimmer 8s ease-in-out infinite;
-    opacity: 0.7;
+    opacity: 0.4;
 }
 
 /* Turuncu Kenar Işıması (#FF8C00) - Sadece küçük baloncukların %5'inde */
@@ -1371,15 +1397,15 @@ h1, h2, h3 {
     }
 }
 
-/* Shine Shimmer Animation - Daha belirgin parlaklık */
+/* Shine Shimmer Animation - Çok hafif */
 @keyframes shineShimmer {
     0%, 100% {
-        opacity: 0.6;
+        opacity: 0.3;
         transform: rotate(-35deg) scale(1);
     }
     50% {
-        opacity: 0.9;
-        transform: rotate(-35deg) scale(1.15);
+        opacity: 0.5;
+        transform: rotate(-35deg) scale(1.1);
     }
 }
 
@@ -1403,4 +1429,81 @@ h1, h2, h3 {
 
 .bubble-layer[data-layer="3"] .hygienic-bubble:nth-child(1) { animation-delay: 1s; }
 .bubble-layer[data-layer="3"] .hygienic-bubble:nth-child(2) { animation-delay: 7s; }
+
+/* ============================================
+   LANGUAGE SWITCHER STYLES
+   ============================================ */
+
+/* Desktop Language Switcher */
+#language-switcher-desktop {
+    z-index: 100;
+}
+
+#language-switcher-desktop-button {
+    transition: all 0.3s ease;
+}
+
+#language-switcher-desktop-button:hover {
+    transform: scale(1.05);
+}
+
+#language-switcher-desktop-dropdown.show {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
+}
+
+#language-switcher-desktop .lang-option.active {
+    background-color: #F8FAFC;
+    color: #FF8C00;
+    font-weight: 600;
+}
+
+/* Mobile Language Switcher */
+#language-switcher-mobile {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #E2E8F0;
+}
+
+#language-switcher-mobile .lang-btn {
+    flex: 1;
+    min-width: 0;
+    transition: all 0.2s ease;
+}
+
+#language-switcher-mobile .lang-btn.active {
+    background-color: #FF8C00 !important;
+    color: white !important;
+    border-color: #FF8C00 !important;
+    box-shadow: 0 2px 8px rgba(255, 140, 0, 0.3);
+    transform: scale(1.05);
+}
+
+#language-switcher-mobile .lang-btn:not(.active):hover {
+    background-color: #F8FAFC;
+    transform: scale(1.02);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #language-switcher-desktop {
+        display: none !important;
+    }
+    
+    #language-switcher-mobile {
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    #language-switcher-mobile {
+        display: none !important;
+    }
+    
+    #language-switcher-desktop {
+        display: block !important;
+    }
+}
 

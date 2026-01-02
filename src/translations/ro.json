@@ -142,7 +142,11 @@
       "email": "E-mail",
       "phone": "Telefon",
       "message": "Mesajul dvs.",
-      "send": "Trimite"
+      "send": "Trimite",
+      "placeholderName": "Numele dvs.",
+      "placeholderEmail": "exemplu@companie.com",
+      "placeholderPhone": "Numărul dvs. de telefon",
+      "placeholderMessage": "Scrieți cererea dvs. aici..."
     },
     "factory": {
       "title": "Fabrica și sediul central",
@@ -169,4 +173,5 @@
     "downloadPDF": "Descarcă PDF"
   }
 }
+
 

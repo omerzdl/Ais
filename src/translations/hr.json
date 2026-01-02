@@ -142,7 +142,11 @@
       "email": "E-pošta",
       "phone": "Telefon",
       "message": "Vaša poruka",
-      "send": "Pošalji"
+      "send": "Pošalji",
+      "placeholderName": "Vaše ime",
+      "placeholderEmail": "primjer@tvrtka.com",
+      "placeholderPhone": "Vaš broj telefona",
+      "placeholderMessage": "Napišite vaš zahtjev ovdje..."
     },
     "factory": {
       "title": "Tvornica i sjedište",
@@ -169,4 +173,5 @@
     "downloadPDF": "Preuzmi PDF"
   }
 }
+
 

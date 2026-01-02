@@ -142,7 +142,11 @@
       "email": "Электронная почта",
       "phone": "Телефон",
       "message": "Ваше сообщение",
-      "send": "Отправить"
+      "send": "Отправить",
+      "placeholderName": "Ваше имя",
+      "placeholderEmail": "example@company.com",
+      "placeholderPhone": "Ваш номер телефона",
+      "placeholderMessage": "Напишите ваш запрос здесь..."
     },
     "factory": {
       "title": "Завод и штаб-квартира",
@@ -169,4 +173,5 @@
     "downloadPDF": "Скачать PDF"
   }
 }
+
 

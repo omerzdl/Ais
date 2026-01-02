@@ -1,81 +1,6 @@
 // Initialize Lucide Icons (will be called after DOM is ready)
 
 // ============================================
-// TRANSLATION SYSTEM FOR STATIC HTML
-// ============================================
-let translations = {};
-let currentLanguage = 'en';
-
-// Load translations
-async function loadTranslations(lang) {
-    try {
-        const response = await fetch(`/src/translations/${lang}.json`);
-        if (response.ok) {
-            translations = await response.json();
-            currentLanguage = lang;
-            updateStaticTranslations();
-            return true;
-        }
-    } catch (error) {
-        console.error('Error loading translations:', error);
-    }
-    return false;
-}
-
-// Get translation by key
-function t(key) {
-    const keys = key.split('.');
-    let value = translations;
-    for (const k of keys) {
-        value = value?.[k];
-        if (value === undefined) break;
-    }
-    return value || key;
-}
-
-// Update all elements with data-i18n attribute
-function updateStaticTranslations() {
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        const translation = t(key);
-        
-        // Handle HTML content
-        if (element.hasAttribute('data-i18n-html')) {
-            element.innerHTML = translation;
-        } else {
-            element.textContent = translation;
-        }
-    });
-    
-    // Update placeholders
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-        const key = element.getAttribute('data-i18n-placeholder');
-        element.placeholder = t(key);
-    });
-    
-    // Update title attributes
-    document.querySelectorAll('[data-i18n-title]').forEach(element => {
-        const key = element.getAttribute('data-i18n-title');
-        element.title = t(key);
-    });
-}
-
-// Initialize language from localStorage or default to 'en'
-async function initLanguage() {
-    const savedLang = localStorage.getItem('language');
-    const lang = savedLang && ['en', 'tr', 'ru', 'sr', 'hr', 'ro'].includes(savedLang) ? savedLang : 'en';
-    await loadTranslations(lang);
-}
-
-// Set language and update
-window.updateStaticTranslations = async function(lang) {
-    if (['en', 'tr', 'ru', 'sr', 'hr', 'ro'].includes(lang)) {
-        await loadTranslations(lang);
-        localStorage.setItem('language', lang);
-    }
-};
-
-// ============================================
 // GLOBAL CONSTANTS
 // ============================================
 const CORPORATE_TABS = ['about', 'mission-vision', 'application'];
@@ -356,62 +281,6 @@ function initDesktopDropdowns() {
     console.log('Dropdown initialization complete');
 }
 
-// Initialize Static Language Selector
-function initStaticLanguageSelector() {
-    const languageSelector = document.getElementById('static-language-selector');
-    if (!languageSelector) return;
-    
-    const trigger = languageSelector.querySelector('.language-trigger');
-    const dropdown = languageSelector.querySelector('.language-dropdown');
-    const currentLang = languageSelector.querySelector('.current-lang');
-    
-    if (!trigger || !dropdown || !currentLang) return;
-    
-    const languages = [
-        { code: 'en', label: 'EN' },
-        { code: 'tr', label: 'TR' },
-        { code: 'ru', label: 'RU' },
-        { code: 'sr', label: 'SR' },
-        { code: 'hr', label: 'HR' },
-        { code: 'ro', label: 'RO' }
-    ];
-    
-    // Update current language display
-    function updateCurrentLang() {
-        const lang = languages.find(l => l.code === currentLanguage);
-        if (lang && currentLang) {
-            currentLang.textContent = lang.label;
-        }
-    }
-    
-    updateCurrentLang();
-    
-    // Toggle dropdown
-    trigger.addEventListener('click', (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle('hidden');
-    });
-    
-    // Close on outside click
-    document.addEventListener('click', (e) => {
-        if (!languageSelector.contains(e.target)) {
-            dropdown.classList.add('hidden');
-        }
-    });
-    
-    // Language selection
-    dropdown.querySelectorAll('.language-option').forEach(option => {
-        option.addEventListener('click', async (e) => {
-            const langCode = option.getAttribute('data-lang');
-            if (langCode && ['en', 'tr', 'ru', 'sr', 'hr', 'ro'].includes(langCode)) {
-                await window.updateStaticTranslations(langCode);
-                updateCurrentLang();
-                dropdown.classList.add('hidden');
-            }
-        });
-    });
-}
-
 // Mobile Menu Toggle and Scroll Lock
 let mobileMenuOpen = false;
 let scrollPosition = 0;
@@ -642,34 +511,45 @@ function initEnhancedNavigation() {
                 return;
             }
             
-            // Private Label section - Center vertically on screen
+            // Private Label section - scroll to title
+            if (href === '#private-label-title') {
+                e.preventDefault();
+                const privateLabelTitle = document.getElementById('private-label-title');
+                if (privateLabelTitle) {
+                    const offsetTop = privateLabelTitle.getBoundingClientRect().top + window.scrollY - 150;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                }
+                return;
+            }
+            
+            // Legacy support for #private-label (redirect to title)
             if (href === '#private-label') {
                 e.preventDefault();
-                const privateLabelSection = document.getElementById('private-label');
-                if (privateLabelSection) {
-                    // Get header height (navbar is fixed)
-                    const navbar = document.getElementById('navbar');
-                    const headerHeight = navbar ? navbar.offsetHeight : 0;
-                    
-                    // Calculate scroll position to center the section vertically
-                    // Formula: element.offsetTop - (window.innerHeight / 2) + (element.offsetHeight / 2)
-                    const elementTop = privateLabelSection.offsetTop;
-                    const elementHeight = privateLabelSection.offsetHeight;
-                    const viewportHeight = window.innerHeight;
-                    
-                    // Calculate target scroll position to center the section
-                    // This centers the section's midpoint at the viewport's midpoint
-                    let targetScrollPos = elementTop - (viewportHeight / 2) + (elementHeight / 2);
-                    
-                    // Ensure the section doesn't get hidden under the fixed header
-                    // If the calculated position would place content under the header, adjust it
-                    const minScrollPos = elementTop - headerHeight;
-                    if (targetScrollPos < minScrollPos) {
-                        // Adjust to ensure section is visible, but still try to center as much as possible
-                        targetScrollPos = Math.max(0, minScrollPos + (elementHeight / 2));
+                const privateLabelTitle = document.getElementById('private-label-title');
+                if (privateLabelTitle) {
+                    const offsetTop = privateLabelTitle.getBoundingClientRect().top + window.scrollY - 150;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                }
+                return;
+            }
+            
+            // Contact section - scroll to heading with proper offset
+            if (href === '#contact') {
+                e.preventDefault();
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                    // Get the contact heading (h2) within the section
+                    const contactHeading = contactSection.querySelector('h2');
+                    if (contactHeading) {
+                        // Calculate offset to position heading at top (accounting for navbar ~120px)
+                        const navbarHeight = 120;
+                        const offsetTop = contactHeading.getBoundingClientRect().top + window.scrollY - navbarHeight;
+                        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    } else {
+                        // Fallback to section scroll
+                        const offsetTop = contactSection.getBoundingClientRect().top + window.scrollY - 120;
+                        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
                     }
-                    
-                    window.scrollTo({ top: Math.max(0, targetScrollPos), behavior: 'smooth' });
                 }
                 return;
             }
@@ -762,8 +642,8 @@ window.addEventListener('scroll', () => {
             totalBubbles += bubbles.length;
             
             bubbles.forEach(bubble => {
-                // Rastgele opacity: 0.30 ile 0.60 arası (daha görünür)
-                const randomOpacity = 0.30 + Math.random() * 0.30; // 0.30 - 0.60
+                // Rastgele opacity: 0.03 ile 0.1 arası
+                const randomOpacity = 0.03 + Math.random() * 0.07; // 0.03 - 0.1
                 bubble.style.opacity = randomOpacity;
                 
                 // Küçük baloncukları topla (turuncu glow için)
@@ -1013,6 +893,7 @@ function initApplicationForm() {
     const cvInput = document.getElementById('app-cv');
     const cvLabel = document.getElementById('app-cv-label');
     const cvText = document.getElementById('app-cv-text');
+    const cvPlaceholder = document.getElementById('app-cv-placeholder');
     const cvError = document.getElementById('app-cv-error');
     const nameInput = document.getElementById('app-name');
     const nameError = document.getElementById('app-name-error');
@@ -1128,7 +1009,13 @@ function initApplicationForm() {
                 if (file.size > maxSize) {
                     showError(cvError, 'File size cannot exceed 10MB.');
                     this.value = '';
-                    if (cvText) cvText.textContent = '';
+                    if (cvText) {
+                        cvText.textContent = '';
+                        cvText.classList.add('hidden');
+                    }
+                    if (cvPlaceholder) {
+                        cvPlaceholder.classList.remove('hidden');
+                    }
                     return;
                 }
                 
@@ -1140,16 +1027,35 @@ function initApplicationForm() {
                 if (!allowedTypes.includes(file.type) && !allowedExtensions.includes(fileExtension)) {
                     showError(cvError, 'Only PDF, DOC or DOCX files are allowed.');
                     this.value = '';
-                    if (cvText) cvText.textContent = '';
+                    if (cvText) {
+                        cvText.textContent = '';
+                        cvText.classList.add('hidden');
+                    }
+                    if (cvPlaceholder) {
+                        cvPlaceholder.classList.remove('hidden');
+                    }
                     return;
                 }
                 
                 // Success - show file name
-                const fileName = file.name.length > 35 ? file.name.substring(0, 32) + '...' : file.name;
+                const fileName = file.name.length > 50 ? file.name.substring(0, 47) + '...' : file.name;
                 if (cvText) {
                     cvText.textContent = fileName;
+                    cvText.classList.remove('hidden');
+                }
+                if (cvPlaceholder) {
+                    cvPlaceholder.classList.add('hidden');
                 }
                 hideError(cvError);
+            } else {
+                // No file selected - show placeholder
+                if (cvText) {
+                    cvText.textContent = '';
+                    cvText.classList.add('hidden');
+                }
+                if (cvPlaceholder) {
+                    cvPlaceholder.classList.remove('hidden');
+                }
             }
         });
     }
@@ -1258,7 +1164,13 @@ function initApplicationForm() {
                     form.reset();
                     if (charCount) charCount.textContent = '0';
                     if (messageTextarea) messageTextarea.style.height = '48px';
-                    if (cvText) cvText.textContent = '';
+                    if (cvText) {
+                        cvText.textContent = '';
+                        cvText.classList.add('hidden');
+                    }
+                    if (cvPlaceholder) {
+                        cvPlaceholder.classList.remove('hidden');
+                    }
                     
                     // Scroll to success message
                     formSuccess?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1289,26 +1201,21 @@ function handleProductNavigation(hash) {
     
     if (PRODUCT_ITEMS.includes(productId)) {
         // Scroll to products tabs section
+        const productsTabsSection = document.getElementById('products-tabs');
         const productsSection = document.getElementById('products');
         if (productsSection) {
             const offsetTop = productsSection.offsetTop - 150; // Header offset
             window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-            
-            // Wait for scroll to complete, then activate product
-            // Use a longer timeout to ensure scroll animation completes
-            setTimeout(() => {
-                switchProduct(productId);
-            }, 800);
-        } else {
-            // If section not found, activate immediately
-            switchProduct(productId);
         }
+        
+        // Activate product after scroll
+        setTimeout(() => {
+            switchProduct(productId);
+        }, 500);
     }
 }
 
 function switchProduct(productId) {
-    console.log('switchProduct called with:', productId);
-    
     // Remove active class from all tabs
     document.querySelectorAll('.product-tab').forEach(tab => {
         tab.classList.remove('active');
@@ -1332,10 +1239,6 @@ function switchProduct(productId) {
     const selectedContent = document.getElementById(`product-content-${productId}`);
     const selectedImage = document.getElementById(`product-image-${productId}`);
     
-    console.log('Selected tab:', selectedTab);
-    console.log('Selected content:', selectedContent);
-    console.log('Selected image:', selectedImage);
-    
     if (selectedTab && selectedContent) {
         selectedTab.classList.add('active');
         selectedContent.classList.remove('hidden');
@@ -1351,13 +1254,7 @@ function switchProduct(productId) {
         }
         
         // Re-initialize icons
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-        }
-        
-        console.log('Product switched successfully to:', productId);
-    } else {
-        console.error('Failed to switch product. Tab or content not found for:', productId);
+        lucide.createIcons();
     }
 }
 
@@ -1457,20 +1354,8 @@ function initMobileProductDropdown() {
             // Close dropdown
             closeMobileProductDropdown();
             
-            // Scroll to products section first
-            const productsSection = document.getElementById('products');
-            if (productsSection) {
-                const offsetTop = productsSection.offsetTop - 150;
-                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                
-                // Wait for scroll to complete, then switch product
-                setTimeout(() => {
-                    switchProduct(productId);
-                }, 800);
-            } else {
-                // If section not found, switch immediately
-                switchProduct(productId);
-            }
+            // Switch product
+            switchProduct(productId);
         });
     });
     
@@ -2151,27 +2036,106 @@ function initContactForm() {
     updateContactTexts();
 }
 
-// Initialize all functionality
-async function initAll() {
-    // Initialize language system first
-    await initLanguage();
+// ============================================
+// LANGUAGE SWITCHER FUNCTIONALITY
+// ============================================
+
+function initLanguageSwitcher() {
+    // Desktop language switcher
+    const desktopButton = document.getElementById('language-switcher-desktop-button');
+    const desktopDropdown = document.getElementById('language-switcher-desktop-dropdown');
+    const desktopOptions = document.querySelectorAll('#language-switcher-desktop .lang-option');
     
+    if (desktopButton && desktopDropdown) {
+        let isOpen = false;
+        
+        // Toggle dropdown
+        desktopButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            isOpen = !isOpen;
+            
+            if (isOpen) {
+                desktopDropdown.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
+                desktopDropdown.classList.add('opacity-100', 'visible');
+                desktopDropdown.style.transform = 'translateY(0)';
+                const chevron = desktopButton.querySelector('[data-lucide="chevron-down"]');
+                if (chevron) {
+                    chevron.style.transform = 'rotate(180deg)';
+                }
+            } else {
+                desktopDropdown.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+                desktopDropdown.classList.remove('opacity-100', 'visible');
+                desktopDropdown.style.transform = 'translateY(-10px)';
+                const chevron = desktopButton.querySelector('[data-lucide="chevron-down"]');
+                if (chevron) {
+                    chevron.style.transform = 'rotate(0deg)';
+                }
+            }
+        });
+        
+        // Handle language selection
+        desktopOptions.forEach(option => {
+            option.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                const lang = option.dataset.lang;
+                if (window.i18n && lang) {
+                    await window.i18n.setLanguage(lang);
+                    isOpen = false;
+                    desktopDropdown.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+                    desktopDropdown.classList.remove('opacity-100', 'visible');
+                    desktopDropdown.style.transform = 'translateY(-10px)';
+                    const chevron = desktopButton.querySelector('[data-lucide="chevron-down"]');
+                    if (chevron) {
+                        chevron.style.transform = 'rotate(0deg)';
+                    }
+                }
+            });
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!desktopButton.contains(e.target) && !desktopDropdown.contains(e.target)) {
+                isOpen = false;
+                desktopDropdown.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+                desktopDropdown.classList.remove('opacity-100', 'visible');
+                desktopDropdown.style.transform = 'translateY(-10px)';
+                const chevron = desktopButton.querySelector('[data-lucide="chevron-down"]');
+                if (chevron) {
+                    chevron.style.transform = 'rotate(0deg)';
+                }
+            }
+        });
+    }
+    
+    // Mobile language switcher
+    const mobileButtons = document.querySelectorAll('#language-switcher-mobile .lang-btn');
+    
+    mobileButtons.forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const lang = btn.dataset.lang;
+            if (window.i18n && lang) {
+                await window.i18n.setLanguage(lang);
+            }
+        });
+    });
+}
+
+// Initialize all functionality
+function initAll() {
     // Initialize Lucide icons first
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
+    
+    // Initialize language switcher
+    initLanguageSwitcher();
     
     // Navbar initialization
     initNavbarAnimation();
     initDesktopDropdowns();
     initMobileMenu();
     initEnhancedNavigation();
-    
-    // Initialize language selector for static HTML
-    initStaticLanguageSelector();
-    
-    // Initialize language selector for static HTML
-    initStaticLanguageSelector();
     
     // Existing functionality
     initCorporateTabs();

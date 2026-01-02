@@ -1,5 +1,4 @@
 import { useLanguage } from "../contexts/LanguageContext"
-import LanguageSelector from "../components/LanguageSelector"
 
 export function CatalogPage() {
   const { t } = useLanguage()
@@ -20,7 +19,7 @@ export function CatalogPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#153A60]">
+    <div className="min-h-screen bg-gradient-to-b from-[#4DA8DA] to-[#003399]">
       {/* Header with buttons */}
       <div className="sticky top-0 z-50 px-6 py-6">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -45,9 +44,8 @@ export function CatalogPage() {
             {t('catalog.backToHome')}
           </button>
 
-          {/* Language Selector and Download PDF Button - Right */}
+          {/* Download PDF Button - Right */}
           <div className="flex items-center gap-4">
-            <LanguageSelector />
             <button
               onClick={handleDownloadPDF}
               className="glassmorphism-button glassmorphism-button-md glassmorphism-button-on-blue flex items-center gap-2"

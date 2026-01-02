@@ -74,7 +74,7 @@
     </div>
 
     <!-- HYGIENIC BUBBLES CONTAINER (Scroll-linked animation) - Zarif ve Şeffaf -->
-    <div id="bubble-layer" class="fixed inset-0 w-full h-full pointer-events-none overflow-hidden" style="z-index: 5;">
+    <div id="bubble-layer" class="fixed inset-0 w-full h-full pointer-events-none overflow-hidden" style="z-index: 50;">
         <!-- Layer 1: Slowest movement (background layer) -->
         <div class="bubble-layer" data-layer="1" data-speed="-0.08">
             <div class="hygienic-bubble bubble-size-md" style="top: 25%; left: 15%;"></div>
@@ -112,19 +112,19 @@
         <div id="desktop-menu" class="hidden md:block w-fit mx-auto">
             <div class="bg-white/30 backdrop-blur-md rounded-full px-6 py-3 shadow-lg border border-[#8FA895]/20">
                 <div class="flex items-center gap-8 text-[#153A60] text-sm font-bold" style="font-family: 'Syne', sans-serif;">
-                    <a href="#hero" class="hover:text-[#FF8C00] transition-colors">Home</a>
+                    <a href="#hero" class="hover:text-[#FF8C00] transition-colors" data-i18n="nav.home">Home</a>
                     
                     <!-- Corporate Dropdown -->
                     <div class="relative nav-dropdown" data-dropdown="corporate">
                         <a href="#corporate" class="hover:text-[#FF8C00] transition-colors flex items-center gap-1 cursor-pointer">
-                            Corporate
+                            <span data-i18n="nav.corporate">Corporate</span>
                             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
                         </a>
                         <div class="dropdown-menu absolute top-full left-0 pt-2 w-56 opacity-0 invisible pointer-events-none transition-all duration-300">
                             <div class="rounded-2xl p-2 shadow-xl bg-white border border-[#E2E8F0]">
-                                <a href="#about" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">About Us</a>
-                                <a href="#mission-vision" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Mission & Vision</a>
-                                <a href="#application" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Job Application</a>
+                                <a href="#about" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.about">About Us</a>
+                                <a href="#mission-vision" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.missionVision">Mission & Vision</a>
+                                <a href="#application" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.jobApplication">Job Application</a>
                             </div>
                         </div>
                     </div>
@@ -132,38 +132,43 @@
                     <!-- Products Dropdown -->
                     <div class="relative nav-dropdown" data-dropdown="products">
                         <a href="#products" class="hover:text-[#FF8C00] transition-colors flex items-center gap-1 cursor-pointer">
-                            Products
+                            <span data-i18n="nav.products">Products</span>
                             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
                         </a>
                         <div class="dropdown-menu absolute top-full left-0 pt-2 w-56 opacity-0 invisible pointer-events-none transition-all duration-300">
                             <div class="rounded-2xl p-2 shadow-xl bg-white border border-[#E2E8F0]">
-                                <a href="#products-surface-cleaners" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Powder Detergent</a>
-                                <a href="#products-concentrated-detergents" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Liquid Detergent</a>
-                                <a href="#products-disinfectants" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Wet Wipe</a>
-                                <a href="#products-liquid-soap" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Liquid Soap</a>
-                                <a href="#products-shampoo" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Shampoo</a>
+                                <a href="#products-surface-cleaners" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.powderDetergent">Powder Detergent</a>
+                                <a href="#products-concentrated-detergents" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.liquidDetergent">Liquid Detergent</a>
+                                <a href="#products-disinfectants" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.wetWipe">Wet Wipe</a>
+                                <a href="#products-liquid-soap" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.liquidSoap">Liquid Soap</a>
+                                <a href="#products-shampoo" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.shampoo">Shampoo</a>
                             </div>
                         </div>
                     </div>
                     
-                    <a href="#private-label" class="hover:text-[#FF8C00] transition-colors" data-i18n="nav.privateLabel">Private Label</a>
                     <a href="/catalog" class="hover:text-[#FF8C00] transition-colors" data-i18n="nav.eCatalog">E-Catalog</a>
+                    <a href="#private-label-title" class="hover:text-[#FF8C00] transition-colors" data-i18n="nav.privateLabel">Private Label</a>
                     <a href="#contact" class="hover:text-[#FF8C00] transition-colors" data-i18n="nav.contact">Contact</a>
-                    
-                    <!-- Language Selector -->
-                    <div id="static-language-selector" class="relative">
-                        <button class="language-trigger flex items-center justify-center gap-1 rounded-full bg-white/30 backdrop-blur-md border border-[#8FA895]/20 text-[#153A60] text-sm font-bold hover:bg-white/40 transition-colors px-3 py-1.5 shadow-lg" style="font-family: 'Syne', sans-serif;">
-                            <span class="current-lang">EN</span>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
-                        </button>
-                        <div class="language-dropdown absolute top-full right-0 mt-0 bg-white rounded-b-2xl shadow-xl border border-[#8FA895]/30 border-t-0 z-50 min-w-[120px] hidden">
-                            <button class="language-option w-full text-left px-4 py-2 text-sm transition-colors first:rounded-t-none last:rounded-b-2xl text-[#1E293B] hover:bg-[#F8FAFC] hover:text-[#FF8C00]" data-lang="en" style="font-family: 'Syne', sans-serif;">EN</button>
-                            <button class="language-option w-full text-left px-4 py-2 text-sm transition-colors text-[#1E293B] hover:bg-[#F8FAFC] hover:text-[#FF8C00]" data-lang="tr" style="font-family: 'Syne', sans-serif;">TR</button>
-                            <button class="language-option w-full text-left px-4 py-2 text-sm transition-colors text-[#1E293B] hover:bg-[#F8FAFC] hover:text-[#FF8C00]" data-lang="ru" style="font-family: 'Syne', sans-serif;">RU</button>
-                            <button class="language-option w-full text-left px-4 py-2 text-sm transition-colors text-[#1E293B] hover:bg-[#F8FAFC] hover:text-[#FF8C00]" data-lang="sr" style="font-family: 'Syne', sans-serif;">SR</button>
-                            <button class="language-option w-full text-left px-4 py-2 text-sm transition-colors text-[#1E293B] hover:bg-[#F8FAFC] hover:text-[#FF8C00]" data-lang="hr" style="font-family: 'Syne', sans-serif;">HR</button>
-                            <button class="language-option w-full text-left px-4 py-2 text-sm transition-colors last:rounded-b-2xl text-[#1E293B] hover:bg-[#F8FAFC] hover:text-[#FF8C00]" data-lang="ro" style="font-family: 'Syne', sans-serif;">RO</button>
-                        </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desktop Language Switcher (Fixed Top Right) -->
+        <div id="language-switcher-desktop" class="hidden md:block fixed right-4 md:right-8 top-4 md:top-6 z-[100]">
+            <div class="relative">
+                <button id="language-switcher-desktop-button" class="bg-white/30 backdrop-blur-md rounded-full px-4 py-2 shadow-lg border border-[#8FA895]/20 flex items-center gap-2 text-[#153A60] text-sm font-bold hover:bg-white/50 transition-all" style="font-family: 'Syne', sans-serif;">
+                    <i data-lucide="languages" class="w-4 h-4"></i>
+                    <span class="current-lang">EN</span>
+                    <i data-lucide="chevron-down" class="w-3 h-3 transition-transform"></i>
+                </button>
+                <div id="language-switcher-desktop-dropdown" class="absolute top-full right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-[#E2E8F0] opacity-0 invisible pointer-events-none transition-all duration-300 transform translate-y-[-10px]">
+                    <div class="p-2 space-y-1">
+                        <button class="lang-option w-full text-left px-4 py-2 rounded-xl text-sm font-medium text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-lang="en">English</button>
+                        <button class="lang-option w-full text-left px-4 py-2 rounded-xl text-sm font-medium text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-lang="tr">Türkçe</button>
+                        <button class="lang-option w-full text-left px-4 py-2 rounded-xl text-sm font-medium text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-lang="ru">Русский</button>
+                        <button class="lang-option w-full text-left px-4 py-2 rounded-xl text-sm font-medium text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-lang="sr">Српски</button>
+                        <button class="lang-option w-full text-left px-4 py-2 rounded-xl text-sm font-medium text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-lang="hr">Hrvatski</button>
+                        <button class="lang-option w-full text-left px-4 py-2 rounded-xl text-sm font-medium text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-lang="ro">Română</button>
                     </div>
                 </div>
             </div>
@@ -182,41 +187,53 @@
         
         <!-- Menu Content -->
         <div class="absolute top-20 right-4 left-4 bg-white rounded-3xl p-6 shadow-xl border border-[#8FA895]/30 animate-fade-in-down max-h-[calc(100vh-7rem)] overflow-y-auto">
+            <!-- Mobile Language Switcher (Top of Menu) -->
+            <div id="language-switcher-mobile" class="mb-6 pb-6 border-b border-[#E2E8F0]">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <button class="lang-btn px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 bg-[#FF8C00] text-white shadow-md" data-lang="en">EN</button>
+                    <button class="lang-btn px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 bg-white text-[#1E293B] border border-[#E2E8F0] hover:bg-[#F8FAFC]" data-lang="tr">TR</button>
+                    <button class="lang-btn px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 bg-white text-[#1E293B] border border-[#E2E8F0] hover:bg-[#F8FAFC]" data-lang="ru">RU</button>
+                    <button class="lang-btn px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 bg-white text-[#1E293B] border border-[#E2E8F0] hover:bg-[#F8FAFC]" data-lang="sr">SR</button>
+                    <button class="lang-btn px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 bg-white text-[#1E293B] border border-[#E2E8F0] hover:bg-[#F8FAFC]" data-lang="hr">HR</button>
+                    <button class="lang-btn px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 bg-white text-[#1E293B] border border-[#E2E8F0] hover:bg-[#F8FAFC]" data-lang="ro">RO</button>
+                </div>
+            </div>
+            
             <!-- Mobile Menu Items -->
             <div id="mobile-menu-items" class="space-y-2" style="font-family: 'Syne', sans-serif; font-weight: 400;">
-                <a href="#hero" class="block px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors border-b border-[#E2E8F0]">Home</a>
+                <a href="#hero" class="block px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors border-b border-[#E2E8F0]" data-i18n="nav.home">Home</a>
                 
                 <!-- Corporate Mobile Dropdown -->
                 <div class="mobile-dropdown">
                     <button class="mobile-dropdown-toggle w-full flex items-center justify-between px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors border-b border-[#E2E8F0]">
-                        <span>Corporate</span>
+                        <span data-i18n="nav.corporate">Corporate</span>
                         <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
                     </button>
                     <div class="mobile-dropdown-content hidden ml-4 mt-2 space-y-2">
-                        <a href="#about" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">About Us</a>
-                        <a href="#mission-vision" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Mission & Vision</a>
-                        <a href="#application" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Job Application</a>
+                        <a href="#about" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.about">About Us</a>
+                        <a href="#mission-vision" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.missionVision">Mission & Vision</a>
+                        <a href="#application" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.jobApplication">Job Application</a>
                     </div>
                 </div>
                 
                 <!-- Products Mobile Dropdown -->
                 <div class="mobile-dropdown">
                     <button class="mobile-dropdown-toggle w-full flex items-center justify-between px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors border-b border-[#E2E8F0]">
-                        <span>Products</span>
+                        <span data-i18n="nav.products">Products</span>
                         <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
                     </button>
                     <div class="mobile-dropdown-content hidden ml-4 mt-2 space-y-2">
-                        <a href="#products-surface-cleaners" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Powder Detergent</a>
-                        <a href="#products-concentrated-detergents" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Liquid Detergent</a>
-                        <a href="#products-disinfectants" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Wet Wipe</a>
-                        <a href="#products-liquid-soap" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Liquid Soap</a>
-                        <a href="#products-shampoo" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Shampoo</a>
+                        <a href="#products-surface-cleaners" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.powderDetergent">Powder Detergent</a>
+                        <a href="#products-concentrated-detergents" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.liquidDetergent">Liquid Detergent</a>
+                        <a href="#products-disinfectants" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.wetWipe">Wet Wipe</a>
+                        <a href="#products-liquid-soap" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.liquidSoap">Liquid Soap</a>
+                        <a href="#products-shampoo" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.shampoo">Shampoo</a>
                     </div>
                 </div>
                 
-                <a href="#private-label" class="block px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors border-b border-[#E2E8F0]">Private Label</a>
-                <a href="/catalog" class="block px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors border-b border-[#E2E8F0]">E-Catalog</a>
-                <a href="#contact" class="block px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors">Contact</a>
+                <a href="/catalog" class="block px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors border-b border-[#E2E8F0]" data-i18n="nav.eCatalog">E-Catalog</a>
+                <a href="#private-label-title" class="block px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors border-b border-[#E2E8F0]" data-i18n="nav.privateLabel">Private Label</a>
+                <a href="#contact" class="block px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.contact">Contact</a>
             </div>
         </div>
     </div>
@@ -227,23 +244,23 @@
         <div class="absolute inset-0 bg-white/10 z-0"></div>
 
         <!-- Glassmorphism Layer - Left Side -->
-        <div class="absolute top-0 left-0 w-full lg:w-[60%] xl:w-[55%] h-full bg-white/5 backdrop-blur-md border-r border-b border-white/30 rounded-br-[200px] z-[1] bg-gradient-to-br from-white/10 to-transparent"></div>
+        <div class="absolute top-0 left-0 w-full lg:w-[56%] xl:w-[52%] h-full bg-white/5 backdrop-blur-md border-r border-b border-white/30 rounded-br-[200px] z-[1] bg-gradient-to-br from-white/10 to-transparent"></div>
 
         <div class="relative max-w-7xl mx-auto px-6 lg:px-12 xl:px-20 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 z-10">
             
-            <div class="flex flex-col justify-center items-start pt-10 max-w-full px-8 md:px-16 lg:px-20" style="overflow-wrap: break-word; word-wrap: break-word;">
-                <h1 class="font-subheading font-bold tracking-tight mb-5 antialiased text-left flex flex-col gap-y-3 max-w-full" style="overflow-wrap: break-word; word-wrap: break-word;">
+            <div class="flex flex-col justify-center items-start pt-10 w-full break-words px-6 md:px-12 lg:px-16 xl:px-20 overflow-visible">
+                <h1 class="font-subheading font-bold tracking-tight mb-5 antialiased text-left flex flex-col gap-y-3 w-full break-words">
                     <!-- Satır 1: Ais: -->
-                    <div class="text-[#FF8C00] flex-shrink-0 leading-[1.2] inline-block pr-[0.3em] -mr-[0.3em]" style="font-size: clamp(1.75rem, 5.6vw, 3.15rem); overflow-wrap: break-word; word-wrap: break-word;">Ais:</div>
+                    <div class="text-[#FF8C00] leading-[1.4] w-full overflow-visible" style="font-size: clamp(1.75rem, 5vw, 3rem);" data-i18n="hero.brand">Ais:</div>
                     <!-- Satır 2: The Depth of Purity, -->
-                    <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent flex-shrink-0 leading-[1.2] inline-block pr-[0.3em] -mr-[0.3em]" style="font-size: clamp(1.4rem, 3.5vw, 2.45rem); overflow-wrap: break-word; word-wrap: break-word;">The Depth of Purity,</div>
+                    <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent leading-[1.5] w-full overflow-visible" style="font-size: clamp(1.25rem, 3.5vw, 2.25rem);" data-i18n="hero.title1">The Depth of Purity,</div>
                     <!-- Satır 3: The Next Generation of Clean. -->
-                    <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent flex-shrink-0 leading-[1.2] inline-block pr-[0.3em] -mr-[0.3em]" style="font-size: clamp(1.4rem, 3.5vw, 2.45rem); overflow-wrap: break-word; word-wrap: break-word;">The Next Generation of Clean.</div>
+                    <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent leading-[1.5] w-full overflow-visible" style="font-size: clamp(1.25rem, 3.5vw, 2.25rem);" data-i18n="hero.title2">The Next Generation of Clean.</div>
                 </h1>
 
                 <div class="flex flex-wrap items-center gap-4">
                     <a href="/catalog" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue">
-                        <span>Product Catalog</span>
+                        <span data-i18n="hero.productCatalog">Product Catalog</span>
                         <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </a>
                 </div>
@@ -260,7 +277,7 @@
                             <i data-lucide="award" class="w-5 h-5"></i>
                         </div>
                     </div>
-                    <span>100% Hygiene Guarantee</span>
+                    <span data-i18n="hero.hygieneGuarantee">100% Hygiene Guarantee</span>
                 </div>
             </div>
 
@@ -272,8 +289,8 @@
                             <i data-lucide="phone" class="w-6 h-6 stroke-[1.5]"></i>
                         </div>
                         <div>
-                            <h3 class="text-[#153A60] font-sans font-bold leading-tight">Contact Us!</h3>
-                            <p class="text-xs text-[#64748B]">Get in touch now</p>
+                            <h3 class="text-[#153A60] font-sans font-bold leading-tight" data-i18n="hero.contactUs">Contact Us!</h3>
+                            <p class="text-xs text-[#64748B]" data-i18n="hero.getInTouch">Get in touch now</p>
                         </div>
                     </div>
                     <div class="h-2 w-full bg-white/50 rounded-full overflow-hidden">
@@ -289,8 +306,8 @@
         <div class="max-w-7xl mx-auto">
             <!-- Section Header -->
             <div class="text-center mb-12 md:mb-16">
-                <h2 class="text-4xl md:text-5xl font-subheading font-bold mb-4 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent overflow-visible">Corporate</h2>
-                <p class="text-lg text-[#1E293B] leading-relaxed font-sans font-normal max-w-2xl mx-auto">
+                <h2 class="text-4xl md:text-5xl font-subheading font-bold mb-4 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent overflow-visible" data-i18n="corporate.title">Corporate</h2>
+                <p class="text-lg text-[#1E293B] leading-relaxed font-sans font-normal max-w-2xl mx-auto" data-i18n="corporate.subtitle">
                     Discover our company values, mission, and opportunities. Learn about our culture and join our team.
                 </p>
             </div>
@@ -299,13 +316,13 @@
             <div id="corporate-tabs" class="glass-radio-group-wrapper flex justify-center mb-12 md:mb-16 px-4 md:px-0">
                 <div class="glass-radio-group flex-shrink-0">
                     <input type="radio" name="corporate-tab" id="corporate-about" value="about" checked>
-                    <label for="corporate-about" data-tab="about">About Us</label>
+                    <label for="corporate-about" data-tab="about" data-i18n="nav.about">About Us</label>
                     
                     <input type="radio" name="corporate-tab" id="corporate-mission-vision" value="mission-vision">
-                    <label for="corporate-mission-vision" data-tab="mission-vision">Mission & Vision</label>
+                    <label for="corporate-mission-vision" data-tab="mission-vision" data-i18n="nav.missionVision">Mission & Vision</label>
                     
                     <input type="radio" name="corporate-tab" id="corporate-application" value="application">
-                    <label for="corporate-application" data-tab="application">Job Application</label>
+                    <label for="corporate-application" data-tab="application" data-i18n="nav.jobApplication">Job Application</label>
                     
                     <div class="glass-glider"></div>
                 </div>
@@ -315,9 +332,9 @@
             <div class="max-w-4xl mx-auto">
                 <!-- About Tab Content -->
                 <div id="tab-content-about" class="corporate-tab-content hidden text-center">
-                    <h2 class="text-4xl md:text-5xl font-subheading font-bold mb-8 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent overflow-visible">About Us</h2>
+                    <h2 class="text-4xl md:text-5xl font-subheading font-bold mb-8 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent overflow-visible" data-i18n="corporate.about.title">About Us</h2>
                     <div class="space-y-6 mb-12">
-                        <p class="text-lg text-[#1E293B] leading-relaxed font-sans font-normal">
+                        <p class="text-lg text-[#1E293B] leading-relaxed font-sans font-normal" data-i18n="corporate.about.description">
                             At Ais, we view cleaning not merely as a surface-level task, but as the way living spaces breathe. By blending chemistry and technology with a meticulous focus on human health, we redefine 'deep purity' standards in every product—from powder detergents to personal care. In our specialized field of powder detergent technology, we offer molecular solutions that eliminate the toughest stains without damaging fibers. Ais is more than just a cleaning brand; it is the scientific embodiment of the flawless freshness you feel in your home and on your skin.
                         </p>
                     </div>
@@ -328,8 +345,8 @@
                             <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-[#F8FAFC] flex items-center justify-center shadow-[0_4px_16px_rgba(128,224,255,0.2)]">
                                 <i data-lucide="award" class="w-8 h-8 text-[#FF8C00]"></i>
                 </div>
-                            <h3 class="text-xl font-subheading font-bold text-[#153A60] mb-3">Excellence</h3>
-                            <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal">
+                            <h3 class="text-xl font-subheading font-bold text-[#153A60] mb-3" data-i18n="corporate.about.excellence.title">Excellence</h3>
+                            <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal" data-i18n="corporate.about.excellence.description">
                                 Scientific data-driven solutions with cutting-edge technology in every product.
                             </p>
                         </div>
@@ -337,8 +354,8 @@
                             <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-[#F8FAFC] flex items-center justify-center shadow-[0_4px_16px_rgba(128,224,255,0.2)]">
                                 <i data-lucide="users" class="w-8 h-8 text-[#FF8C00]"></i>
                             </div>
-                            <h3 class="text-xl font-subheading font-bold text-[#153A60] mb-3">Trusted Partner</h3>
-                            <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal">
+                            <h3 class="text-xl font-subheading font-bold text-[#153A60] mb-3" data-i18n="corporate.about.trustedPartner.title">Trusted Partner</h3>
+                            <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal" data-i18n="corporate.about.trustedPartner.description">
                                 Serving over 100 corporate customers with reliable and effective cleaning solutions.
                         </p>
                     </div>
@@ -346,8 +363,8 @@
                             <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-[#F8FAFC] flex items-center justify-center shadow-[0_4px_16px_rgba(128,224,255,0.2)]">
                                 <i data-lucide="leaf" class="w-8 h-8 text-[#FF8C00]"></i>
                             </div>
-                            <h3 class="text-xl font-subheading font-bold text-[#153A60] mb-3">Sustainability</h3>
-                            <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal">
+                            <h3 class="text-xl font-subheading font-bold text-[#153A60] mb-3" data-i18n="corporate.about.sustainability.title">Sustainability</h3>
+                            <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal" data-i18n="corporate.about.sustainability.description">
                                 Environmentally friendly solutions that protect both your spaces and our planet.
                             </p>
                         </div>
@@ -358,14 +375,14 @@
                 <div id="tab-content-mission-vision" class="corporate-tab-content hidden">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-center mb-12">
                         <div>
-                            <h3 class="text-3xl md:text-4xl font-subheading font-bold mb-6 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent overflow-visible">Our Mission</h3>
-                            <p class="text-lg text-[#1E293B] leading-relaxed font-sans font-normal">
+                            <h3 class="text-3xl md:text-4xl font-subheading font-bold mb-6 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent overflow-visible" data-i18n="corporate.missionVision.mission.title">Our Mission</h3>
+                            <p class="text-lg text-[#1E293B] leading-relaxed font-sans font-normal" data-i18n="corporate.missionVision.mission.description">
                                 Our mission is to transform traditional cleaning concepts through modern laboratory techniques and eco-friendly formulas. We believe that cleanliness should be an accessible 'living standard' for everyone, not just a necessity. Across every product group—from our flagship powder detergents to wet wipes—we combine high performance with reliability, striving to represent the purest form of hygiene on a global scale.
                             </p>
                         </div>
                         <div>
-                            <h3 class="text-3xl md:text-4xl font-subheading font-bold mb-6 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent overflow-visible">Our Vision</h3>
-                            <p class="text-lg text-[#1E293B] leading-relaxed font-sans font-normal">
+                            <h3 class="text-3xl md:text-4xl font-subheading font-bold mb-6 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent overflow-visible" data-i18n="corporate.missionVision.vision.title">Our Vision</h3>
+                            <p class="text-lg text-[#1E293B] leading-relaxed font-sans font-normal" data-i18n="corporate.missionVision.vision.description">
                                 As a pioneer of innovation in hygiene technologies, our vision is to become a global reference point that defines the very criteria of 'purity.' By elevating cleaning culture to a more sustainable, smarter, and more effective level with every formula we develop, we aim to establish a permanent guarantee of absolute hygiene wherever the Ais logo is present.
                             </p>
                         </div>
@@ -377,8 +394,8 @@
                             <div class="w-12 h-12 mb-4 rounded-full bg-[#F8FAFC] flex items-center justify-center shadow-[0_4px_16px_rgba(128,224,255,0.2)]">
                                 <i data-lucide="target" class="w-6 h-6 text-[#FF8C00]"></i>
                             </div>
-                            <h3 class="text-lg font-subheading font-bold text-[#153A60] mb-2">Innovation</h3>
-                            <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal">
+                            <h3 class="text-lg font-subheading font-bold text-[#153A60] mb-2" data-i18n="corporate.missionVision.innovation.title">Innovation</h3>
+                            <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal" data-i18n="corporate.missionVision.innovation.description">
                                 Continuously developing new technologies and formulas to meet evolving cleaning needs.
                             </p>
                         </div>
@@ -386,8 +403,8 @@
                             <div class="w-12 h-12 mb-4 rounded-full bg-[#F8FAFC] flex items-center justify-center shadow-[0_4px_16px_rgba(128,224,255,0.2)]">
                                 <i data-lucide="globe" class="w-6 h-6 text-[#FF8C00]"></i>
                             </div>
-                            <h3 class="text-lg font-subheading font-bold text-[#153A60] mb-2">Global Reach</h3>
-                            <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal">
+                            <h3 class="text-lg font-subheading font-bold text-[#153A60] mb-2" data-i18n="corporate.missionVision.globalReach.title">Global Reach</h3>
+                            <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal" data-i18n="corporate.missionVision.globalReach.description">
                                 Expanding our presence in international markets with sustainable and effective solutions.
                             </p>
                         </div>
@@ -396,11 +413,11 @@
 
                 <!-- Application Tab Content -->
                 <div id="tab-content-application" class="corporate-tab-content hidden text-center">
-                    <h2 class="text-4xl md:text-5xl font-subheading font-bold mb-8 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent">Job Application</h2>
+                    <h2 class="text-4xl md:text-5xl font-subheading font-bold mb-8 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent" data-i18n="corporate.application.title">Job Application</h2>
                     <div class="space-y-6 mb-10">
                         <p class="text-lg text-[#1E293B] leading-relaxed font-sans font-normal">
-                            <span class="font-bold">Together we are stronger!</span><br>
-                            Fill out the form below to join the Ais Cleaning family. We will get back to you as soon as possible after your application is reviewed.
+                            <span class="font-bold" data-i18n="corporate.application.subtitle">Together we are stronger!</span><br>
+                            <span data-i18n="corporate.application.description">Fill out the form below to join the Ais Cleaning family. We will get back to you as soon as possible after your application is reviewed.</span>
                         </p>
                     </div>
 
@@ -408,45 +425,45 @@
                     <form id="application-form" class="text-left max-w-2xl mx-auto space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label for="app-name" class="block text-sm font-medium text-[#1E293B] mb-2">Full Name <span class="text-[#FF8C00]">*</span></label>
+                                <label for="app-name" class="block text-sm font-medium text-[#1E293B] mb-2"><span data-i18n="corporate.application.form.fullName">Full Name</span> <span class="text-[#FF8C00]">*</span></label>
                                 <input type="text" id="app-name" name="name" autocomplete="name" required class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm">
                             </div>
                             <div>
-                                <label for="app-email" class="block text-sm font-medium text-[#1E293B] mb-2">Email <span class="text-[#FF8C00]">*</span></label>
+                                <label for="app-email" class="block text-sm font-medium text-[#1E293B] mb-2"><span data-i18n="corporate.application.form.email">Email</span> <span class="text-[#FF8C00]">*</span></label>
                                 <input type="email" id="app-email" name="email" autocomplete="email" required class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label for="app-phone" class="block text-sm font-medium text-[#1E293B] mb-2">Phone <span class="text-[#FF8C00]">*</span></label>
+                                <label for="app-phone" class="block text-sm font-medium text-[#1E293B] mb-2"><span data-i18n="corporate.application.form.phone">Phone</span> <span class="text-[#FF8C00]">*</span></label>
                                 <input type="tel" id="app-phone" name="phone" autocomplete="tel" required pattern="[0-9]+" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm">
                             </div>
                             <div>
-                                <label for="app-position" class="block text-sm font-medium text-[#1E293B] mb-2">Position</label>
+                                <label for="app-position" class="block text-sm font-medium text-[#1E293B] mb-2" data-i18n="corporate.application.form.position">Position</label>
                                 <input type="text" id="app-position" name="position" autocomplete="organization-title" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm">
                             </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-[#1E293B] mb-2">Upload CV <span class="text-[#FF8C00]">*</span></label>
-                            <div class="flex items-center gap-3">
-                                <label for="app-cv" id="app-cv-label" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#FF8C00] text-white text-sm font-medium cursor-pointer hover:bg-[#E67E00] transition-colors duration-200">
-                                    <i data-lucide="upload" class="w-4 h-4"></i>
-                                    <span>Select File</span>
-                                </label>
-                                <span id="app-cv-text" class="text-sm text-[#64748B]"></span>
-                            </div>
+                            <label class="block text-sm font-medium text-[#1E293B] mb-2"><span data-i18n="corporate.application.form.uploadCV">Upload CV</span> <span class="text-[#FF8C00]">*</span></label>
+                            <label for="app-cv" id="app-cv-label" class="block w-full cursor-pointer group">
+                                <div class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-full relative w-full flex items-center justify-center gap-3">
+                                    <i data-lucide="upload" class="w-5 h-5 flex-shrink-0"></i>
+                                    <span id="app-cv-placeholder" class="text-base font-semibold" data-i18n="corporate.application.form.selectFile">Select File...</span>
+                                    <span id="app-cv-text" class="text-base font-semibold hidden"></span>
+                                </div>
+                            </label>
                             <input type="file" id="app-cv" name="cv" autocomplete="off" required accept=".pdf,.doc,.docx" class="sr-only">
-                            <p class="text-xs text-[#64748B] mt-2">PDF, DOC or DOCX format, max 10MB</p>
+                            <p class="text-xs text-[#64748B] mt-2" data-i18n="corporate.application.form.fileFormat">PDF, DOC or DOCX format, maximum 10MB</p>
                             <p id="app-cv-error" class="text-xs text-red-500 mt-1 hidden"></p>
                         </div>
                         <div>
-                            <label for="app-message" class="block text-sm font-medium text-[#1E293B] mb-2">Message</label>
+                            <label for="app-message" class="block text-sm font-medium text-[#1E293B] mb-2" data-i18n="corporate.application.form.message">Message</label>
                             <textarea id="app-message" name="message" rows="4" maxlength="500" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm resize-none"></textarea>
-                            <p class="text-xs text-[#64748B] mt-2"><span id="char-count">0</span>/500 characters</p>
+                            <p class="text-xs text-[#64748B] mt-2"><span id="char-count">0</span>/500 <span data-i18n="corporate.application.form.characters">characters</span></p>
                         </div>
                         <div class="pt-4">
                             <button type="submit" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-full glassmorphism-button-blue">
-                                <span>Submit Application</span>
+                                <span data-i18n="corporate.application.form.submit">Submit Application</span>
                                 <i data-lucide="send" class="w-5 h-5"></i>
                             </button>
                         </div>
@@ -469,30 +486,30 @@
             <div id="products-mobile-dropdown" class="lg:hidden mb-8">
                 <div class="products-mobile-dropdown-wrapper relative w-full">
                     <button type="button" id="products-mobile-trigger" class="products-mobile-trigger w-full flex items-center justify-between gap-2 px-4 py-3 rounded-2xl bg-white/80 backdrop-blur-md border border-[#8FA895]/30 text-[#1A2F25] text-sm font-medium shadow-lg transition-all duration-300 hover:bg-white hover:shadow-xl" aria-expanded="false" aria-haspopup="listbox">
-                        <span class="selected-text truncate">Powder Detergent</span>
+                        <span class="selected-text truncate" data-i18n="nav.powderDetergent">Powder Detergent</span>
                         <i data-lucide="chevron-down" class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
                     </button>
                     <div id="products-mobile-menu" class="products-mobile-menu absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl border border-[#8FA895]/20 shadow-2xl z-50 max-h-[400px] overflow-y-auto overscroll-contain opacity-0 invisible transform translate-y-[-10px] transition-all duration-300" role="listbox">
                         <div class="p-2 space-y-1">
                             <button type="button" class="products-mobile-item w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-3 bg-[#FF8C00] text-white" data-value="surface-cleaners" role="option" aria-selected="true">
                                 <i data-lucide="washing-machine" class="w-5 h-5 flex-shrink-0 product-tab-icon"></i>
-                                <span>Powder Detergent</span>
+                                <span data-i18n="nav.powderDetergent">Powder Detergent</span>
                             </button>
                             <button type="button" class="products-mobile-item w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-3 text-[#1E293B] hover:bg-[#F8FAFC] hover:text-[#FF8C00]" data-value="concentrated-detergents" role="option" aria-selected="false">
                                 <i data-lucide="droplets" class="w-5 h-5 flex-shrink-0 product-tab-icon"></i>
-                                <span>Liquid Detergent</span>
+                                <span data-i18n="nav.liquidDetergent">Liquid Detergent</span>
                             </button>
                             <button type="button" class="products-mobile-item w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-3 text-[#1E293B] hover:bg-[#F8FAFC] hover:text-[#FF8C00]" data-value="disinfectants" role="option" aria-selected="false">
                                 <i data-lucide="layers" class="w-5 h-5 flex-shrink-0 product-tab-icon"></i>
-                                <span>Wet Wipe</span>
+                                <span data-i18n="nav.wetWipe">Wet Wipe</span>
                             </button>
                             <button type="button" class="products-mobile-item w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-3 text-[#1E293B] hover:bg-[#F8FAFC] hover:text-[#FF8C00]" data-value="liquid-soap" role="option" aria-selected="false">
                                 <i data-lucide="hand" class="w-5 h-5 flex-shrink-0 product-tab-icon"></i>
-                                <span>Liquid Soap</span>
+                                <span data-i18n="nav.liquidSoap">Liquid Soap</span>
                             </button>
                             <button type="button" class="products-mobile-item w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-3 text-[#1E293B] hover:bg-[#F8FAFC] hover:text-[#FF8C00]" data-value="shampoo" role="option" aria-selected="false">
                                 <i data-lucide="shower-head" class="w-5 h-5 flex-shrink-0 product-tab-icon"></i>
-                                <span>Shampoo</span>
+                                <span data-i18n="nav.shampoo">Shampoo</span>
                             </button>
                         </div>
                     </div>
@@ -507,31 +524,31 @@
                         <button class="product-tab w-full text-left px-4 py-3 rounded-xl font-medium transition-all" data-product="surface-cleaners" data-href="#products-surface-cleaners">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="washing-machine" class="w-5 h-5 product-tab-icon"></i>
-                                <span data-i18n="products.surface-cleaners">Powder Detergent</span>
+                                <span data-i18n="nav.powderDetergent">Powder Detergent</span>
                             </div>
                         </button>
                         <button class="product-tab w-full text-left px-4 py-3 rounded-xl font-medium transition-all" data-product="concentrated-detergents" data-href="#products-concentrated-detergents">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="droplets" class="w-5 h-5 product-tab-icon"></i>
-                                <span data-i18n="products.concentrated-detergents">Liquid Detergent</span>
+                                <span data-i18n="nav.liquidDetergent">Liquid Detergent</span>
                             </div>
                         </button>
                         <button class="product-tab w-full text-left px-4 py-3 rounded-xl font-medium transition-all" data-product="disinfectants" data-href="#products-disinfectants">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="layers" class="w-5 h-5 product-tab-icon"></i>
-                                <span data-i18n="products.disinfectants">Wet Wipe</span>
+                                <span data-i18n="nav.wetWipe">Wet Wipe</span>
                             </div>
                         </button>
                         <button class="product-tab w-full text-left px-4 py-3 rounded-xl font-medium transition-all" data-product="liquid-soap" data-href="#products-liquid-soap">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="hand" class="w-5 h-5 product-tab-icon"></i>
-                                <span data-i18n="products.liquid-soap">Liquid Soap</span>
+                                <span data-i18n="nav.liquidSoap">Liquid Soap</span>
                             </div>
                         </button>
                         <button class="product-tab w-full text-left px-4 py-3 rounded-xl font-medium transition-all" data-product="shampoo" data-href="#products-shampoo">
                             <div class="flex items-center gap-3">
                                 <i data-lucide="shower-head" class="w-5 h-5 product-tab-icon"></i>
-                                <span data-i18n="products.shampoo">Shampoo</span>
+                                <span data-i18n="nav.shampoo">Shampoo</span>
                             </div>
                         </button>
                     </div>
@@ -542,7 +559,7 @@
                     <!-- Surface Cleaners Content -->
                     <div id="product-content-surface-cleaners" class="product-content hidden">
                         <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-3xl md:text-4xl font-subheading font-bold antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent">Powder Detergent</h3>
+                            <h3 class="text-3xl md:text-4xl font-subheading font-bold antialiased text-[#FF8C00]" data-i18n="products.powderDetergent.title">Powder Detergent</h3>
                             <div class="packaging-dropdown-wrapper" data-dropdown="surface">
                             <button type="button" class="packaging-dropdown-trigger" aria-expanded="false" aria-haspopup="listbox">
                                 <i data-lucide="package" class="w-4 h-4"></i>
@@ -568,16 +585,16 @@
                             </div>
                         </div>
                         </div>
-                        <p class="text-lg text-[#1E293B] mb-6 font-sans font-normal leading-relaxed">
+                        <p class="text-lg text-[#1E293B] mb-6 font-sans font-normal leading-relaxed" data-i18n="products.powderDetergent.description">
                             Molecular Power Deep Within Fibers: Ais's signature powder technology takes cleaning beyond the surface and into the heart of the fabric. It breaks down the toughest stains at a molecular level without compromising fiber integrity, leaving behind a visible purity and a renewed softness. Professional washing power is now your home's new standard.
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
-                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px]">
-                            <img src="https://images.unsplash.com/photo-1563453392212-326f5e854473?auto=format&fit=crop&w=1200&q=80" alt="Surface Cleaners" class="w-full h-full object-cover product-image" data-parallax="true" data-i18n-alt="products.surface-cleaners">
+                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
+                            <img src="/Powder Detergent.png" alt="Surface Cleaners" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.surface-cleaners">
                         </div>
                         <div class="flex justify-center">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
-                                <span>Get Quote</span>
+                                <span data-i18n="products.powderDetergent.getQuote">Get Quote</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5 stroke-[1.5]"></i>
                             </a>
                         </div>
@@ -586,7 +603,7 @@
                     <!-- Concentrated Detergents Content -->
                     <div id="product-content-concentrated-detergents" class="product-content hidden">
                         <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-3xl md:text-4xl font-subheading font-bold antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent" data-i18n="products.concentrated-detergents">Liquid Detergent</h3>
+                            <h3 class="text-3xl md:text-4xl font-subheading font-bold antialiased text-[#FF8C00]" data-i18n="products.liquidDetergent.title">Liquid Detergent</h3>
                             <div class="packaging-dropdown-wrapper" data-dropdown="concentrated">
                             <button type="button" class="packaging-dropdown-trigger" aria-expanded="false" aria-haspopup="listbox">
                                 <i data-lucide="flask-round" class="w-4 h-4"></i>
@@ -607,16 +624,16 @@
                             </div>
                         </div>
                         </div>
-                        <p class="text-lg text-[#1E293B] mb-6 font-sans font-normal leading-relaxed" data-i18n="products.concentrated-detergents.description">
+                        <p class="text-lg text-[#1E293B] mb-6 font-sans font-normal leading-relaxed" data-i18n="products.liquidDetergent.description">
                             Flawless Clean Through Fluid Dynamics: Developed with advanced production technologies, our liquid formula activates instantly upon contact with water to penetrate fabric pores. Optimized for both colors and whites, it preserves color vibrancy with laboratory precision. Deep cleaning and lasting freshness meet in the smart cleaning formula of Ais.
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
-                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px]">
-                            <img src="https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=1200&q=80" alt="Concentrated Detergents" class="w-full h-full object-cover product-image" data-parallax="true" data-i18n-alt="products.concentrated-detergents">
+                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
+                            <img src="/Liquid Detergent.png" alt="Concentrated Detergents" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.concentrated-detergents">
                         </div>
                         <div class="flex justify-center">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
-                                <span data-i18n="products.get-quote">Get Quote</span>
+                                <span data-i18n="products.liquidDetergent.getQuote">Get Quote</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5 stroke-[1.5]"></i>
                             </a>
                         </div>
@@ -625,7 +642,7 @@
                     <!-- Disinfectants Content -->
                     <div id="product-content-disinfectants" class="product-content hidden">
                         <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-3xl md:text-4xl font-subheading font-bold antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent" data-i18n="products.disinfectants">Wet Wipe</h3>
+                            <h3 class="text-3xl md:text-4xl font-subheading font-bold antialiased text-[#FF8C00]" data-i18n="products.wetWipe.title">Wet Wipe</h3>
                             <div class="packaging-dropdown-wrapper" data-dropdown="wipes">
                             <button type="button" class="packaging-dropdown-trigger" aria-expanded="false" aria-haspopup="listbox">
                                 <i data-lucide="cylinder" class="w-4 h-4"></i>
@@ -651,16 +668,16 @@
                             </div>
                         </div>
                         </div>
-                        <p class="text-lg text-[#1E293B] mb-6 font-sans font-normal leading-relaxed" data-i18n="products.disinfectants.description">
+                        <p class="text-lg text-[#1E293B] mb-6 font-sans font-normal leading-relaxed" data-i18n="products.wetWipe.description">
                             Breathable Hygiene for Your Skin: We've blended the soft texture of nature with scientific purity. Our pH-balanced Ais wet wipes create a "breathable cleaning" effect on your skin and every surface they touch. With an eco-friendly structure and a refreshing touch, it is the most elegant form of hygiene, always by your side.
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
-                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px]">
-                            <img src="https://images.unsplash.com/photo-1584813470613-5b1c1cad3d69?auto=format&fit=crop&w=1200&q=80" alt="Disinfectant Products" class="w-full h-full object-cover product-image" data-parallax="true" data-i18n-alt="products.disinfectants">
+                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
+                            <img src="/Wet Wipe.png" alt="Disinfectant Products" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.disinfectants">
                         </div>
                         <div class="flex justify-center">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
-                                <span data-i18n="products.get-quote">Get Quote</span>
+                                <span data-i18n="products.wetWipe.getQuote">Get Quote</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5 stroke-[1.5]"></i>
                             </a>
                         </div>
@@ -669,7 +686,7 @@
                     <!-- Liquid Soap Content -->
                     <div id="product-content-liquid-soap" class="product-content hidden">
                         <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-3xl md:text-4xl font-subheading font-bold antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent" data-i18n="products.liquid-soap">Liquid Soap</h3>
+                            <h3 class="text-3xl md:text-4xl font-subheading font-bold antialiased text-[#FF8C00]" data-i18n="products.liquidSoap.title">Liquid Soap</h3>
                             <div class="packaging-dropdown-wrapper" data-dropdown="liquid-soap">
                             <button type="button" class="packaging-dropdown-trigger" aria-expanded="false" aria-haspopup="listbox">
                                 <i data-lucide="flask-round" class="w-4 h-4"></i>
@@ -695,16 +712,16 @@
                             </div>
                         </div>
                         </div>
-                        <p class="text-lg text-[#1E293B] mb-6 font-sans font-normal leading-relaxed" data-i18n="products.liquid-soap.description">
+                        <p class="text-lg text-[#1E293B] mb-6 font-sans font-normal leading-relaxed" data-i18n="products.liquidSoap.description">
                             Botanical Care & Molecular Moisture Balance: More than just soap; it's a moisture bath for your hands. Combining the purest ingredients of nature with technology, our formula purifies your skin while nourishing and renewing its barrier. It offers a refreshing and restorative hygiene experience that awakens your senses with every use.
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
-                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px]">
-                            <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1200&q=80" alt="Liquid Soap" class="w-full h-full object-cover product-image" data-parallax="true" data-i18n-alt="products.liquid-soap">
+                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
+                            <img src="/Liquid Soap.png" alt="Liquid Soap" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.liquid-soap">
                         </div>
                         <div class="flex justify-center">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
-                                <span data-i18n="products.get-quote">Get Quote</span>
+                                <span data-i18n="products.liquidSoap.getQuote">Get Quote</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5 stroke-[1.5]"></i>
                             </a>
                         </div>
@@ -713,7 +730,7 @@
                     <!-- Shampoo Content -->
                     <div id="product-content-shampoo" class="product-content hidden">
                         <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-3xl md:text-4xl font-subheading font-bold antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent" data-i18n="products.shampoo">Shampoo</h3>
+                            <h3 class="text-3xl md:text-4xl font-subheading font-bold antialiased text-[#FF8C00]" data-i18n="products.shampoo.title">Shampoo</h3>
                             <div class="packaging-dropdown-wrapper" data-dropdown="shampoo">
                             <button type="button" class="packaging-dropdown-trigger" aria-expanded="false" aria-haspopup="listbox">
                                 <i data-lucide="flask-round" class="w-4 h-4"></i>
@@ -738,12 +755,12 @@
                             Scientific Radiance from Root to Tip: Our specialized formula allows the scalp to breathe while deeply purifying hair strands without weighing them down. Optimized with scientific data, its nourishing structure protects the hair's natural balance while providing the signature Ais glow. Professional hair care, in its purest form, is now in your bathroom.
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
-                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px]">
-                            <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=1200&q=80" alt="Shampoo" class="w-full h-full object-cover product-image" data-parallax="true" data-i18n-alt="products.shampoo">
+                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
+                            <img src="/Shampoo.png" alt="Shampoo" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.shampoo">
                         </div>
                         <div class="flex justify-center">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
-                                <span data-i18n="products.get-quote">Get Quote</span>
+                                <span data-i18n="products.shampoo.getQuote">Get Quote</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5 stroke-[1.5]"></i>
                             </a>
                         </div>
@@ -754,32 +771,42 @@
                 <div class="hidden lg:block flex flex-col min-h-0 h-full">
                     <!-- Surface Cleaners Image -->
                     <div id="product-image-surface-cleaners" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
-                        <div class="relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] w-full" style="height: 0; min-height: 100%;">
-                            <img src="https://images.unsplash.com/photo-1563453392212-326f5e854473?auto=format&fit=crop&w=1200&q=80" alt="Surface Cleaners" class="absolute inset-0 w-full h-full object-cover product-image" data-i18n-alt="products.surface-cleaners">
+                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
+                            <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
+                                <img src="/Powder Detergent.png" alt="Surface Cleaners" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.surface-cleaners">
+                            </div>
                         </div>
                     </div>
                     <!-- Concentrated Detergents Image -->
                     <div id="product-image-concentrated-detergents" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
-                        <div class="relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] w-full" style="height: 0; min-height: 100%;">
-                            <img src="https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=1200&q=80" alt="Concentrated Detergents" class="absolute inset-0 w-full h-full object-cover product-image" data-i18n-alt="products.concentrated-detergents">
+                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
+                            <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
+                                <img src="/Liquid Detergent.png" alt="Concentrated Detergents" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.concentrated-detergents">
+                            </div>
                         </div>
                     </div>
                     <!-- Disinfectants Image -->
                     <div id="product-image-disinfectants" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
-                        <div class="relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] w-full" style="height: 0; min-height: 100%;">
-                            <img src="https://images.unsplash.com/photo-1584813470613-5b1c1cad3d69?auto=format&fit=crop&w=1200&q=80" alt="Disinfectant Products" class="absolute inset-0 w-full h-full object-cover product-image" data-i18n-alt="products.disinfectants">
+                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
+                            <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
+                                <img src="/Wet Wipe.png" alt="Disinfectant Products" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.disinfectants">
+                            </div>
                         </div>
                     </div>
                     <!-- Liquid Soap Image -->
                     <div id="product-image-liquid-soap" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
-                        <div class="relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] w-full" style="height: 0; min-height: 100%;">
-                            <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1200&q=80" alt="Liquid Soap" class="absolute inset-0 w-full h-full object-cover product-image" data-i18n-alt="products.liquid-soap">
+                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
+                            <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
+                                <img src="/Liquid Soap.png" alt="Liquid Soap" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.liquid-soap">
+                            </div>
                         </div>
                     </div>
                     <!-- Shampoo Image -->
                     <div id="product-image-shampoo" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
-                        <div class="relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] w-full" style="height: 0; min-height: 100%;">
-                            <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=1200&q=80" alt="Shampoo" class="absolute inset-0 w-full h-full object-cover product-image" data-i18n-alt="products.shampoo">
+                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
+                            <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
+                                <img src="/Shampoo.png" alt="Shampoo" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.shampoo">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -793,11 +820,11 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <!-- Left Column: Text Content with Glassmorphism -->
                 <div class="relative">
-                    <div class="glass-panel p-8 md:p-10 rounded-3xl shadow-[0_8px_32px_rgba(128,224,255,0.15)]">
-                        <h2 class="text-3xl md:text-4xl lg:text-5xl font-subheading font-bold mb-6 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent overflow-visible">
+                    <div class="glass-panel p-8 md:p-10 rounded-3xl backdrop-blur-md bg-white/60 border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.15)]">
+                        <h2 id="private-label-title" class="text-3xl md:text-4xl lg:text-5xl font-subheading font-bold mb-6 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent scroll-mt-24" data-i18n="privateLabel.title">
                             Your Brand, Our Expertise: Private Label Solutions
                         </h2>
-                        <p class="text-lg text-[#1E293B] mb-8 leading-relaxed font-sans font-normal">
+                        <p class="text-lg text-[#1E293B] mb-8 leading-relaxed font-sans font-normal" data-i18n="privateLabel.description">
                             Bring your cleaning brand to life with Ais Cleaning's state-of-the-art production facilities. We offer comprehensive private label services including custom formulation, professional packaging, and high-capacity manufacturing for detergents, soaps, and hygiene products.
                         </p>
                         
@@ -805,11 +832,11 @@
                         <ul class="space-y-4 mb-8">
                             <li class="flex items-start gap-4">
                                 <div class="w-12 h-12 rounded-full bg-[#F8FAFC] flex items-center justify-center text-[#FF8C00] shadow-[0_4px_16px_rgba(128,224,255,0.2)] flex-shrink-0">
-                                    <i data-lucide="flask-conical" class="w-6 h-6"></i>
+                                    <i data-lucide="factory" class="w-6 h-6"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-lg font-subheading font-bold text-[#153A60] mb-1">Custom Formulation</h3>
-                                    <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal">Tailored solutions for your market needs.</p>
+                                    <h3 class="text-lg font-subheading font-bold text-[#153A60] mb-1" data-i18n="privateLabel.customFormulation.title">Custom Formulation</h3>
+                                    <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal" data-i18n="privateLabel.customFormulation.description">Tailored solutions for your market needs.</p>
                                 </div>
                             </li>
                             <li class="flex items-start gap-4">
@@ -817,107 +844,71 @@
                                     <i data-lucide="package" class="w-6 h-6"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-lg font-subheading font-bold text-[#153A60] mb-1">Flexible Packaging</h3>
-                                    <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal">Wide range of bottle and box options.</p>
+                                    <h3 class="text-lg font-subheading font-bold text-[#153A60] mb-1" data-i18n="privateLabel.flexiblePackaging.title">Flexible Packaging</h3>
+                                    <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal" data-i18n="privateLabel.flexiblePackaging.description">Wide range of bottle and box options.</p>
                                 </div>
                             </li>
                             <li class="flex items-start gap-4">
                                 <div class="w-12 h-12 rounded-full bg-[#F8FAFC] flex items-center justify-center text-[#FF8C00] shadow-[0_4px_16px_rgba(128,224,255,0.2)] flex-shrink-0">
-                                    <i data-lucide="shield-check" class="w-6 h-6"></i>
+                                    <i data-lucide="handshake" class="w-6 h-6"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-lg font-subheading font-bold text-[#153A60] mb-1">Quality Assurance</h3>
-                                    <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal">ISO and GMP certified production standards.</p>
+                                    <h3 class="text-lg font-subheading font-bold text-[#153A60] mb-1" data-i18n="privateLabel.qualityAssurance.title">Quality Assurance</h3>
+                                    <p class="text-sm text-[#64748B] leading-relaxed font-sans font-normal" data-i18n="privateLabel.qualityAssurance.description">ISO and GMP certified production standards.</p>
                                 </div>
                             </li>
                         </ul>
                         
                         <!-- CTA Button -->
-                        <a href="#contact" class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#FF8C00] text-white font-semibold text-base hover:bg-[#E67E00] transition-all duration-300 shadow-lg shadow-[#FF8C00]/30 hover:shadow-xl hover:shadow-[#FF8C00]/40 hover:scale-105">
-                            <span>Start Your Partnership</span>
-                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        <a href="#contact" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF8C00] text-white font-semibold text-base hover:bg-[#E67E00] transition-all duration-300 shadow-lg shadow-[#FF8C00]/30 hover:shadow-xl hover:shadow-[#FF8C00]/40">
+                            <span data-i18n="privateLabel.startPartnership">Start Your Partnership</span>
+                            <i data-lucide="handshake" class="w-5 h-5"></i>
                         </a>
                     </div>
                 </div>
                 
                 <!-- Right Column: Image -->
                 <div class="relative">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-[#FF8C00]/10 to-[#80E0FF]/10 rounded-3xl transform rotate-3"></div>
-                    <div class="relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] border border-white/50">
-                        <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=1200&q=80" alt="Private Label Manufacturing - Production Line" class="w-full h-[500px] md:h-[600px] object-cover hover:scale-[1.02] transition duration-700">
+                    <div class="relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] border border-white/30">
+                        <img src="/production.png" alt="Private Label Manufacturing" class="w-full h-full object-cover min-h-[500px]">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PRODUCTION SECTION -->
-    <section id="production" class="py-32 px-6 bg-[#153A60] text-white relative overflow-hidden z-10">
-        <div class="absolute top-0 left-0 w-1/2 h-full bg-[#FF8C00]/10 blur-[100px] pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-                <div>
-                    <h2 class="text-sm font-semibold text-[#80E0FF] uppercase tracking-widest mb-2">Production</h2>
-                    <h3 class="text-4xl md:text-5xl font-subheading font-bold tracking-tight mb-6 whitespace-nowrap antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent">Sterile Filling Facilities.</h3>
-                    <p class="text-slate-300 text-lg mb-8 leading-relaxed font-sans font-normal">
-                        Our facilities operate at the highest hygiene standards. We produce on fully automated lines without using any additives harmful to human health.
-                    </p>
-                    <ul class="space-y-4 mb-8">
-                        <li class="flex items-center gap-3 text-slate-200">
-                            <i data-lucide="check-circle-2" class="text-[#FF8C00] w-6 h-6"></i>
-                            ISO 9001 & GMP Certified
-                        </li>
-                        <li class="flex items-center gap-3 text-slate-200">
-                            <i data-lucide="check-circle-2" class="text-[#FF8C00] w-6 h-6"></i>
-                            Dermatologically Tested
-                        </li>
-                        <li class="flex items-center gap-3 text-slate-200">
-                            <i data-lucide="check-circle-2" class="text-[#FF8C00] w-6 h-6"></i>
-                            Recyclable Packaging
-                        </li>
-                    </ul>
-                </div>
-                <div class="relative">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-[#FF8C00]/20 to-[#80E0FF]/20 rounded-3xl transform rotate-3"></div>
-                    <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=800&q=80" alt="Detergent Factory" class="relative rounded-3xl shadow-[0_8px_32px_rgba(128,224,255,0.3)] border border-white/10 w-full object-cover h-[500px] hover:scale-[1.02] transition duration-700">
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- CONTACT SECTION -->
-    <section id="contact" class="py-32 px-6 bg-white relative z-10">
+    <section id="contact" class="py-32 px-6 bg-white relative z-10 scroll-mt-32">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
                 <div class="flex flex-col justify-center">
-                    <h2 class="text-4xl font-subheading font-bold tracking-tight mb-2 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent">Contact Us</h2>
-                    <p class="text-[#64748B] mb-10 text-lg font-sans font-normal">Fill out the form for wholesale orders and dealership applications.</p>
+                    <h2 class="text-4xl font-subheading font-bold tracking-tight mb-2 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent" data-i18n="contact.title">Contact Us</h2>
+                    <p class="text-[#64748B] mb-10 text-lg font-sans font-normal" data-i18n="contact.subtitle">Fill out the form for wholesale orders and dealership applications.</p>
 
                     <form action="#" class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
-                                <label for="contact-wholesale-name" class="text-sm font-medium text-[#1E293B] ml-1">Full Name</label>
-                                <input type="text" id="contact-wholesale-name" name="name" placeholder="Your Name" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm">
+                                <label for="contact-wholesale-name" class="text-sm font-medium text-[#1E293B] ml-1" data-i18n="contact.form.fullName">Full Name</label>
+                                <input type="text" id="contact-wholesale-name" name="name" data-i18n-placeholder="contact.form.placeholderName" placeholder="Your Name" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm">
                             </div>
                             <div class="space-y-2">
-                                <label for="contact-wholesale-email" class="text-sm font-medium text-[#1E293B] ml-1">Email</label>
-                                <input type="email" id="contact-wholesale-email" name="email" placeholder="example@company.com" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm">
+                                <label for="contact-wholesale-email" class="text-sm font-medium text-[#1E293B] ml-1" data-i18n="contact.form.email">Email</label>
+                                <input type="email" id="contact-wholesale-email" name="email" data-i18n-placeholder="contact.form.placeholderEmail" placeholder="example@company.com" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm">
                             </div>
                         </div>
 
                         <div class="space-y-2">
-                            <label for="contact-wholesale-phone" class="text-sm font-medium text-[#1E293B] ml-1">Phone</label>
-                            <input type="tel" id="contact-wholesale-phone" name="phone" pattern="[0-9]*" inputmode="numeric" placeholder="Your Phone Number" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <label for="contact-wholesale-phone" class="text-sm font-medium text-[#1E293B] ml-1" data-i18n="contact.form.phone">Phone</label>
+                            <input type="tel" id="contact-wholesale-phone" name="phone" pattern="[0-9]*" inputmode="numeric" data-i18n-placeholder="contact.form.placeholderPhone" placeholder="Your Phone Number" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                         </div>
 
                         <div class="space-y-2">
-                            <label for="contact-wholesale-message" class="text-sm font-medium text-[#1E293B] ml-1">Your Message</label>
-                            <textarea id="contact-wholesale-message" name="message" rows="4" placeholder="Write your request here..." class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm resize-none"></textarea>
+                            <label for="contact-wholesale-message" class="text-sm font-medium text-[#1E293B] ml-1" data-i18n="contact.form.message">Your Message</label>
+                            <textarea id="contact-wholesale-message" name="message" rows="4" data-i18n-placeholder="contact.form.placeholderMessage" placeholder="Write your request here..." class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm resize-none"></textarea>
                         </div>
 
                         <button type="button" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-full glassmorphism-button-blue flex justify-center items-center gap-2">
-                            <span>Send</span>
+                            <span data-i18n="contact.form.send">Send</span>
                             <i data-lucide="send" class="w-4 h-4"></i>
                         </button>
                         </form>
@@ -930,8 +921,8 @@
                                 <i data-lucide="map-pin" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="font-semibold text-[#153A60]">Factory & Headquarters</h4>
-                                <p class="text-sm text-[#64748B] mt-1">Organized Industrial Zone 4th Street<br>34000 Istanbul</p>
+                                <h4 class="font-semibold text-[#153A60]" data-i18n="contact.factory.title">Factory & Headquarters</h4>
+                                <p class="text-sm text-[#64748B] mt-1" data-i18n-html="contact.factory.address">Organized Industrial Zone 4th Street<br>34000 Istanbul</p>
                         </div>
                     </div>
                         <div class="flex items-center gap-3">
@@ -939,8 +930,8 @@
                                 <i data-lucide="phone" class="w-5 h-5"></i>
                 </div>
                             <div>
-                                <h4 class="font-semibold text-[#153A60]">Customer Line</h4>
-                                <p class="text-sm text-[#64748B]">444 0 123</p>
+                                <h4 class="font-semibold text-[#153A60]" data-i18n="contact.customerLine.title">Customer Line</h4>
+                                <p class="text-sm text-[#64748B]" data-i18n="contact.customerLine.phone">444 0 123</p>
             </div>
         </div>
             </div>
@@ -958,7 +949,7 @@
                     <a href="#" class="flex items-center gap-2 mb-6">
                         <img src="/Ais.png" alt="Ais Logo" class="h-10 w-auto object-contain" style="aspect-ratio: auto;">
                     </a>
-                    <p class="text-white max-w-sm mb-6 font-sans font-normal">
+                    <p class="text-white max-w-sm mb-6 font-sans font-normal" data-i18n="footer.description">
                         Next generation technology in cleaning. The purest, most effective solutions for your home and workplace.
                     </p>
                     <div class="flex gap-4">
@@ -969,19 +960,19 @@
                 </div>
 
                 <div class="hidden md:block text-right md:col-start-4 lg:col-start-5">
-                    <h4 class="font-semibold text-white mb-6">Products</h4>
+                    <h4 class="font-semibold text-white mb-6" data-i18n="footer.products">Products</h4>
                     <ul class="space-y-4 text-white text-base font-sans font-normal">
-                        <li><a href="#products" class="hover:text-white/80 transition">Home Cleaning</a></li>
-                        <li><a href="#products" class="hover:text-white/80 transition">Industrial</a></li>
-                        <li><a href="#catalog" class="hover:text-white/80 transition">Auto Care</a></li>
-                        <li><a href="#" class="hover:text-white/80 transition">New Releases</a></li>
+                        <li><a href="#products" class="hover:text-white/80 transition" data-i18n="footer.homeCleaning">Home Cleaning</a></li>
+                        <li><a href="#products" class="hover:text-white/80 transition" data-i18n="footer.industrial">Industrial</a></li>
+                        <li><a href="#catalog" class="hover:text-white/80 transition" data-i18n="footer.autoCare">Auto Care</a></li>
+                        <li><a href="#" class="hover:text-white/80 transition" data-i18n="footer.newReleases">New Releases</a></li>
                     </ul>
                 </div>
 
             </div>
 
             <div class="pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/80">
-                <p class="font-bold">© 2026 Ais Cleaning Inc. All rights reserved.</p>
+                <p class="font-bold" data-i18n="footer.copyright">© 2026 Ais Cleaning Inc. All rights reserved.</p>
                 <a href="https://www.praksistech.com/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition font-bold">
                     Powered by Praksis.
                 </a>
@@ -992,23 +983,33 @@
     <!-- React root for catalog page -->
     <div id="root"></div>
     <script type="module">
-        // Check if we're on the catalog route
-        if (window.location.pathname === '/catalog') {
-            // Hide all static HTML content
-            const staticContent = document.querySelector('body > *:not(#root):not(script)');
-            if (staticContent) {
-                Array.from(document.body.children).forEach(child => {
-                    if (child.id !== 'root' && child.tagName !== 'SCRIPT') {
-                        child.style.display = 'none';
-                    }
-                });
+        (async () => {
+            // Load i18n first
+            await import('/src/i18n.js');
+            
+            // Initialize language
+            if (window.i18n) {
+                await window.i18n.initLanguage();
             }
-            // Load React app
-            import('/src/main.tsx');
-        } else {
-            // Load static JS for home page
-            import('/src/main.js');
-        }
+            
+            // Check if we're on the catalog route
+            if (window.location.pathname === '/catalog') {
+                // Hide all static HTML content
+                const staticContent = document.querySelector('body > *:not(#root):not(script)');
+                if (staticContent) {
+                    Array.from(document.body.children).forEach(child => {
+                        if (child.id !== 'root' && child.tagName !== 'SCRIPT') {
+                            child.style.display = 'none';
+                        }
+                    });
+                }
+                // Load React app
+                import('/src/main.tsx');
+            } else {
+                // Load static JS for home page
+                import('/src/main.js');
+            }
+        })();
     </script>
 </body>
 </html>

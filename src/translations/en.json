@@ -142,7 +142,11 @@
       "email": "Email",
       "phone": "Phone",
       "message": "Your Message",
-      "send": "Send"
+      "send": "Send",
+      "placeholderName": "Your Name",
+      "placeholderEmail": "example@company.com",
+      "placeholderPhone": "Your Phone Number",
+      "placeholderMessage": "Write your request here..."
     },
     "factory": {
       "title": "Factory & Headquarters",
@@ -169,4 +173,5 @@
     "downloadPDF": "Download PDF"
   }
 }
+
 
