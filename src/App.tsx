@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { LanguageProvider } from "./contexts/LanguageContext"
 import { Testimonial } from "@/components/ui/design-testimonial"
 import { PackagingDropdown } from "@/components/ui/packaging-dropdown"
 import { ContactForm } from "@/components/ui/contact-form"
@@ -72,12 +73,14 @@ function HomePage() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/catalog" element={<CatalogPage />} />
-      </Routes>
-    </BrowserRouter>
+    <LanguageProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/catalog" element={<CatalogPage />} />
+        </Routes>
+      </BrowserRouter>
+    </LanguageProvider>
   )
 }
 

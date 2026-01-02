@@ -1,0 +1,172 @@
+{
+  "nav": {
+    "home": "Početna",
+    "corporate": "Korporativno",
+    "about": "O nama",
+    "missionVision": "Misija i Vizija",
+    "jobApplication": "Prijava za posao",
+    "products": "Proizvodi",
+    "powderDetergent": "Prašak za pranje",
+    "liquidDetergent": "Tekuće sredstvo za pranje",
+    "wetWipe": "Vlažne maramice",
+    "liquidSoap": "Tekući sapun",
+    "shampoo": "Šampon",
+    "privateLabel": "Privatna marka",
+    "eCatalog": "E-Katalog",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "brand": "Ais:",
+    "title1": "Dubina Čistoće,",
+    "title2": "Sljedeća Generacija Čistoće.",
+    "productCatalog": "Katalog proizvoda",
+    "hygieneGuarantee": "100% Garancija Higijene",
+    "contactUs": "Kontaktirajte nas!",
+    "getInTouch": "Kontaktirajte nas odmah"
+  },
+  "corporate": {
+    "title": "Korporativno",
+    "subtitle": "Otkrijte naše korporativne vrijednosti, misiju i mogućnosti. Saznajte o našoj kulturi i pridružite se našem timu.",
+    "about": {
+      "title": "O nama",
+      "description": "U Ais-u, čišćenje ne promatramo samo kao površinski zadatak, već kao način na koji živi prostori dišu. Kombinirajući kemiju i tehnologiju s pažljivom pažnjom na ljudsko zdravlje, redefiniramo standarde 'duboke čistoće' u svakom proizvodu - od praška za pranje do osobne njege. U našoj specijaliziranoj oblasti tehnologije praška za pranje, nudimo molekularna rješenja koja eliminiraju najteže mrlje bez oštećenja vlakana. Ais je više od brenda za čišćenje; to je znanstveno utjelovljenje besprijekorne svježine koju osjećate u svom domu i na svojoj koži.",
+      "excellence": {
+        "title": "Izvrsnost",
+        "description": "Znanstvena rješenja temeljena na podacima s najsuvremenijom tehnologijom u svakom proizvodu."
+      },
+      "trustedPartner": {
+        "title": "Pouzdan partner",
+        "description": "Služimo preko 100 korporativnih klijenata pouzdanim i učinkovitim rješenjima za čišćenje."
+      },
+      "sustainability": {
+        "title": "Održivost",
+        "description": "Ekološka rješenja koja štite i vaše prostore i naš planet."
+      }
+    },
+    "missionVision": {
+      "mission": {
+        "title": "Naša misija",
+        "description": "Naša misija je transformirati tradicionalne koncepte čišćenja kroz moderne laboratorijske tehnike i ekološke formule. Vjerujemo da bi čistoća trebala biti pristupačan 'životni standard' za sve, a ne samo nužnost. U svakoj grupi proizvoda - od naših vodećih praška za pranje do vlažnih maramica - kombiniramo visoke performanse s pouzdanošću, nastojeći predstavljati najčišći oblik higijene na globalnoj razini."
+      },
+      "vision": {
+        "title": "Naša vizija",
+        "description": "Kao pionir inovacija u tehnologijama higijene, naša vizija je postati globalna referentna točka koja definira same kriterije 'čistoće'. Podižući kulturu čišćenja na održiviju, pametniju i učinkovitiju razinu sa svakom formulom koju razvijamo, nastojimo uspostaviti trajnu garanciju apsolutne higijene gdje god se nalazi logo Ais."
+      },
+      "innovation": {
+        "title": "Inovacija",
+        "description": "Kontinuirano razvijamo nove tehnologije i formule kako bismo zadovoljili evoluirajuće potrebe za čišćenjem."
+      },
+      "globalReach": {
+        "title": "Globalni doseg",
+        "description": "Širimo naše prisustvo na međunarodnim tržištima s održivim i učinkovitim rješenjima."
+      }
+    },
+    "application": {
+      "title": "Prijava za posao",
+      "subtitle": "Zajedno smo jači!",
+      "description": "Ispunite obrazac u nastavku kako biste se pridružili obitelji Ais Cleaning. Javiti ćemo vam se što prije nakon pregleda vaše prijave.",
+      "form": {
+        "fullName": "Puno ime",
+        "email": "E-pošta",
+        "phone": "Telefon",
+        "position": "Pozicija",
+        "uploadCV": "Učitaj CV",
+        "selectFile": "Odaberi datoteku",
+        "message": "Poruka",
+        "characters": "znakova",
+        "submit": "Pošalji prijavu",
+        "submitting": "Slanje...",
+        "fileFormat": "PDF, DOC ili DOCX format, maksimum 10MB"
+      }
+    }
+  },
+  "products": {
+    "title": "Profesionalni proizvodi",
+    "subtitle": "Posebne formule za svaku površinu, od kuće do ureda, od tvornice do škole.",
+    "powderDetergent": {
+      "title": "Prašak za pranje",
+      "description": "Molekularna moć duboko u vlaknima: Ais-ova zaštitna tehnologija praška izvodi čišćenje izvan površine i u srce tkanine. Razlaže najteže mrlje na molekularnoj razini bez kompromitiranja integriteta vlakana, ostavljajući vidljivu čistoću i obnovljenu mekoću. Profesionalna moć pranja sada je novi standard vašeg doma.",
+      "getQuote": "Zatraži ponudu"
+    },
+    "liquidDetergent": {
+      "title": "Tekuće sredstvo za pranje",
+      "description": "Besprijekorna čistoća kroz dinamiku tekućine: Razvijena s naprednim proizvodnim tehnologijama, naša tekuća formula se aktivira trenutno pri kontaktu s vodom kako bi prodrela u pore tkanine. Optimizirana i za boje i za bijelo, čuva živahnost boje s laboratorijskom preciznošću. Duboko čišćenje i trajna svježina se susreću u pametnoj formuli čišćenja Ais-a.",
+      "getQuote": "Zatraži ponudu"
+    },
+    "wetWipe": {
+      "title": "Vlažne maramice",
+      "description": "Disajuća higijena za vašu kožu: Kombinirali smo meku teksturu prirode sa znanstvenom čistoćom. Naše pH-uravnotežene Ais vlažne maramice stvaraju učinak 'disajućeg čišćenja' na vašoj koži i svakoj površini koju dodirnu. S ekološkom strukturom i osvježavajućim dodirom, to je najelegantniji oblik higijene, uvijek uz vas.",
+      "getQuote": "Zatraži ponudu"
+    },
+    "liquidSoap": {
+      "title": "Tekući sapun",
+      "description": "Botanička njega i molekularni balans vlage: Više od sapuna; to je kupalište vlage za vaše ruke. Kombinirajući najčišće sastojke prirode s tehnologijom, naša formula pročišćava vašu kožu dok je hrani i obnavlja njezinu barijeru. Nudi osvježavajuće i restaurativno higijensko iskustvo koje budi vaša osjetila pri svakoj upotrebi.",
+      "getQuote": "Zatraži ponudu"
+    },
+    "shampoo": {
+      "title": "Šampon",
+      "description": "Znanstveni sjaj od korijena do vrha: Naša specijalizirana formula omogućava vlasištu da diše dok duboko pročišćava vlasi kose bez opterećenja. Optimizirana sa znanstvenim podacima, njezina hranjiva struktura štiti prirodni balans kose dok pruža zaštitni Ais sjaj. Profesionalna njega kose, u svom najčišćem obliku, sada je u vašoj kupaonici.",
+      "getQuote": "Zatraži ponudu"
+    }
+  },
+  "privateLabel": {
+    "title": "Vaš brend, naša stručnost: Rješenja za privatnu marku",
+    "description": "Oživite vaš brend za čišćenje s najsuvremenijim proizvodnim kapacitetima Ais Cleaning-a. Nudimo sveobuhvatne usluge privatne marke uključujući prilagođenu formulaciju, profesionalno pakiranje i proizvodnju velikog kapaciteta za sredstva za pranje, sapune i higijenske proizvode.",
+    "customFormulation": {
+      "title": "Prilagođena formulacija",
+      "description": "Rješenja prilagođena potrebama vašeg tržišta."
+    },
+    "flexiblePackaging": {
+      "title": "Fleksibilno pakiranje",
+      "description": "Širok izbor opcija za boce i kutije."
+    },
+    "qualityAssurance": {
+      "title": "Garancija kvalitete",
+      "description": "ISO i GMP certificirani standardi proizvodnje."
+    },
+    "startPartnership": "Započnite partnerstvo"
+  },
+  "production": {
+    "label": "Proizvodnja",
+    "title": "Sterilni punjeni kapaciteti.",
+    "description": "Naši kapaciteti rade po najvišim standardima higijene. Proizvodimo na potpuno automatiziranim linijama bez upotrebe aditiva štetnih za ljudsko zdravlje.",
+    "isoCertified": "ISO 9001 i GMP certificirano",
+    "dermatologicallyTested": "Dermatološki testirano",
+    "recyclablePackaging": "Reciklirano pakiranje"
+  },
+  "contact": {
+    "title": "Kontaktirajte nas",
+    "subtitle": "Ispunite obrazac za veleprodajne narudžbe i prijave za distribuciju.",
+    "form": {
+      "fullName": "Puno ime",
+      "email": "E-pošta",
+      "phone": "Telefon",
+      "message": "Vaša poruka",
+      "send": "Pošalji"
+    },
+    "factory": {
+      "title": "Tvornica i sjedište",
+      "address": "Organizirana industrijska zona 4. ulica<br>34000 Istanbul"
+    },
+    "customerLine": {
+      "title": "Linija za klijente",
+      "phone": "444 0 123"
+    }
+  },
+  "footer": {
+    "description": "Tehnologija sljedeće generacije u čišćenju. Najčišća, najučinkovitija rješenja za vaš dom i radno mjesto.",
+    "products": "Proizvodi",
+    "homeCleaning": "Kućno čišćenje",
+    "industrial": "Industrijsko",
+    "autoCare": "Njega automobila",
+    "newReleases": "Nova izdanja",
+    "copyright": "© 2026 Ais Cleaning Inc. Sva prava pridržana.",
+    "poweredBy": "Pokreće Praksis."
+  },
+  "catalog": {
+    "title": "E-Katalog",
+    "backToHome": "Natrag na početnu",
+    "downloadPDF": "Preuzmi PDF"
+  }
+}
+

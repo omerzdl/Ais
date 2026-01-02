@@ -1,0 +1,172 @@
+{
+  "nav": {
+    "home": "Home",
+    "corporate": "Corporate",
+    "about": "About Us",
+    "missionVision": "Mission & Vision",
+    "jobApplication": "Job Application",
+    "products": "Products",
+    "powderDetergent": "Powder Detergent",
+    "liquidDetergent": "Liquid Detergent",
+    "wetWipe": "Wet Wipe",
+    "liquidSoap": "Liquid Soap",
+    "shampoo": "Shampoo",
+    "privateLabel": "Private Label",
+    "eCatalog": "E-Catalog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "brand": "Ais:",
+    "title1": "The Depth of Purity,",
+    "title2": "The Next Generation of Clean.",
+    "productCatalog": "Product Catalog",
+    "hygieneGuarantee": "100% Hygiene Guarantee",
+    "contactUs": "Contact Us!",
+    "getInTouch": "Get in touch now"
+  },
+  "corporate": {
+    "title": "Corporate",
+    "subtitle": "Discover our company values, mission, and opportunities. Learn about our culture and join our team.",
+    "about": {
+      "title": "About Us",
+      "description": "At Ais, we view cleaning not merely as a surface-level task, but as the way living spaces breathe. By blending chemistry and technology with a meticulous focus on human health, we redefine 'deep purity' standards in every product—from powder detergents to personal care. In our specialized field of powder detergent technology, we offer molecular solutions that eliminate the toughest stains without damaging fibers. Ais is more than just a cleaning brand; it is the scientific embodiment of the flawless freshness you feel in your home and on your skin.",
+      "excellence": {
+        "title": "Excellence",
+        "description": "Scientific data-driven solutions with cutting-edge technology in every product."
+      },
+      "trustedPartner": {
+        "title": "Trusted Partner",
+        "description": "Serving over 100 corporate customers with reliable and effective cleaning solutions."
+      },
+      "sustainability": {
+        "title": "Sustainability",
+        "description": "Environmentally friendly solutions that protect both your spaces and our planet."
+      }
+    },
+    "missionVision": {
+      "mission": {
+        "title": "Our Mission",
+        "description": "Our mission is to transform traditional cleaning concepts through modern laboratory techniques and eco-friendly formulas. We believe that cleanliness should be an accessible 'living standard' for everyone, not just a necessity. Across every product group—from our flagship powder detergents to wet wipes—we combine high performance with reliability, striving to represent the purest form of hygiene on a global scale."
+      },
+      "vision": {
+        "title": "Our Vision",
+        "description": "As a pioneer of innovation in hygiene technologies, our vision is to become a global reference point that defines the very criteria of 'purity.' By elevating cleaning culture to a more sustainable, smarter, and more effective level with every formula we develop, we aim to establish a permanent guarantee of absolute hygiene wherever the Ais logo is present."
+      },
+      "innovation": {
+        "title": "Innovation",
+        "description": "Continuously developing new technologies and formulas to meet evolving cleaning needs."
+      },
+      "globalReach": {
+        "title": "Global Reach",
+        "description": "Expanding our presence in international markets with sustainable and effective solutions."
+      }
+    },
+    "application": {
+      "title": "Job Application",
+      "subtitle": "Together we are stronger!",
+      "description": "Fill out the form below to join the Ais Cleaning family. We will get back to you as soon as possible after your application is reviewed.",
+      "form": {
+        "fullName": "Full Name",
+        "email": "Email",
+        "phone": "Phone",
+        "position": "Position",
+        "uploadCV": "Upload CV",
+        "selectFile": "Select File",
+        "message": "Message",
+        "characters": "characters",
+        "submit": "Submit Application",
+        "submitting": "Submitting...",
+        "fileFormat": "PDF, DOC or DOCX format, max 10MB"
+      }
+    }
+  },
+  "products": {
+    "title": "Professional Products",
+    "subtitle": "Special formulas for every surface, from home to office, factory to school.",
+    "powderDetergent": {
+      "title": "Powder Detergent",
+      "description": "Molecular Power Deep Within Fibers: Ais's signature powder technology takes cleaning beyond the surface and into the heart of the fabric. It breaks down the toughest stains at a molecular level without compromising fiber integrity, leaving behind a visible purity and a renewed softness. Professional washing power is now your home's new standard.",
+      "getQuote": "Get Quote"
+    },
+    "liquidDetergent": {
+      "title": "Liquid Detergent",
+      "description": "Flawless Clean Through Fluid Dynamics: Developed with advanced production technologies, our liquid formula activates instantly upon contact with water to penetrate fabric pores. Optimized for both colors and whites, it preserves color vibrancy with laboratory precision. Deep cleaning and lasting freshness meet in the smart cleaning formula of Ais.",
+      "getQuote": "Get Quote"
+    },
+    "wetWipe": {
+      "title": "Wet Wipe",
+      "description": "Breathable Hygiene for Your Skin: We've blended the soft texture of nature with scientific purity. Our pH-balanced Ais wet wipes create a 'breathable cleaning' effect on your skin and every surface they touch. With an eco-friendly structure and a refreshing touch, it is the most elegant form of hygiene, always by your side.",
+      "getQuote": "Get Quote"
+    },
+    "liquidSoap": {
+      "title": "Liquid Soap",
+      "description": "Botanical Care & Molecular Moisture Balance: More than just soap; it's a moisture bath for your hands. Combining the purest ingredients of nature with technology, our formula purifies your skin while nourishing and renewing its barrier. It offers a refreshing and restorative hygiene experience that awakens your senses with every use.",
+      "getQuote": "Get Quote"
+    },
+    "shampoo": {
+      "title": "Shampoo",
+      "description": "Scientific Radiance from Root to Tip: Our specialized formula allows the scalp to breathe while deeply purifying hair strands without weighing them down. Optimized with scientific data, its nourishing structure protects the hair's natural balance while providing the signature Ais glow. Professional hair care, in its purest form, is now in your bathroom.",
+      "getQuote": "Get Quote"
+    }
+  },
+  "privateLabel": {
+    "title": "Your Brand, Our Expertise: Private Label Solutions",
+    "description": "Bring your cleaning brand to life with Ais Cleaning's state-of-the-art production facilities. We offer comprehensive private label services including custom formulation, professional packaging, and high-capacity manufacturing for detergents, soaps, and hygiene products.",
+    "customFormulation": {
+      "title": "Custom Formulation",
+      "description": "Tailored solutions for your market needs."
+    },
+    "flexiblePackaging": {
+      "title": "Flexible Packaging",
+      "description": "Wide range of bottle and box options."
+    },
+    "qualityAssurance": {
+      "title": "Quality Assurance",
+      "description": "ISO and GMP certified production standards."
+    },
+    "startPartnership": "Start Your Partnership"
+  },
+  "production": {
+    "label": "Production",
+    "title": "Sterile Filling Facilities.",
+    "description": "Our facilities operate at the highest hygiene standards. We produce on fully automated lines without using any additives harmful to human health.",
+    "isoCertified": "ISO 9001 & GMP Certified",
+    "dermatologicallyTested": "Dermatologically Tested",
+    "recyclablePackaging": "Recyclable Packaging"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Fill out the form for wholesale orders and dealership applications.",
+    "form": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Your Message",
+      "send": "Send"
+    },
+    "factory": {
+      "title": "Factory & Headquarters",
+      "address": "Organized Industrial Zone 4th Street<br>34000 Istanbul"
+    },
+    "customerLine": {
+      "title": "Customer Line",
+      "phone": "444 0 123"
+    }
+  },
+  "footer": {
+    "description": "Next generation technology in cleaning. The purest, most effective solutions for your home and workplace.",
+    "products": "Products",
+    "homeCleaning": "Home Cleaning",
+    "industrial": "Industrial",
+    "autoCare": "Auto Care",
+    "newReleases": "New Releases",
+    "copyright": "© 2026 Ais Cleaning Inc. All rights reserved.",
+    "poweredBy": "Powered by Praksis."
+  },
+  "catalog": {
+    "title": "E-Catalog",
+    "backToHome": "Back to Home",
+    "downloadPDF": "Download PDF"
+  }
+}
+

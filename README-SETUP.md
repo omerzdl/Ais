@@ -79,3 +79,4 @@ The products section has been updated with the new color palette:
 4. The testimonial component uses Framer Motion for animations and requires the `framer-motion` package.
 
 
+

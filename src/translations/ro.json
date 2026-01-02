@@ -1,0 +1,172 @@
+{
+  "nav": {
+    "home": "Acasă",
+    "corporate": "Corporativ",
+    "about": "Despre noi",
+    "missionVision": "Misiune și Viziune",
+    "jobApplication": "Aplicare pentru locuri de muncă",
+    "products": "Produse",
+    "powderDetergent": "Detergent pudră",
+    "liquidDetergent": "Detergent lichid",
+    "wetWipe": "Șervețele umede",
+    "liquidSoap": "Săpun lichid",
+    "shampoo": "Șampon",
+    "privateLabel": "Marca privată",
+    "eCatalog": "E-Catalog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "brand": "Ais:",
+    "title1": "Adâncimea Purității,",
+    "title2": "Următoarea Generație de Curățare.",
+    "productCatalog": "Catalog produse",
+    "hygieneGuarantee": "100% Garanție de Igienă",
+    "contactUs": "Contactați-ne!",
+    "getInTouch": "Contactați-ne acum"
+  },
+  "corporate": {
+    "title": "Corporativ",
+    "subtitle": "Descoperiți valorile companiei noastre, misiunea și oportunitățile. Aflați despre cultura noastră și alăturați-vă echipei noastre.",
+    "about": {
+      "title": "Despre noi",
+      "description": "La Ais, privim curățarea nu doar ca o sarcină de suprafață, ci ca modul în care spațiile de viață respiră. Combinând chimia și tehnologia cu o atenție meticuloasă la sănătatea umană, redefinim standardele 'purității profunde' în fiecare produs - de la detergenții în pudră la îngrijirea personală. În domeniul nostru specializat de tehnologie a detergentului în pudră, oferim soluții moleculare care elimină cele mai grele pete fără a deteriora fibrele. Ais este mai mult decât un brand de curățare; este întruchiparea științifică a prospețimii impecabile pe care o simțiți în casa dvs. și pe pielea dvs.",
+      "excellence": {
+        "title": "Excelență",
+        "description": "Soluții bazate pe date științifice cu tehnologie de vârf în fiecare produs."
+      },
+      "trustedPartner": {
+        "title": "Partener de încredere",
+        "description": "Servim peste 100 de clienți corporativi cu soluții de curățare fiabile și eficiente."
+      },
+      "sustainability": {
+        "title": "Sustenabilitate",
+        "description": "Soluții prietenoase cu mediul care protejează atât spațiile dvs., cât și planeta noastră."
+      }
+    },
+    "missionVision": {
+      "mission": {
+        "title": "Misiunea noastră",
+        "description": "Misiunea noastră este de a transforma conceptele tradiționale de curățare prin tehnici moderne de laborator și formule ecologice. Credem că curățenia ar trebui să fie un 'standard de viață' accesibil pentru toată lumea, nu doar o necesitate. În fiecare grup de produse - de la detergenții noștri în pudră de top la șervețelele umede - combinăm performanțe înalte cu fiabilitate, străduindu-ne să reprezentăm cea mai pură formă de igienă la scară globală."
+      },
+      "vision": {
+        "title": "Viziunea noastră",
+        "description": "Ca pionier al inovației în tehnologiile de igienă, viziunea noastră este de a deveni un punct de referință global care definește chiar criteriile 'purității'. Ridicând cultura curățării la un nivel mai sustenabil, mai inteligent și mai eficient cu fiecare formulă pe care o dezvoltăm, ne propunem să stabilim o garanție permanentă de igienă absolută oriunde este prezent logo-ul Ais."
+      },
+      "innovation": {
+        "title": "Inovație",
+        "description": "Dezvoltăm continuu noi tehnologii și formule pentru a satisface nevoile în evoluție de curățare."
+      },
+      "globalReach": {
+        "title": "Acoperire globală",
+        "description": "Extindem prezența noastră pe piețele internaționale cu soluții sustenabile și eficiente."
+      }
+    },
+    "application": {
+      "title": "Aplicare pentru locuri de muncă",
+      "subtitle": "Împreună suntem mai puternici!",
+      "description": "Completați formularul de mai jos pentru a vă alătura familiei Ais Cleaning. Vă vom contacta cât mai curând posibil după revizuirea aplicației dvs.",
+      "form": {
+        "fullName": "Nume complet",
+        "email": "E-mail",
+        "phone": "Telefon",
+        "position": "Poziție",
+        "uploadCV": "Încărcați CV",
+        "selectFile": "Selectați fișier",
+        "message": "Mesaj",
+        "characters": "caractere",
+        "submit": "Trimite aplicația",
+        "submitting": "Se trimite...",
+        "fileFormat": "Format PDF, DOC sau DOCX, maxim 10MB"
+      }
+    }
+  },
+  "products": {
+    "title": "Produse profesionale",
+    "subtitle": "Formule speciale pentru fiecare suprafață, de la casă la birou, de la fabrică la școală.",
+    "powderDetergent": {
+      "title": "Detergent pudră",
+      "description": "Putere moleculară adânc în fibre: Tehnologia de pudră semnătură Ais aduce curățarea dincolo de suprafață și în inima țesutului. Descompune cele mai grele pete la nivel molecular fără a compromite integritatea fibrelor, lăsând în urmă o puritate vizibilă și o moliciune reînnoită. Puterea profesională de spălare este acum noul standard al casei dvs.",
+      "getQuote": "Solicită ofertă"
+    },
+    "liquidDetergent": {
+      "title": "Detergent lichid",
+      "description": "Curățare impecabilă prin dinamica fluidelor: Dezvoltată cu tehnologii avansate de producție, formula noastră lichidă se activează instantaneu la contactul cu apa pentru a pătrunde în porii țesutului. Optimizată atât pentru culori, cât și pentru albe, păstrează vitalitatea culorii cu precizie de laborator. Curățarea profundă și prospețimea durabilă se întâlnesc în formula inteligentă de curățare Ais.",
+      "getQuote": "Solicită ofertă"
+    },
+    "wetWipe": {
+      "title": "Șervețele umede",
+      "description": "Igienă respirabilă pentru pielea dvs.: Am combinat textura moale a naturii cu puritatea științifică. Șervețelele noastre umede Ais echilibrate cu pH creează un efect de 'curățare respirabilă' pe pielea dvs. și pe fiecare suprafață pe care o ating. Cu o structură prietenoasă cu mediul și un contact revigorant, este cea mai elegantă formă de igienă, întotdeauna alături de dvs.",
+      "getQuote": "Solicită ofertă"
+    },
+    "liquidSoap": {
+      "title": "Săpun lichid",
+      "description": "Îngrijire botanică și echilibru molecular al umidității: Mai mult decât săpun; este o baie de umiditate pentru mâinile dvs. Combinând cele mai pure ingrediente ale naturii cu tehnologia, formula noastră purifică pielea dvs. în timp ce o hrănește și îi reînnoiește bariera. Oferă o experiență de igienă revigorantă și restaurativă care vă trezește simțurile la fiecare utilizare.",
+      "getQuote": "Solicită ofertă"
+    },
+    "shampoo": {
+      "title": "Șampon",
+      "description": "Strălucire științifică de la rădăcină la vârf: Formula noastră specializată permite scalpului să respire în timp ce purifică profund firele de păr fără a le îngreuna. Optimizată cu date științifice, structura sa hrănitoare protejează balanța naturală a părului oferind în același timp strălucirea semnătură Ais. Îngrijirea profesională a părului, în forma sa cea mai pură, este acum în baia dvs.",
+      "getQuote": "Solicită ofertă"
+    }
+  },
+  "privateLabel": {
+    "title": "Marca dvs., expertiza noastră: Soluții pentru marca privată",
+    "description": "Aduceți-vă marca de curățare la viață cu facilitățile de producție de ultimă generație ale Ais Cleaning. Oferim servicii complete de marcă privată, inclusiv formulare personalizată, ambalare profesională și producție de mare capacitate pentru detergenți, săpunuri și produse de igienă.",
+    "customFormulation": {
+      "title": "Formulare personalizată",
+      "description": "Soluții adaptate nevoilor pieței dvs."
+    },
+    "flexiblePackaging": {
+      "title": "Ambalare flexibilă",
+      "description": "Gamă largă de opțiuni pentru sticle și cutii."
+    },
+    "qualityAssurance": {
+      "title": "Asigurarea calității",
+      "description": "Standarde de producție certificate ISO și GMP."
+    },
+    "startPartnership": "Începeți parteneriatul"
+  },
+  "production": {
+    "label": "Producție",
+    "title": "Facilități de umplere sterilă.",
+    "description": "Facilitățile noastre funcționează la cele mai înalte standarde de igienă. Producem pe linii complet automatizate fără a folosi aditivi dăunători sănătății umane.",
+    "isoCertified": "Certificat ISO 9001 și GMP",
+    "dermatologicallyTested": "Testat dermatologic",
+    "recyclablePackaging": "Ambalare reciclabilită"
+  },
+  "contact": {
+    "title": "Contactați-ne",
+    "subtitle": "Completați formularul pentru comenzi en-gros și aplicații de distribuție.",
+    "form": {
+      "fullName": "Nume complet",
+      "email": "E-mail",
+      "phone": "Telefon",
+      "message": "Mesajul dvs.",
+      "send": "Trimite"
+    },
+    "factory": {
+      "title": "Fabrica și sediul central",
+      "address": "Zona Industrială Organizată, Strada a 4-a<br>34000 Istanbul"
+    },
+    "customerLine": {
+      "title": "Linia pentru clienți",
+      "phone": "444 0 123"
+    }
+  },
+  "footer": {
+    "description": "Tehnologie de următoarea generație în curățare. Cele mai pure, cele mai eficiente soluții pentru casa și locul dvs. de muncă.",
+    "products": "Produse",
+    "homeCleaning": "Curățenie casnică",
+    "industrial": "Industrial",
+    "autoCare": "Îngrijire auto",
+    "newReleases": "Lansări noi",
+    "copyright": "© 2026 Ais Cleaning Inc. Toate drepturile rezervate.",
+    "poweredBy": "Alimentat de Praksis."
+  },
+  "catalog": {
+    "title": "E-Catalog",
+    "backToHome": "Înapoi acasă",
+    "downloadPDF": "Descarcă PDF"
+  }
+}
+

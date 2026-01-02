@@ -7,31 +7,30 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "#EDF2FB",
-        foreground: "#1B1B1B",
+        background: "#FFFFFF",
+        foreground: "#1E293B",
         primary: {
-          DEFAULT: "#0061FF",
-          foreground: "#EDF2FB",
+          DEFAULT: "#153A60", // Dark Navy from logo 's' character
+          foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#5A95FF",
-          foreground: "#1B1B1B",
+          DEFAULT: "#80E0FF", // Light blue/ice blue glow from logo
+          foreground: "#1E293B",
         },
         accent: {
-          DEFAULT: "#A7C1FF",
-          foreground: "#1B1B1B",
+          DEFAULT: "#FF8C00", // Vibrant orange from logo droplet
+          foreground: "#FFFFFF",
         },
         muted: {
-          DEFAULT: "#A7C1FF",
-          foreground: "#1B1B1B",
+          DEFAULT: "#F8FAFC", // Very light gray for backgrounds
+          foreground: "#1E293B",
         },
-        border: "#A7C1FF",
-        // Yeni renk paleti
-        'dark-green': '#1A2F25',
-        'light-green': '#8FA895',
-        'accent-red': '#a84833',
-        'dark-red': '#873523',
-        'beige-bg': '#f5f4d0',
+        border: "#E2E8F0",
+        // Brand color aliases
+        'brand-navy': '#153A60',
+        'brand-orange': '#FF8C00',
+        'brand-glow': '#80E0FF',
+        'brand-anthracite': '#1E293B',
       },
       fontFamily: {
         sans: ['Montserrat', 'sans-serif'],

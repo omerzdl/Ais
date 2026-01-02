@@ -1,10 +1,85 @@
 // Initialize Lucide Icons (will be called after DOM is ready)
 
 // ============================================
+// TRANSLATION SYSTEM FOR STATIC HTML
+// ============================================
+let translations = {};
+let currentLanguage = 'en';
+
+// Load translations
+async function loadTranslations(lang) {
+    try {
+        const response = await fetch(`/src/translations/${lang}.json`);
+        if (response.ok) {
+            translations = await response.json();
+            currentLanguage = lang;
+            updateStaticTranslations();
+            return true;
+        }
+    } catch (error) {
+        console.error('Error loading translations:', error);
+    }
+    return false;
+}
+
+// Get translation by key
+function t(key) {
+    const keys = key.split('.');
+    let value = translations;
+    for (const k of keys) {
+        value = value?.[k];
+        if (value === undefined) break;
+    }
+    return value || key;
+}
+
+// Update all elements with data-i18n attribute
+function updateStaticTranslations() {
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        const translation = t(key);
+        
+        // Handle HTML content
+        if (element.hasAttribute('data-i18n-html')) {
+            element.innerHTML = translation;
+        } else {
+            element.textContent = translation;
+        }
+    });
+    
+    // Update placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        element.placeholder = t(key);
+    });
+    
+    // Update title attributes
+    document.querySelectorAll('[data-i18n-title]').forEach(element => {
+        const key = element.getAttribute('data-i18n-title');
+        element.title = t(key);
+    });
+}
+
+// Initialize language from localStorage or default to 'en'
+async function initLanguage() {
+    const savedLang = localStorage.getItem('language');
+    const lang = savedLang && ['en', 'tr', 'ru', 'sr', 'hr', 'ro'].includes(savedLang) ? savedLang : 'en';
+    await loadTranslations(lang);
+}
+
+// Set language and update
+window.updateStaticTranslations = async function(lang) {
+    if (['en', 'tr', 'ru', 'sr', 'hr', 'ro'].includes(lang)) {
+        await loadTranslations(lang);
+        localStorage.setItem('language', lang);
+    }
+};
+
+// ============================================
 // GLOBAL CONSTANTS
 // ============================================
-const CORPORATE_TABS = ['about', 'mission-vision', 'career', 'culture', 'application'];
-const PRODUCT_ITEMS = ['surface-cleaners', 'concentrated-detergents', 'disinfectants'];
+const CORPORATE_TABS = ['about', 'mission-vision', 'application'];
+const PRODUCT_ITEMS = ['surface-cleaners', 'concentrated-detergents', 'disinfectants', 'liquid-soap', 'shampoo'];
 
 // ============================================
 // NAVBAR FUNCTIONALITY
@@ -281,6 +356,62 @@ function initDesktopDropdowns() {
     console.log('Dropdown initialization complete');
 }
 
+// Initialize Static Language Selector
+function initStaticLanguageSelector() {
+    const languageSelector = document.getElementById('static-language-selector');
+    if (!languageSelector) return;
+    
+    const trigger = languageSelector.querySelector('.language-trigger');
+    const dropdown = languageSelector.querySelector('.language-dropdown');
+    const currentLang = languageSelector.querySelector('.current-lang');
+    
+    if (!trigger || !dropdown || !currentLang) return;
+    
+    const languages = [
+        { code: 'en', label: 'EN' },
+        { code: 'tr', label: 'TR' },
+        { code: 'ru', label: 'RU' },
+        { code: 'sr', label: 'SR' },
+        { code: 'hr', label: 'HR' },
+        { code: 'ro', label: 'RO' }
+    ];
+    
+    // Update current language display
+    function updateCurrentLang() {
+        const lang = languages.find(l => l.code === currentLanguage);
+        if (lang && currentLang) {
+            currentLang.textContent = lang.label;
+        }
+    }
+    
+    updateCurrentLang();
+    
+    // Toggle dropdown
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('hidden');
+    });
+    
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+        if (!languageSelector.contains(e.target)) {
+            dropdown.classList.add('hidden');
+        }
+    });
+    
+    // Language selection
+    dropdown.querySelectorAll('.language-option').forEach(option => {
+        option.addEventListener('click', async (e) => {
+            const langCode = option.getAttribute('data-lang');
+            if (langCode && ['en', 'tr', 'ru', 'sr', 'hr', 'ro'].includes(langCode)) {
+                await window.updateStaticTranslations(langCode);
+                updateCurrentLang();
+                dropdown.classList.add('hidden');
+            }
+        });
+    });
+}
+
 // Mobile Menu Toggle and Scroll Lock
 let mobileMenuOpen = false;
 let scrollPosition = 0;
@@ -491,9 +622,9 @@ function initEnhancedNavigation() {
             if (href === '#corporate') {
                 e.preventDefault();
                 setTimeout(() => {
-                    const section = document.getElementById('corporate-tabs');
+                    const section = document.getElementById('about');
                     if (section) {
-                        const offsetTop = section.offsetTop - 150;
+                        const offsetTop = section.getBoundingClientRect().top + window.scrollY - 100;
                         window.scrollTo({ top: offsetTop, behavior: 'smooth' });
                     }
                 }, 50);
@@ -507,6 +638,38 @@ function initEnhancedNavigation() {
                 if (productsSection) {
                     const offsetTop = productsSection.offsetTop - 100;
                     window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                }
+                return;
+            }
+            
+            // Private Label section - Center vertically on screen
+            if (href === '#private-label') {
+                e.preventDefault();
+                const privateLabelSection = document.getElementById('private-label');
+                if (privateLabelSection) {
+                    // Get header height (navbar is fixed)
+                    const navbar = document.getElementById('navbar');
+                    const headerHeight = navbar ? navbar.offsetHeight : 0;
+                    
+                    // Calculate scroll position to center the section vertically
+                    // Formula: element.offsetTop - (window.innerHeight / 2) + (element.offsetHeight / 2)
+                    const elementTop = privateLabelSection.offsetTop;
+                    const elementHeight = privateLabelSection.offsetHeight;
+                    const viewportHeight = window.innerHeight;
+                    
+                    // Calculate target scroll position to center the section
+                    // This centers the section's midpoint at the viewport's midpoint
+                    let targetScrollPos = elementTop - (viewportHeight / 2) + (elementHeight / 2);
+                    
+                    // Ensure the section doesn't get hidden under the fixed header
+                    // If the calculated position would place content under the header, adjust it
+                    const minScrollPos = elementTop - headerHeight;
+                    if (targetScrollPos < minScrollPos) {
+                        // Adjust to ensure section is visible, but still try to center as much as possible
+                        targetScrollPos = Math.max(0, minScrollPos + (elementHeight / 2));
+                    }
+                    
+                    window.scrollTo({ top: Math.max(0, targetScrollPos), behavior: 'smooth' });
                 }
                 return;
             }
@@ -534,6 +697,114 @@ window.addEventListener('scroll', () => {
         droplet.style.transform = `translateY(${scrollY * speed}px)`;
     });
 });
+
+// ============================================
+// HYGIENIC BUBBLE SCROLL-LINKED ANIMATION
+// ============================================
+(function() {
+    let ticking = false;
+    
+    // Get all bubble layers
+    const bubbleLayers = document.querySelectorAll('.bubble-layer');
+    
+    // Performance-optimized scroll handler using requestAnimationFrame
+    function updateBubblePositions() {
+        const scrollY = window.scrollY;
+        
+        bubbleLayers.forEach(layer => {
+            const speed = parseFloat(layer.getAttribute('data-speed')) || -0.3;
+            const bubbles = layer.querySelectorAll('.hygienic-bubble');
+            
+            bubbles.forEach(bubble => {
+                // Calculate vertical offset based on scroll position
+                // Negative speed means bubbles move upward as user scrolls down
+                const scrollOffset = scrollY * speed;
+                
+                // Transform: translateY(var(--scroll-y)) - CSS'te tanımlı
+                // CSS custom property --scroll-y kullanılıyor
+                // Salınım animasyonu margin ile yapılıyor, transform ile çakışmıyor
+                bubble.style.setProperty('--scroll-y', `${scrollOffset}px`);
+                
+                // Doğrulama: window.scrollY * data-speed = --scroll-y
+                // Debug: İlk baloncuk için console log (sadece ilk layer'dan)
+                if (layer === bubbleLayers[0] && bubbles.length > 0 && bubble === bubbles[0]) {
+                    console.log(`Bubble Scroll - scrollY: ${scrollY}, speed: ${speed}, offset: ${scrollOffset}px`);
+                }
+            });
+        });
+        
+        ticking = false;
+    }
+    
+    // Throttled scroll handler
+    function onScroll() {
+        if (!ticking) {
+            window.requestAnimationFrame(updateBubblePositions);
+            ticking = true;
+        }
+    }
+    
+    // Initialize on page load
+    function initBubbleAnimation() {
+        if (bubbleLayers.length === 0) {
+            console.warn('Bubble layers not found!');
+            return;
+        }
+        
+        console.log(`Initialized ${bubbleLayers.length} bubble layers`);
+        
+        // Count total bubbles and apply random opacity
+        let totalBubbles = 0;
+        let smallBubbles = [];
+        
+        bubbleLayers.forEach(layer => {
+            const bubbles = layer.querySelectorAll('.hygienic-bubble');
+            totalBubbles += bubbles.length;
+            
+            bubbles.forEach(bubble => {
+                // Rastgele opacity: 0.30 ile 0.60 arası (daha görünür)
+                const randomOpacity = 0.30 + Math.random() * 0.30; // 0.30 - 0.60
+                bubble.style.opacity = randomOpacity;
+                
+                // Küçük baloncukları topla (turuncu glow için)
+                if (bubble.classList.contains('bubble-size-sm')) {
+                    smallBubbles.push(bubble);
+                }
+            });
+        });
+        
+        console.log(`Total bubbles: ${totalBubbles}`);
+        
+        // Küçük baloncukların %5'ine turuncu glow ekle
+        const orangeGlowCount = Math.max(1, Math.floor(smallBubbles.length * 0.05));
+        const shuffled = smallBubbles.sort(() => 0.5 - Math.random());
+        for (let i = 0; i < orangeGlowCount && i < shuffled.length; i++) {
+            shuffled[i].classList.add('has-orange-glow');
+        }
+        
+        // Set initial positions
+        updateBubblePositions();
+        
+        // Listen to scroll events with passive flag for better performance
+        window.addEventListener('scroll', onScroll, { passive: true });
+        
+        // Also update on resize to recalculate positions
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                updateBubblePositions();
+            }, 100);
+        });
+    }
+    
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initBubbleAnimation);
+    } else {
+        initBubbleAnimation();
+    }
+})();
 
 // Corporate Tab Navigation
 function handleCorporateTabNavigation(hash) {
@@ -728,7 +999,8 @@ function initCorporateTabs() {
         // Delay glider update to ensure DOM is ready
         setTimeout(() => updateGliderPosition(initialHash), 100);
     } else {
-        // Update glider for default tab
+        // Show default "about" tab content and update glider
+        switchTab('about');
         setTimeout(() => updateGliderPosition('about'), 100);
     }
 }
@@ -1017,21 +1289,26 @@ function handleProductNavigation(hash) {
     
     if (PRODUCT_ITEMS.includes(productId)) {
         // Scroll to products tabs section
-        const productsTabsSection = document.getElementById('products-tabs');
         const productsSection = document.getElementById('products');
         if (productsSection) {
             const offsetTop = productsSection.offsetTop - 150; // Header offset
             window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-        }
-        
-        // Activate product after scroll
-        setTimeout(() => {
+            
+            // Wait for scroll to complete, then activate product
+            // Use a longer timeout to ensure scroll animation completes
+            setTimeout(() => {
+                switchProduct(productId);
+            }, 800);
+        } else {
+            // If section not found, activate immediately
             switchProduct(productId);
-        }, 500);
+        }
     }
 }
 
 function switchProduct(productId) {
+    console.log('switchProduct called with:', productId);
+    
     // Remove active class from all tabs
     document.querySelectorAll('.product-tab').forEach(tab => {
         tab.classList.remove('active');
@@ -1042,16 +1319,31 @@ function switchProduct(productId) {
         content.classList.add('hidden');
     });
     
+    // Hide all product images
+    document.querySelectorAll('.product-image-container').forEach(image => {
+        image.classList.add('hidden');
+    });
+    
     // Update mobile custom dropdown
     updateMobileProductDropdown(productId);
     
     // Activate selected product
     const selectedTab = document.querySelector(`[data-product="${productId}"]`);
     const selectedContent = document.getElementById(`product-content-${productId}`);
+    const selectedImage = document.getElementById(`product-image-${productId}`);
+    
+    console.log('Selected tab:', selectedTab);
+    console.log('Selected content:', selectedContent);
+    console.log('Selected image:', selectedImage);
     
     if (selectedTab && selectedContent) {
         selectedTab.classList.add('active');
         selectedContent.classList.remove('hidden');
+        
+        // Show corresponding product image if it exists
+        if (selectedImage) {
+            selectedImage.classList.remove('hidden');
+        }
         
         // Update URL hash without triggering scroll
         if (window.location.hash !== `#products-${productId}`) {
@@ -1059,7 +1351,13 @@ function switchProduct(productId) {
         }
         
         // Re-initialize icons
-        lucide.createIcons();
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+        
+        console.log('Product switched successfully to:', productId);
+    } else {
+        console.error('Failed to switch product. Tab or content not found for:', productId);
     }
 }
 
@@ -1159,8 +1457,20 @@ function initMobileProductDropdown() {
             // Close dropdown
             closeMobileProductDropdown();
             
-            // Switch product
-            switchProduct(productId);
+            // Scroll to products section first
+            const productsSection = document.getElementById('products');
+            if (productsSection) {
+                const offsetTop = productsSection.offsetTop - 150;
+                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                
+                // Wait for scroll to complete, then switch product
+                setTimeout(() => {
+                    switchProduct(productId);
+                }, 800);
+            } else {
+                // If section not found, switch immediately
+                switchProduct(productId);
+            }
         });
     });
     
@@ -1298,7 +1608,7 @@ function initPackagingDropdowns() {
     });
 }
 
-// Parallax effect for product images
+// Parallax effect for product images (excluding right column images)
 function initProductParallax() {
     const productImages = document.querySelectorAll('.product-image[data-parallax="true"]');
     
@@ -1306,6 +1616,12 @@ function initProductParallax() {
         const scrollY = window.scrollY;
         
         productImages.forEach(img => {
+            // Skip parallax for images in the right column (product-image-container)
+            if (img.closest('.product-image-container')) {
+                img.style.transform = 'none';
+                return;
+            }
+            
             const rect = img.getBoundingClientRect();
             const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
             
@@ -1836,7 +2152,10 @@ function initContactForm() {
 }
 
 // Initialize all functionality
-function initAll() {
+async function initAll() {
+    // Initialize language system first
+    await initLanguage();
+    
     // Initialize Lucide icons first
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
@@ -1847,6 +2166,12 @@ function initAll() {
     initDesktopDropdowns();
     initMobileMenu();
     initEnhancedNavigation();
+    
+    // Initialize language selector for static HTML
+    initStaticLanguageSelector();
+    
+    // Initialize language selector for static HTML
+    initStaticLanguageSelector();
     
     // Existing functionality
     initCorporateTabs();

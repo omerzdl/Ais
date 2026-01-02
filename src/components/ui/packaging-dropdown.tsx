@@ -30,7 +30,7 @@ export function PackagingDropdown({
   if (options.length === 1) {
     return (
       <div className="w-full sm:min-w-[180px] sm:max-w-[260px]">
-        <div className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs md:text-sm font-medium break-words bg-transparent text-[#1A2F25] border border-[#8FA895] text-center">
+        <div className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs md:text-sm font-medium break-words bg-transparent text-[#1E293B] border border-[#E2E8F0] text-center">
           {options[0].label}
         </div>
       </div>
@@ -109,8 +109,8 @@ export function PackagingDropdown({
           flex items-center justify-between break-words
           ${
             isOpen
-              ? "bg-[#a84833] text-white shadow-lg rounded-b-none"
-              : "bg-transparent text-[#1A2F25] border border-[#8FA895] hover:bg-white active:bg-white"
+              ? "bg-[#FF8C00] text-white shadow-lg rounded-b-none"
+              : "bg-transparent text-[#1E293B] border border-[#E2E8F0] hover:bg-[#F8FAFC] active:bg-[#F8FAFC]"
           }
         `}
       >
@@ -134,7 +134,7 @@ export function PackagingDropdown({
 
       {/* Dropdown Menü */}
       {isOpen && (
-        <div className="absolute top-full left-0 sm:right-0 sm:left-auto w-full bg-white border border-[#8FA895] border-t-0 rounded-b-2xl shadow-xl z-50 max-h-[200px] sm:max-h-60 overflow-y-auto overscroll-contain">
+        <div className="absolute top-full left-0 sm:right-0 sm:left-auto w-full bg-white border border-[#E2E8F0] border-t-0 rounded-b-2xl shadow-xl z-50 max-h-[200px] sm:max-h-60 overflow-y-auto overscroll-contain">
           <div className="p-1.5 sm:p-2 space-y-0.5 sm:space-y-1">
             {options.map((option) => (
               <button
@@ -146,8 +146,8 @@ export function PackagingDropdown({
                   touch-manipulation
                   ${
                     selectedId === option.id
-                      ? "bg-[#a84833] text-white"
-                      : "text-[#1A2F25]/70 hover:bg-[#f5f4d0] active:bg-[#f5f4d0] hover:text-[#1A2F25]"
+                      ? "bg-[#FF8C00] text-white"
+                      : "text-[#1E293B] hover:bg-[#F8FAFC] active:bg-[#F8FAFC] hover:text-[#FF8C00]"
                   }
                 `}
               >

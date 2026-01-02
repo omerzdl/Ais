@@ -105,7 +105,7 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
         <div>
           <label 
             htmlFor="contact-name" 
-            className="block text-sm font-medium text-[#1A2F25] mb-2"
+            className="block text-sm font-medium text-[#1E293B] mb-2"
           >
             Full Name
           </label>
@@ -117,8 +117,8 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
             onChange={(e) => handleChange('name', e.target.value)}
             required
             className={`
-              w-full px-4 py-3 rounded-xl border border-[#8FA895] bg-white text-[#1A2F25]
-              focus:outline-none focus:ring-2 focus:ring-[#a84833] focus:border-transparent
+              w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-white text-[#1E293B]
+              focus:outline-none focus:ring-2 focus:ring-[#FF8C00] focus:border-transparent
               transition-all duration-200
               ${errors.name ? 'border-red-500' : ''}
             `}
@@ -135,7 +135,7 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
         <div>
           <label 
             htmlFor="contact-email" 
-            className="block text-sm font-medium text-[#1A2F25] mb-2"
+            className="block text-sm font-medium text-[#1E293B] mb-2"
           >
             Email
           </label>
@@ -147,8 +147,8 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
             onChange={(e) => handleChange('email', e.target.value)}
             required
             className={`
-              w-full px-4 py-3 rounded-xl border border-[#8FA895] bg-white text-[#1A2F25]
-              focus:outline-none focus:ring-2 focus:ring-[#a84833] focus:border-transparent
+              w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-white text-[#1E293B]
+              focus:outline-none focus:ring-2 focus:ring-[#FF8C00] focus:border-transparent
               transition-all duration-200
               ${errors.email ? 'border-red-500' : ''}
             `}
@@ -168,7 +168,7 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
         <div>
           <label 
             htmlFor="contact-phone" 
-            className="block text-sm font-medium text-[#1A2F25] mb-2"
+            className="block text-sm font-medium text-[#1E293B] mb-2"
           >
             Phone
           </label>
@@ -180,8 +180,8 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
             onChange={(e) => handleChange('phone', e.target.value)}
             required
             className={`
-              w-full px-4 py-3 rounded-xl border border-[#8FA895] bg-white text-[#1A2F25]
-              focus:outline-none focus:ring-2 focus:ring-[#a84833] focus:border-transparent
+              w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-white text-[#1E293B]
+              focus:outline-none focus:ring-2 focus:ring-[#FF8C00] focus:border-transparent
               transition-all duration-200
               ${errors.phone ? 'border-red-500' : ''}
             `}
@@ -198,7 +198,7 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
         <div>
           <label 
             htmlFor="contact-department" 
-            className="block text-sm font-medium text-[#1A2F25] mb-2"
+            className="block text-sm font-medium text-[#1E293B] mb-2"
           >
             Department
           </label>
@@ -221,7 +221,7 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
       <div>
         <label 
           htmlFor="contact-message" 
-          className="block text-sm font-medium text-[#1A2F25] mb-2"
+          className="block text-sm font-medium text-[#1E293B] mb-2"
         >
           Your Message
         </label>
@@ -231,7 +231,7 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
           value={formData.message}
           onChange={(e) => handleChange('message', e.target.value)}
           rows={3}
-          className="w-full px-4 py-3 rounded-xl border border-[#8FA895] bg-white text-[#1A2F25] resize-none focus:outline-none focus:ring-2 focus:ring-[#a84833] focus:border-transparent transition-all duration-200"
+          className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-white text-[#1E293B] resize-none focus:outline-none focus:ring-2 focus:ring-[#FF8C00] focus:border-transparent transition-all duration-200"
         />
       </div>
 
@@ -244,18 +244,18 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
           checked={formData.kvkkConsent}
           onChange={(e) => handleChange('kvkkConsent', e.target.checked)}
           required
-          className="mt-1 w-4 h-4 rounded border-[#8FA895] text-[#a84833] focus:ring-[#a84833] focus:ring-2 cursor-pointer"
+          className="mt-1 w-4 h-4 rounded border-[#E2E8F0] text-[#FF8C00] focus:ring-[#FF8C00] focus:ring-2 cursor-pointer"
           aria-invalid={!!errors.kvkkConsent}
           aria-describedby={errors.kvkkConsent ? 'kvkk-error' : undefined}
         />
         <label 
           htmlFor="contact-kvkk" 
-          className="text-sm text-[#1A2F25]/80 leading-relaxed cursor-pointer"
+          className="text-sm text-[#1E293B] leading-relaxed cursor-pointer"
         >
           I have read and accept the{' '}
           <a 
             href="#kvkk" 
-            className="underline text-[#a84833] hover:text-[#873523] transition-colors"
+            className="underline text-[#FF8C00] hover:text-[#E67E00] transition-colors"
           >
             KVKK Disclosure Text
           </a>
@@ -269,11 +269,11 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
       )}
 
       {/* KVKK Info */}
-      <p className="text-xs text-[#1A2F25]/70">
+      <p className="text-xs text-[#64748B]">
         Your personal data will be processed in accordance with the{' '}
         <a 
           href="#kvkk" 
-          className="underline text-[#a84833] hover:text-[#873523] transition-colors"
+          className="underline text-[#FF8C00] hover:text-[#E67E00] transition-colors"
         >
           KVKK Disclosure Text
         </a>
@@ -283,7 +283,7 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
       {/* Submit Button */}
       <button
         type="submit"
-        className="w-full py-3 px-6 rounded-xl bg-[#a84833] text-white font-bold hover:bg-[#873523] transition-colors duration-200"
+        className="w-full py-3 px-6 rounded-xl bg-[#FF8C00] text-white font-bold hover:bg-[#E67E00] transition-colors duration-200 shadow-[0_4px_16px_rgba(255,140,0,0.3)]"
       >
         Send
       </button>
