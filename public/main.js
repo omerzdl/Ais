@@ -1255,6 +1255,12 @@ function switchProduct(productId) {
         
         // Re-initialize icons
         lucide.createIcons();
+        
+        // Re-initialize packaging dropdowns for the newly shown product content
+        // Use setTimeout to ensure DOM is updated
+        setTimeout(() => {
+            initPackagingDropdowns();
+        }, 50);
     }
 }
 
@@ -1550,16 +1556,27 @@ function closeMobileProductDropdown() {
 }
 
 // Custom Packaging Dropdown
+// Use a Set to track initialized dropdowns to prevent duplicate event listeners
+const initializedPackagingDropdowns = new WeakSet();
+
 function initPackagingDropdowns() {
     const dropdownWrappers = document.querySelectorAll('.packaging-dropdown-wrapper');
     
     dropdownWrappers.forEach(wrapper => {
+        // Skip if already initialized
+        if (initializedPackagingDropdowns.has(wrapper)) {
+            return;
+        }
+        
         const trigger = wrapper.querySelector('.packaging-dropdown-trigger');
         const menu = wrapper.querySelector('.packaging-dropdown-menu');
         const items = wrapper.querySelectorAll('.packaging-dropdown-item');
         const selectedText = trigger?.querySelector('.selected-text');
         
         if (!trigger || !menu) return;
+        
+        // Mark as initialized
+        initializedPackagingDropdowns.add(wrapper);
         
         // Toggle dropdown on click
         trigger.addEventListener('click', (e) => {
