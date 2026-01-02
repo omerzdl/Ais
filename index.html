@@ -1057,28 +1057,41 @@
                 }
                 ensureIcons();
             } else {
-                // Load static JS for home page immediately (no 10s wait for i18n)
-                const mainJsPath = basePath ? `${basePath}/src/main.js` : './src/main.js';
-                const script = document.createElement('script');
-                script.src = mainJsPath;
-                script.type = 'module';
-                script.onload = async function() {
-                    console.log('main.js loaded successfully');
-                    // Give i18n a brief moment to finish fetching translations
-                    await new Promise(resolve => setTimeout(resolve, 50));
-                    if (typeof window !== 'undefined' && window.initAll) {
-                        try {
-                            await window.initAll();
-                        } catch (e) {
-                            console.warn('Error initializing functionality:', e);
-                        }
+                // Load static JS for home page immediately (no long wait for i18n)
+                const candidates = basePath
+                    ? [`${basePath}/main.js`, `${basePath}/src/main.js`]
+                    : ['./main.js', './src/main.js'];
+                
+                const loadMain = (urls) => {
+                    if (!urls.length) {
+                        console.error('Failed to load main.js from all fallbacks');
+                        return;
                     }
-                    ensureIcons();
+                    const url = urls[0];
+                    const script = document.createElement('script');
+                    script.src = url;
+                    script.type = 'module';
+                    script.onload = async function() {
+                        console.log('main.js loaded successfully from:', url);
+                        // Give i18n a brief moment to finish fetching translations
+                        await new Promise(resolve => setTimeout(resolve, 50));
+                        if (typeof window !== 'undefined' && window.initAll) {
+                            try {
+                                await window.initAll();
+                            } catch (e) {
+                                console.warn('Error initializing functionality:', e);
+                            }
+                        }
+                        ensureIcons();
+                    };
+                    script.onerror = function() {
+                        console.error('Failed to load main.js from:', url);
+                        loadMain(urls.slice(1)); // try next candidate
+                    };
+                    document.head.appendChild(script);
                 };
-                script.onerror = function() {
-                    console.error('Failed to load main.js from:', mainJsPath);
-                };
-                document.head.appendChild(script);
+                
+                loadMain(candidates);
             }
             
             // Ensure icons are initialized after everything loads
