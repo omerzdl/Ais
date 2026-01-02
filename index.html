@@ -1137,14 +1137,8 @@
                     }
                 }
                 
-                // Initialize all functionality
-                if (typeof window !== 'undefined' && window.initAll) {
-                    try {
-                        window.initAll();
-                    } catch (e) {
-                        console.warn('Error initializing functionality:', e);
-                    }
-                }
+                // Note: initAll will be called after main.js loads (for home page)
+                // or immediately for catalog page
             }, 100);
             
             // Check if we're on the catalog route
@@ -1166,12 +1160,26 @@
                     await import('./src/main.tsx');
                 }
             } else {
-                // Load static JS for home page
-                if (basePath) {
-                    await import(`${basePath}/main.js`);
-                } else {
-                    await import('./main.js');
-                }
+                // Load static JS for home page using script tag (not dynamic import to avoid Vite build issues)
+                const mainJsPath = basePath ? `${basePath}/main.js` : './main.js';
+                const script = document.createElement('script');
+                script.src = mainJsPath;
+                script.type = 'text/javascript';
+                script.onload = function() {
+                    console.log('main.js loaded successfully');
+                    // Initialize all functionality after main.js loads
+                    if (typeof window !== 'undefined' && window.initAll) {
+                        try {
+                            window.initAll();
+                        } catch (e) {
+                            console.warn('Error initializing functionality:', e);
+                        }
+                    }
+                };
+                script.onerror = function() {
+                    console.error('Failed to load main.js from:', mainJsPath);
+                };
+                document.head.appendChild(script);
             }
             
             // Ensure icons are initialized after everything loads
