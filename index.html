@@ -1168,9 +1168,9 @@
             } else {
                 // Load static JS for home page
                 if (basePath) {
-                    await import(`${basePath}/src/main.js`);
+                    await import(`${basePath}/main.js`);
                 } else {
-                    await import('./src/main.js');
+                    await import('./main.js');
                 }
             }
             
