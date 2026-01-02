@@ -984,8 +984,18 @@
     <div id="root"></div>
     <script type="module">
         (async () => {
+            // Get base path for GitHub Pages
+            const getBasePath = () => {
+                if (window.location.hostname === 'omerzdl.github.io') {
+                    return '/Ais';
+                }
+                return '';
+            };
+            
+            const basePath = getBasePath();
+            
             // Load i18n first
-            await import('/src/i18n.js');
+            await import(`${basePath}/src/i18n.js`);
             
             // Initialize language
             if (window.i18n) {
@@ -993,7 +1003,8 @@
             }
             
             // Check if we're on the catalog route
-            if (window.location.pathname === '/catalog') {
+            const catalogPath = basePath ? `${basePath}/catalog` : '/catalog';
+            if (window.location.pathname === catalogPath || window.location.pathname === '/catalog') {
                 // Hide all static HTML content
                 const staticContent = document.querySelector('body > *:not(#root):not(script)');
                 if (staticContent) {
@@ -1004,10 +1015,10 @@
                     });
                 }
                 // Load React app
-                import('/src/main.tsx');
+                import(`${basePath}/src/main.tsx`);
             } else {
                 // Load static JS for home page
-                import('/src/main.js');
+                import(`${basePath}/src/main.js`);
             }
         })();
     </script>

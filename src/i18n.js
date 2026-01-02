@@ -17,10 +17,20 @@ const STORAGE_KEY = 'ais_language';
 let currentLanguage = DEFAULT_LANGUAGE;
 let translations = {};
 
+// Get base path for GitHub Pages
+function getBasePath() {
+    // Check if we're on GitHub Pages
+    if (window.location.hostname === 'omerzdl.github.io') {
+        return '/Ais';
+    }
+    return '';
+}
+
 // Load translation file
 async function loadTranslations(lang) {
     try {
-        const response = await fetch(`/src/translations/${lang}.json`);
+        const basePath = getBasePath();
+        const response = await fetch(`${basePath}/src/translations/${lang}.json`);
         if (!response.ok) {
             throw new Error(`Failed to load translations for ${lang}`);
         }
