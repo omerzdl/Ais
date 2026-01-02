@@ -368,9 +368,14 @@ function closeMobileMenu(restoreScroll = true) {
 }
 
 // Mobile Menu Button
+// Use WeakSet to track initialized elements and prevent duplicate event listeners
+const initializedMobileMenuButton = new WeakSet();
+const initializedMobileDropdowns = new WeakSet();
+
 function initMobileMenu() {
     const button = document.getElementById('mobile-menu-button');
-    if (button) {
+    if (button && !initializedMobileMenuButton.has(button)) {
+        initializedMobileMenuButton.add(button);
         button.addEventListener('click', toggleMobileMenu);
         
         // Touch event handling - call toggleMobileMenu on touch
@@ -384,6 +389,12 @@ function initMobileMenu() {
     // Mobile dropdown toggles
     const mobileDropdowns = document.querySelectorAll('.mobile-dropdown-toggle');
     mobileDropdowns.forEach(toggle => {
+        // Skip if already initialized
+        if (initializedMobileDropdowns.has(toggle)) {
+            return;
+        }
+        initializedMobileDropdowns.add(toggle);
+        
         toggle.addEventListener('click', () => {
             const content = toggle.nextElementSibling;
             const chevron = toggle.querySelector('i[data-lucide="chevron-down"]');
@@ -418,8 +429,15 @@ function initMobileMenu() {
     });
     
     // Close mobile menu when clicking a link (don't restore scroll since we're navigating)
+    const initializedMobileLinks = new WeakSet();
     const mobileLinks = document.querySelectorAll('#mobile-menu-items a');
     mobileLinks.forEach(link => {
+        // Skip if already initialized
+        if (initializedMobileLinks.has(link)) {
+            return;
+        }
+        initializedMobileLinks.add(link);
+        
         link.addEventListener('click', () => {
             setTimeout(() => {
                 closeMobileMenu(false);
@@ -1255,6 +1273,12 @@ function switchProduct(productId) {
         
         // Re-initialize icons
         lucide.createIcons();
+        
+        // Re-initialize packaging dropdowns for the newly shown product content
+        // Use setTimeout to ensure DOM is updated
+        setTimeout(() => {
+            initPackagingDropdowns();
+        }, 50);
     }
 }
 
@@ -1326,6 +1350,9 @@ function initProductsTabs() {
 }
 
 // Initialize Mobile Product Custom Dropdown
+// Use WeakSet to track initialized elements and prevent duplicate event listeners
+const initializedMobileProductDropdown = new WeakSet();
+
 function initMobileProductDropdown() {
     const trigger = document.getElementById('products-mobile-trigger');
     const menu = document.getElementById('products-mobile-menu');
@@ -1335,6 +1362,13 @@ function initMobileProductDropdown() {
         console.warn('Mobile product dropdown elements not found');
         return;
     }
+    
+    // Skip if already initialized
+    if (initializedMobileProductDropdown.has(trigger)) {
+        console.log('Mobile product dropdown already initialized');
+        return;
+    }
+    initializedMobileProductDropdown.add(trigger);
     
     console.log('Initializing mobile product dropdown');
     
@@ -2269,7 +2303,21 @@ function initLanguageSwitcher() {
 }
 
 // Initialize all functionality
-function initAll() {
+async function initAll() {
+    // Wait for i18n to be ready before initializing (ensures translations are loaded)
+    if (window.i18n && typeof window.i18n.initLanguage === 'function') {
+        try {
+            // Check if language is already initialized, if not initialize it
+            const currentLang = window.i18n.getCurrentLanguage();
+            if (!currentLang || currentLang === 'en') {
+                // Try to initialize language (this will load translations if not already loaded)
+                await window.i18n.initLanguage();
+            }
+        } catch (error) {
+            console.warn('Error ensuring i18n is ready:', error);
+        }
+    }
+    
     // Wait for Lucide to be available before initializing icons
     const initIcons = () => {
         if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
@@ -2331,9 +2379,9 @@ if (typeof window !== 'undefined') {
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         // Wait for Lucide to be available
-        const waitForLucide = () => {
+        const waitForLucide = async () => {
             if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-                initAll();
+                await initAll();
             } else {
                 setTimeout(waitForLucide, 50);
             }
@@ -2342,9 +2390,9 @@ if (document.readyState === 'loading') {
     });
 } else {
     // DOM already loaded, wait for Lucide
-    const waitForLucide = () => {
+    const waitForLucide = async () => {
         if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-            initAll();
+            await initAll();
         } else {
             setTimeout(waitForLucide, 50);
         }
