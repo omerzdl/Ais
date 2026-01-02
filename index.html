@@ -80,6 +80,55 @@
     </script>
     
     <link rel="stylesheet" href="./src/styles.css">
+
+    <!-- Minimal i18n fallback: ensures language click works even if bundled main.js is missing -->
+    <script type="module">
+        (() => {
+            const getBasePath = () => {
+                if (window.location.hostname === 'omerzdl.github.io' ||
+                    window.location.pathname.startsWith('/Ais')) {
+                    return '/Ais';
+                }
+                return '';
+            };
+            
+            let i18nReadyPromise = null;
+            const ensureI18n = () => {
+                if (window.i18n && typeof window.i18n.setLanguage === 'function') {
+                    return Promise.resolve(window.i18n);
+                }
+                if (i18nReadyPromise) return i18nReadyPromise;
+                const basePath = getBasePath();
+                const fallbackUrl = basePath ? `${basePath}/dist/i18n.js` : './dist/i18n.js';
+                i18nReadyPromise = import(fallbackUrl).then(mod => {
+                    const i18n = mod.default || mod;
+                    window.i18n = i18n;
+                    return i18n;
+                }).catch(err => {
+                    console.warn('Fallback i18n load failed:', err);
+                    return null;
+                });
+                return i18nReadyPromise;
+            };
+            
+            document.addEventListener('click', (e) => {
+                const langBtn = e.target.closest('[data-lang]');
+                if (!langBtn) return;
+                e.preventDefault();
+                const lang = langBtn.getAttribute('data-lang');
+                if (!lang) return;
+                ensureI18n().then(i18n => {
+                    if (i18n && typeof i18n.setLanguage === 'function') {
+                        i18n.setLanguage(lang);
+                    } else {
+                        // store selection so when main.js loads it can pick up
+                        localStorage.setItem('ais_language', lang);
+                        location.reload();
+                    }
+                });
+            });
+        })();
+    </script>
 </head>
     <body class="bg-white text-[#1E293B] font-sans antialiased text-lg relative overflow-x-hidden max-w-full">
 
