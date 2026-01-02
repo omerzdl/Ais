@@ -2297,7 +2297,21 @@ function initLanguageSwitcher() {
 }
 
 // Initialize all functionality
-function initAll() {
+async function initAll() {
+    // Wait for i18n to be ready before initializing (ensures translations are loaded)
+    if (window.i18n && typeof window.i18n.initLanguage === 'function') {
+        try {
+            // Check if language is already initialized, if not initialize it
+            const currentLang = window.i18n.getCurrentLanguage();
+            if (!currentLang || currentLang === 'en') {
+                // Try to initialize language (this will load translations if not already loaded)
+                await window.i18n.initLanguage();
+            }
+        } catch (error) {
+            console.warn('Error ensuring i18n is ready:', error);
+        }
+    }
+    
     // Wait for Lucide to be available before initializing icons
     const initIcons = () => {
         if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
@@ -2346,10 +2360,10 @@ if (typeof window !== 'undefined') {
     window.initAll = initAll;
     
     // Listen for language change events and re-initialize
-    window.addEventListener('languagechange', () => {
+    window.addEventListener('languagechange', async () => {
         // Small delay to ensure DOM updates are complete
-        setTimeout(() => {
-            initAll();
+        setTimeout(async () => {
+            await initAll();
         }, 100);
     });
 }
@@ -2359,9 +2373,9 @@ if (typeof window !== 'undefined') {
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         // Wait for Lucide to be available
-        const waitForLucide = () => {
+        const waitForLucide = async () => {
             if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-                initAll();
+                await initAll();
             } else {
                 setTimeout(waitForLucide, 50);
             }
@@ -2370,9 +2384,9 @@ if (document.readyState === 'loading') {
     });
 } else {
     // DOM already loaded, wait for Lucide
-    const waitForLucide = () => {
+    const waitForLucide = async () => {
         if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-            initAll();
+            await initAll();
         } else {
             setTimeout(waitForLucide, 50);
         }

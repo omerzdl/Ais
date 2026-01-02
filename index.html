@@ -1165,12 +1165,14 @@
                 const script = document.createElement('script');
                 script.src = mainJsPath;
                 script.type = 'text/javascript';
-                script.onload = function() {
+                script.onload = async function() {
                     console.log('main.js loaded successfully');
                     // Initialize all functionality after main.js loads
+                    // Wait a bit to ensure i18n translations are loaded
+                    await new Promise(resolve => setTimeout(resolve, 100));
                     if (typeof window !== 'undefined' && window.initAll) {
                         try {
-                            window.initAll();
+                            await window.initAll();
                         } catch (e) {
                             console.warn('Error initializing functionality:', e);
                         }
