@@ -22,11 +22,11 @@ export function CatalogPage() {
     <div className="min-h-screen bg-gradient-to-b from-[#4DA8DA] to-[#003399]">
       {/* Header with buttons */}
       <div className="sticky top-0 z-50 px-4 md:px-6 py-4 md:py-6">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
+        <div className="max-w-7xl mx-auto flex flex-row justify-between items-center gap-3">
           {/* Back to Home Button - Left */}
           <button
             onClick={handleGoHome}
-            className="glassmorphism-button glassmorphism-button-md glassmorphism-button-on-blue flex items-center gap-2"
+            className="glassmorphism-button glassmorphism-button-md glassmorphism-button-on-blue flex items-center gap-2 scale-90"
           >
             <svg
               className="w-5 h-5"
@@ -45,27 +45,25 @@ export function CatalogPage() {
           </button>
 
           {/* Download PDF Button - Right */}
-          <div className="flex items-center gap-4">
-            <button
-              onClick={handleDownloadPDF}
-              className="glassmorphism-button glassmorphism-button-md glassmorphism-button-on-blue flex items-center gap-2"
+          <button
+            onClick={handleDownloadPDF}
+            className="glassmorphism-button glassmorphism-button-md glassmorphism-button-on-blue flex items-center gap-2 scale-90"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
-              {t('catalog.downloadPDF')}
-            </button>
-          </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+            {t('catalog.downloadPDF')}
+          </button>
         </div>
       </div>
 

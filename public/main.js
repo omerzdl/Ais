@@ -32,253 +32,195 @@ function initNavbarAnimation() {
     }
 }
 
-// Desktop Dropdown Menu
+// Desktop Dropdown Menu - Event Delegation Pattern
+// Global state for dropdown management
+let navDropdownState = {
+    clickOpenedDropdown: null,
+    hoverTimeout: null
+};
+
+// Helper function to get chevron (works with Lucide icons)
+function getChevron(dropdown) {
+    return dropdown.querySelector('svg.lucide-chevron-down') || 
+           dropdown.querySelector('[data-lucide="chevron-down"]') ||
+           dropdown.querySelector('i.lucide-chevron-down');
+}
+
+// Helper function to show dropdown
+function showNavDropdown(dropdown, menu) {
+    menu.classList.add('show');
+    const trigger = dropdown.querySelector('a');
+    const chevron = getChevron(dropdown);
+    if (trigger) {
+        trigger.setAttribute('aria-expanded', 'true');
+    }
+    if (chevron) {
+        chevron.style.transform = 'rotate(180deg)';
+        chevron.style.transition = 'transform 0.2s ease';
+    }
+}
+
+// Helper function to hide dropdown
+function hideNavDropdown(dropdown, menu) {
+    menu.classList.remove('show');
+    const trigger = dropdown.querySelector('a');
+    const chevron = getChevron(dropdown);
+    if (trigger) {
+        trigger.setAttribute('aria-expanded', 'false');
+    }
+    if (chevron) {
+        chevron.style.transform = 'rotate(0deg)';
+    }
+}
+
+// Helper function to hide all nav dropdowns
+function hideAllNavDropdowns() {
+    navDropdownState.clickOpenedDropdown = null;
+    document.querySelectorAll('.nav-dropdown').forEach(dd => {
+        const m = dd.querySelector('.dropdown-menu');
+        if (m) {
+            hideNavDropdown(dd, m);
+        }
+    });
+}
+
+// Helper function to check if device supports hover (desktop)
+function isDesktop() {
+    return window.innerWidth >= 768 && window.matchMedia('(hover: hover)').matches;
+}
+
+// Initialize desktop dropdowns - only sets up overflow styles, event delegation is handled globally
 function initDesktopDropdowns() {
-    const dropdowns = document.querySelectorAll('.nav-dropdown');
-    
-    if (dropdowns.length === 0) {
-        console.log('No dropdowns found');
-        return;
-    }
-    
-    console.log('Initializing', dropdowns.length, 'dropdowns');
-    
-    // Track which dropdown was opened by click (to prevent hover from closing it)
-    let clickOpenedDropdown = null;
-    let hoverTimeout = null;
-    
-    // Helper function to get chevron (works with Lucide icons)
-    function getChevron(dropdown) {
-        // Try multiple selectors since Lucide might transform the element
-        return dropdown.querySelector('svg.lucide-chevron-down') || 
-               dropdown.querySelector('[data-lucide="chevron-down"]') ||
-               dropdown.querySelector('i.lucide-chevron-down');
-    }
-    
-    // Helper function to show dropdown
-    function showDropdown(dropdown, menu) {
-        menu.classList.add('show');
-        const trigger = dropdown.querySelector('a');
-        const chevron = getChevron(dropdown);
-        if (trigger) {
-            trigger.setAttribute('aria-expanded', 'true');
-        }
-        if (chevron) {
-            chevron.style.transform = 'rotate(180deg)';
-            chevron.style.transition = 'transform 0.2s ease';
-        }
-    }
-    
-    // Helper function to hide dropdown
-    function hideDropdown(dropdown, menu) {
-        menu.classList.remove('show');
-        const trigger = dropdown.querySelector('a');
-        const chevron = getChevron(dropdown);
-        if (trigger) {
-            trigger.setAttribute('aria-expanded', 'false');
-        }
-        if (chevron) {
-            chevron.style.transform = 'rotate(0deg)';
-        }
-    }
-    
-    // Helper function to hide all dropdowns
-    function hideAllDropdowns() {
-        clickOpenedDropdown = null;
-        dropdowns.forEach(dd => {
-            const m = dd.querySelector('.dropdown-menu');
-            if (m) {
-                hideDropdown(dd, m);
-            }
-        });
-    }
-    
-    // Helper function to check if device supports hover (desktop)
-    function isDesktop() {
-        return window.innerWidth >= 768 && window.matchMedia('(hover: hover)').matches;
-    }
-    
-    dropdowns.forEach((dropdown, index) => {
-        const menu = dropdown.querySelector('.dropdown-menu');
-        const trigger = dropdown.querySelector('a');
-        
-        if (!menu) {
-            console.warn('No menu found for dropdown', index);
-            return;
-        }
-        
-        // Force overflow visible on all parent containers
+    // Force overflow visible on all parent containers
+    document.querySelectorAll('.nav-dropdown').forEach(dropdown => {
         let parent = dropdown.parentElement;
         while (parent && parent !== document.body) {
             parent.style.overflow = 'visible';
             parent = parent.parentElement;
         }
-        
-        // Click event - handle dropdown toggle or navigation
-        if (trigger) {
-            trigger.addEventListener('click', (e) => {
-                const clickedElement = e.target;
-                const isChevronClick = clickedElement.closest('.dropdown-toggle-icon') || 
-                                       clickedElement.classList.contains('dropdown-toggle-icon') ||
-                                       clickedElement.closest('svg');
-                
-                // If clicked on chevron icon, toggle dropdown
-                if (isChevronClick) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    console.log('Dropdown chevron clicked:', index);
-                    
-                    const isOpen = menu.classList.contains('show');
-                    
-                    // Close all other dropdowns first
-                    dropdowns.forEach(dd => {
-                        if (dd !== dropdown) {
-                            const m = dd.querySelector('.dropdown-menu');
-                            if (m) hideDropdown(dd, m);
-                        }
-                    });
-                    
-                    // Toggle current dropdown
-                    if (isOpen) {
-                        hideDropdown(dropdown, menu);
-                        clickOpenedDropdown = null;
-                    } else {
-                        showDropdown(dropdown, menu);
-                        clickOpenedDropdown = dropdown;
-                    }
-                } else {
-                    // Clicked on text - navigate to section
-                    const sectionId = trigger.getAttribute('data-section');
-                    if (sectionId) {
-                        e.preventDefault();
-                        hideAllDropdowns();
-                        
-                        // Corporate section için özel işlem
-                        if (CORPORATE_TABS.includes(sectionId)) {
-                            handleCorporateTabNavigation(`#${sectionId}`);
-                            return;
-                        }
-                        
-                        // Products section için özel işlem
-                        if (PRODUCT_ITEMS.includes(sectionId)) {
-                            handleProductNavigation(`#products-${sectionId}`);
-                            return;
-                        }
-                        
-                        // Navigate to section (other sections)
-                        const section = document.getElementById(sectionId);
-                        if (section) {
-                            const rect = section.getBoundingClientRect();
-                            const offsetTop = rect.top + window.scrollY - 150;
-                            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
-                        }
-                    }
-                }
-            });
+    });
+}
+
+// Global event delegation for desktop nav dropdowns
+function setupNavDropdownDelegation() {
+    // Click handler - delegation on document.body
+    document.body.addEventListener('click', (e) => {
+        // Check if clicked on nav dropdown trigger
+        const dropdown = e.target.closest('.nav-dropdown');
+        if (!dropdown) {
+            // Click outside - close all dropdowns
+            hideAllNavDropdowns();
+            return;
         }
         
-        // Hover events - only for desktop
-        // Mouse enter - show dropdown
-        dropdown.addEventListener('mouseenter', (e) => {
-            if (!isDesktop()) return;
-            
-            // Clear any pending hide timeout
-            if (hoverTimeout) {
-                clearTimeout(hoverTimeout);
-                hoverTimeout = null;
-            }
-            
-            showDropdown(dropdown, menu);
-        });
+        const menu = dropdown.querySelector('.dropdown-menu');
+        const trigger = dropdown.querySelector('a');
+        if (!menu || !trigger) return;
         
-        // Mouse leave - hide dropdown with delay
-        dropdown.addEventListener('mouseleave', (e) => {
-            if (!isDesktop()) return;
-            
-            // Don't close if it was opened by click
-            if (clickOpenedDropdown === dropdown) return;
-            
-            // Add a small delay before hiding
-            hoverTimeout = setTimeout(() => {
-                hideDropdown(dropdown, menu);
-            }, 100);
-        });
+        // Check if clicked on chevron or SVG icon
+        const clickedElement = e.target;
+        const isChevronClick = clickedElement.closest('.dropdown-toggle-icon') || 
+                               clickedElement.classList.contains('dropdown-toggle-icon') ||
+                               clickedElement.closest('svg') ||
+                               clickedElement.closest('[data-lucide="chevron-down"]');
         
-        // Menu hover events
-        menu.addEventListener('mouseenter', (e) => {
-            if (!isDesktop()) return;
+        if (isChevronClick && trigger.contains(clickedElement)) {
+            e.preventDefault();
+            e.stopPropagation();
             
-            // Clear any pending hide timeout
-            if (hoverTimeout) {
-                clearTimeout(hoverTimeout);
-                hoverTimeout = null;
-            }
-        });
-        
-        menu.addEventListener('mouseleave', (e) => {
-            if (!isDesktop()) return;
+            const isOpen = menu.classList.contains('show');
             
-            // Don't close if it was opened by click
-            if (clickOpenedDropdown === dropdown) return;
-            
-            // Add a small delay before hiding
-            hoverTimeout = setTimeout(() => {
-                hideDropdown(dropdown, menu);
-            }, 100);
-        });
-        
-        // Handle dropdown menu item clicks
-        const menuLinks = menu.querySelectorAll('a[href^="#"]');
-        menuLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                const href = link.getAttribute('href');
-                
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Close dropdown
-                hideAllDropdowns();
-                
-                // Handle Corporate tabs
-                if (CORPORATE_TABS.includes(href.slice(1))) {
-                    handleCorporateTabNavigation(href);
-                    return;
-                }
-                
-                // Handle Products tabs
-                if (href.startsWith('#products-')) {
-                    handleProductNavigation(href);
-                    return;
-                }
-                
-                // Default scroll behavior
-                const target = document.querySelector(href);
-                if (target) {
-                    const offsetTop = target.getBoundingClientRect().top + window.scrollY - 150;
-                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+            // Close all other dropdowns first
+            document.querySelectorAll('.nav-dropdown').forEach(dd => {
+                if (dd !== dropdown) {
+                    const m = dd.querySelector('.dropdown-menu');
+                    if (m) hideNavDropdown(dd, m);
                 }
             });
-        });
+            
+            // Toggle current dropdown
+            if (isOpen) {
+                hideNavDropdown(dropdown, menu);
+                navDropdownState.clickOpenedDropdown = null;
+            } else {
+                showNavDropdown(dropdown, menu);
+                navDropdownState.clickOpenedDropdown = dropdown;
+            }
+        }
+        
+        // Check if clicked on dropdown menu link
+        const menuLink = e.target.closest('.dropdown-menu a[href^="#"]');
+        if (menuLink) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const href = menuLink.getAttribute('href');
+            hideAllNavDropdowns();
+            
+            // Handle Corporate tabs
+            if (CORPORATE_TABS.includes(href.slice(1))) {
+                handleCorporateTabNavigation(href);
+                return;
+            }
+            
+            // Handle Products tabs
+            if (href.startsWith('#products-')) {
+                handleProductNavigation(href);
+                return;
+            }
+            
+            // Default scroll behavior
+            const target = document.querySelector(href);
+            if (target) {
+                const offsetTop = target.getBoundingClientRect().top + window.scrollY - 150;
+                window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+            }
+        }
     });
     
-    // Click outside to close all dropdowns
-    document.addEventListener('click', (e) => {
-        // Check if click is outside all dropdowns
-        const clickedDropdown = e.target.closest('.nav-dropdown');
-        if (!clickedDropdown) {
-            hideAllDropdowns();
+    // Hover events - delegation for desktop only
+    document.body.addEventListener('mouseenter', (e) => {
+        if (!isDesktop()) return;
+        
+        const dropdown = e.target.closest('.nav-dropdown');
+        if (!dropdown) return;
+        
+        const menu = dropdown.querySelector('.dropdown-menu');
+        if (!menu) return;
+        
+        // Clear any pending hide timeout
+        if (navDropdownState.hoverTimeout) {
+            clearTimeout(navDropdownState.hoverTimeout);
+            navDropdownState.hoverTimeout = null;
         }
-    });
+        
+        showNavDropdown(dropdown, menu);
+    }, true);
+    
+    document.body.addEventListener('mouseleave', (e) => {
+        if (!isDesktop()) return;
+        
+        const dropdown = e.target.closest('.nav-dropdown');
+        if (!dropdown) return;
+        
+        // Don't close if it was opened by click
+        if (navDropdownState.clickOpenedDropdown === dropdown) return;
+        
+        const menu = dropdown.querySelector('.dropdown-menu');
+        if (!menu) return;
+        
+        // Add a small delay before hiding
+        navDropdownState.hoverTimeout = setTimeout(() => {
+            hideNavDropdown(dropdown, menu);
+        }, 100);
+    }, true);
     
     // Close dropdowns on escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            hideAllDropdowns();
+            hideAllNavDropdowns();
         }
     });
-    
-    console.log('Dropdown initialization complete');
 }
 
 // Mobile Menu Toggle and Scroll Lock
@@ -309,6 +251,16 @@ function toggleMobileMenu() {
         portal.classList.remove('hidden');
         portal.classList.add('show');
         button.setAttribute('aria-expanded', 'true');
+        
+        // Apply translations to mobile menu when it opens
+        if (window.i18n && typeof window.i18n.updatePageContent === 'function') {
+            // Small delay to ensure DOM is ready
+            setTimeout(() => {
+                if (window.i18n.updatePageContent) {
+                    window.i18n.updatePageContent();
+                }
+            }, 10);
+        }
         
         // Change icon to X
         if (menuIcon) {
@@ -367,35 +319,39 @@ function closeMobileMenu(restoreScroll = true) {
     });
 }
 
-// Mobile Menu Button
-// Use WeakSet to track initialized elements and prevent duplicate event listeners
-const initializedMobileMenuButton = new WeakSet();
-const initializedMobileDropdowns = new WeakSet();
-
+// Mobile Menu - Event Delegation Pattern
 function initMobileMenu() {
-    const button = document.getElementById('mobile-menu-button');
-    if (button && !initializedMobileMenuButton.has(button)) {
-        initializedMobileMenuButton.add(button);
-        button.addEventListener('click', toggleMobileMenu);
-        
-        // Touch event handling - call toggleMobileMenu on touch
-        button.addEventListener('touchstart', (e) => {
+    // This function is now just a placeholder for compatibility
+    // All logic is handled via event delegation in setupMobileMenuDelegation()
+}
+
+// Global event delegation for mobile menu
+function setupMobileMenuDelegation() {
+    // Mobile menu button click/touch
+    document.body.addEventListener('click', (e) => {
+        const button = e.target.closest('#mobile-menu-button');
+        if (button) {
             e.preventDefault();
             e.stopPropagation();
             toggleMobileMenu();
-        }, { passive: false });
-    }
-    
-    // Mobile dropdown toggles
-    const mobileDropdowns = document.querySelectorAll('.mobile-dropdown-toggle');
-    mobileDropdowns.forEach(toggle => {
-        // Skip if already initialized
-        if (initializedMobileDropdowns.has(toggle)) {
-            return;
         }
-        initializedMobileDropdowns.add(toggle);
-        
-        toggle.addEventListener('click', () => {
+    });
+    
+    document.body.addEventListener('touchstart', (e) => {
+        const button = e.target.closest('#mobile-menu-button');
+        if (button) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMobileMenu();
+        }
+    }, { passive: false });
+    
+    // Mobile dropdown toggles - delegation
+    document.body.addEventListener('click', (e) => {
+        const toggle = e.target.closest('.mobile-dropdown-toggle');
+        if (toggle) {
+            e.stopPropagation();
+            
             const content = toggle.nextElementSibling;
             const chevron = toggle.querySelector('i[data-lucide="chevron-down"]');
             
@@ -425,24 +381,15 @@ function initMobileMenu() {
                     }
                 }
             }
-        });
-    });
-    
-    // Close mobile menu when clicking a link (don't restore scroll since we're navigating)
-    const initializedMobileLinks = new WeakSet();
-    const mobileLinks = document.querySelectorAll('#mobile-menu-items a');
-    mobileLinks.forEach(link => {
-        // Skip if already initialized
-        if (initializedMobileLinks.has(link)) {
-            return;
         }
-        initializedMobileLinks.add(link);
         
-        link.addEventListener('click', () => {
+        // Close mobile menu when clicking a link
+        const link = e.target.closest('#mobile-menu-items a');
+        if (link) {
             setTimeout(() => {
                 closeMobileMenu(false);
             }, 300);
-        });
+        }
     });
 }
 
@@ -1339,165 +1286,163 @@ function initProductsTabs() {
         switchProduct('surface-cleaners');
     }
     
-    // Initialize packaging dropdowns
-    initPackagingDropdowns();
+    // Packaging dropdowns are now handled via event delegation (setupPackagingDropdownDelegation)
+    // No need to initialize them here
 }
 
-// Initialize Mobile Product Custom Dropdown
-// Use WeakSet to track initialized elements and prevent duplicate event listeners
-const initializedMobileProductDropdown = new WeakSet();
-
+// Initialize Mobile Product Custom Dropdown - Event Delegation Pattern
 function initMobileProductDropdown() {
-    const trigger = document.getElementById('products-mobile-trigger');
-    const menu = document.getElementById('products-mobile-menu');
-    const items = document.querySelectorAll('.products-mobile-item');
-    
-    if (!trigger || !menu) {
-        console.warn('Mobile product dropdown elements not found');
-        return;
-    }
-    
-    // Skip if already initialized
-    if (initializedMobileProductDropdown.has(trigger)) {
-        console.log('Mobile product dropdown already initialized');
-        return;
-    }
-    initializedMobileProductDropdown.add(trigger);
-    
-    console.log('Initializing mobile product dropdown');
-    
-    // Flag to prevent double-triggering on mobile (touch + click)
-    let touchHandled = false;
-    let clickTimeout = null;
-    
-    // Toggle dropdown on trigger click
-    const handleTriggerClick = (e, isTouch = false) => {
-        if (isTouch) {
-            touchHandled = true;
-            // Clear any pending click handlers
-            if (clickTimeout) {
-                clearTimeout(clickTimeout);
-                clickTimeout = null;
+    // This function is now just a placeholder for compatibility
+    // All logic is handled via event delegation in setupMobileProductDropdownDelegation()
+}
+
+// Global state for mobile product dropdown
+let mobileProductDropdownState = {
+    touchHandled: false,
+    clickTimeout: null,
+    itemTouchHandled: new Map(),
+    itemClickTimeout: new Map()
+};
+
+// Global event delegation for mobile product dropdown
+function setupMobileProductDropdownDelegation() {
+    // Touch handling for trigger
+    document.body.addEventListener('touchstart', (e) => {
+        const trigger = e.target.closest('#products-mobile-trigger');
+        if (trigger) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            mobileProductDropdownState.touchHandled = true;
+            if (mobileProductDropdownState.clickTimeout) {
+                clearTimeout(mobileProductDropdownState.clickTimeout);
+                mobileProductDropdownState.clickTimeout = null;
             }
-        } else {
-            // If this is a click and we just handled a touch, ignore it
-            if (touchHandled) {
-                touchHandled = false;
-                return;
+            
+            const menu = document.getElementById('products-mobile-menu');
+            if (!menu) return;
+            
+            const isOpen = menu.classList.contains('show');
+            if (isOpen) {
+                closeMobileProductDropdown();
+            } else {
+                openMobileProductDropdown();
             }
-        }
-        
-        e.preventDefault();
-        e.stopPropagation();
-        const isOpen = menu.classList.contains('show');
-        console.log('Trigger clicked, isOpen:', isOpen, 'isTouch:', isTouch);
-        
-        if (isOpen) {
-            closeMobileProductDropdown();
-        } else {
-            openMobileProductDropdown();
-        }
-        
-        // Reset touch flag after a delay
-        if (isTouch) {
-            clickTimeout = setTimeout(() => {
-                touchHandled = false;
+            
+            mobileProductDropdownState.clickTimeout = setTimeout(() => {
+                mobileProductDropdownState.touchHandled = false;
             }, 300);
         }
-    };
-    
-    // Use touchstart instead of touchend for better mobile support
-    trigger.addEventListener('touchstart', (e) => {
-        handleTriggerClick(e, true);
     }, { passive: false });
     
-    // Click event for desktop/mouse users
-    trigger.addEventListener('click', (e) => {
-        handleTriggerClick(e, false);
-    });
-    
-    // Handle item selection
-    items.forEach(item => {
-        let itemTouchHandled = false;
-        let itemClickTimeout = null;
-        
-        const handleItemClick = (e, isTouch = false) => {
-            if (isTouch) {
-                itemTouchHandled = true;
-                if (itemClickTimeout) {
-                    clearTimeout(itemClickTimeout);
-                    itemClickTimeout = null;
-                }
-            } else {
-                if (itemTouchHandled) {
-                    itemTouchHandled = false;
-                    return;
-                }
+    // Click handling for trigger
+    document.body.addEventListener('click', (e) => {
+        const trigger = e.target.closest('#products-mobile-trigger');
+        if (trigger) {
+            // If we just handled a touch, ignore this click
+            if (mobileProductDropdownState.touchHandled) {
+                mobileProductDropdownState.touchHandled = false;
+                return;
             }
             
             e.preventDefault();
             e.stopPropagation();
-            const productId = item.getAttribute('data-value');
-            console.log('Item clicked:', productId, 'isTouch:', isTouch);
             
-            // Close dropdown
-            closeMobileProductDropdown();
+            const menu = document.getElementById('products-mobile-menu');
+            if (!menu) return;
             
-            // Switch product
-            switchProduct(productId);
-            
-            if (isTouch) {
-                itemClickTimeout = setTimeout(() => {
-                    itemTouchHandled = false;
-                }, 300);
+            const isOpen = menu.classList.contains('show');
+            if (isOpen) {
+                closeMobileProductDropdown();
+            } else {
+                openMobileProductDropdown();
             }
-        };
-        
-        item.addEventListener('touchstart', (e) => {
-            handleItemClick(e, true);
-        }, { passive: false });
-        
-        item.addEventListener('click', (e) => {
-            handleItemClick(e, false);
-        });
+        }
     });
     
-    // Close dropdown when clicking outside (with delay to allow trigger click to complete)
-    let outsideClickHandler = null;
-    
-    // Use a single event listener that we can remove and re-add
-    const setupOutsideClickHandler = () => {
-        // Remove old handler if exists
-        if (outsideClickHandler) {
-            document.removeEventListener('click', outsideClickHandler, true);
-            document.removeEventListener('touchstart', outsideClickHandler, true);
-        }
-        
-        outsideClickHandler = (e) => {
-            // Don't close if clicking on trigger or menu
-            if (e.target.closest('.products-mobile-dropdown-wrapper')) {
-                return;
-            }
+    // Touch handling for items
+    document.body.addEventListener('touchstart', (e) => {
+        const item = e.target.closest('.products-mobile-item');
+        if (item) {
+            e.preventDefault();
+            e.stopPropagation();
             
-            // Don't close if clicking on packaging dropdown (web view)
-            if (e.target.closest('.packaging-dropdown-wrapper')) {
-                return;
-            }
+            const productId = item.getAttribute('data-value');
+            if (!productId) return;
             
-            // Don't close if we just opened the menu
-            if (mobileProductDropdownOpening) {
-                return;
+            mobileProductDropdownState.itemTouchHandled.set(productId, true);
+            if (mobileProductDropdownState.itemClickTimeout.has(productId)) {
+                clearTimeout(mobileProductDropdownState.itemClickTimeout.get(productId));
             }
             
             closeMobileProductDropdown();
-        };
-        
-        // Use capture phase to catch events before they bubble
-        document.addEventListener('click', outsideClickHandler, true);
-        document.addEventListener('touchstart', outsideClickHandler, true);
-    };
+            switchProduct(productId);
+            
+            mobileProductDropdownState.itemClickTimeout.set(productId, setTimeout(() => {
+                mobileProductDropdownState.itemTouchHandled.delete(productId);
+            }, 300));
+        }
+    }, { passive: false });
     
-    setupOutsideClickHandler();
+    // Click handling for items
+    document.body.addEventListener('click', (e) => {
+        const item = e.target.closest('.products-mobile-item');
+        if (item) {
+            const productId = item.getAttribute('data-value');
+            if (!productId) return;
+            
+            // If we just handled a touch, ignore this click
+            if (mobileProductDropdownState.itemTouchHandled.get(productId)) {
+                mobileProductDropdownState.itemTouchHandled.delete(productId);
+                return;
+            }
+            
+            e.preventDefault();
+            e.stopPropagation();
+            
+            closeMobileProductDropdown();
+            switchProduct(productId);
+        }
+    });
+    
+    // Close dropdown when clicking outside
+    document.body.addEventListener('click', (e) => {
+        // Don't close if clicking on trigger or menu
+        if (e.target.closest('.products-mobile-dropdown-wrapper')) {
+            return;
+        }
+        
+        // Don't close if clicking on packaging dropdown
+        if (e.target.closest('.packaging-dropdown-wrapper')) {
+            return;
+        }
+        
+        // Don't close if we just opened the menu
+        if (mobileProductDropdownOpening) {
+            return;
+        }
+        
+        closeMobileProductDropdown();
+    }, true);
+    
+    document.body.addEventListener('touchstart', (e) => {
+        // Don't close if clicking on trigger or menu
+        if (e.target.closest('.products-mobile-dropdown-wrapper')) {
+            return;
+        }
+        
+        // Don't close if clicking on packaging dropdown
+        if (e.target.closest('.packaging-dropdown-wrapper')) {
+            return;
+        }
+        
+        // Don't close if we just opened the menu
+        if (mobileProductDropdownOpening) {
+            return;
+        }
+        
+        closeMobileProductDropdown();
+    }, true);
     
     // Close on Escape key
     document.addEventListener('keydown', (e) => {
@@ -1577,21 +1522,26 @@ function closeMobileProductDropdown() {
     }, 300); // Wait for transition to complete
 }
 
-// Custom Packaging Dropdown
+// Custom Packaging Dropdown - Event Delegation Pattern
 function initPackagingDropdowns() {
-    const dropdownWrappers = document.querySelectorAll('.packaging-dropdown-wrapper');
-    
-    dropdownWrappers.forEach(wrapper => {
-        const trigger = wrapper.querySelector('.packaging-dropdown-trigger');
-        const menu = wrapper.querySelector('.packaging-dropdown-menu');
-        const items = wrapper.querySelectorAll('.packaging-dropdown-item');
-        const selectedText = trigger?.querySelector('.selected-text');
-        
-        if (!trigger || !menu) return;
-        
-        // Toggle dropdown on click
-        trigger.addEventListener('click', (e) => {
+    // This function is now just a placeholder for compatibility
+    // All logic is handled via event delegation in setupPackagingDropdownDelegation()
+}
+
+// Global event delegation for packaging dropdowns
+function setupPackagingDropdownDelegation() {
+    // Click handler - delegation on document.body
+    document.body.addEventListener('click', (e) => {
+        // Check if clicked on packaging dropdown trigger
+        const trigger = e.target.closest('.packaging-dropdown-trigger');
+        if (trigger) {
             e.stopPropagation();
+            
+            const wrapper = trigger.closest('.packaging-dropdown-wrapper');
+            if (!wrapper) return;
+            
+            const menu = wrapper.querySelector('.packaging-dropdown-menu');
+            if (!menu) return;
             
             // Close other dropdowns first
             document.querySelectorAll('.packaging-dropdown-menu.show').forEach(m => {
@@ -1613,40 +1563,48 @@ function initPackagingDropdowns() {
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
-        });
+            return;
+        }
         
-        // Handle item selection
-        items.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.stopPropagation();
-                
-                const value = item.getAttribute('data-value');
-                const text = item.querySelector('span')?.textContent || value;
-                
-                // Update selected state
-                items.forEach(i => i.classList.remove('selected'));
-                item.classList.add('selected');
-                
-                // Update trigger text
-                if (selectedText) {
-                    selectedText.textContent = text;
-                }
-                
-                // Close dropdown
-                menu.classList.remove('show');
-                trigger.classList.remove('active');
-                trigger.setAttribute('aria-expanded', 'false');
-                
-                // Re-initialize icons
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
-            });
-        });
-    });
-    
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
+        // Check if clicked on packaging dropdown item
+        const item = e.target.closest('.packaging-dropdown-item');
+        if (item) {
+            e.stopPropagation();
+            
+            const wrapper = item.closest('.packaging-dropdown-wrapper');
+            if (!wrapper) return;
+            
+            const menu = wrapper.querySelector('.packaging-dropdown-menu');
+            const trigger = wrapper.querySelector('.packaging-dropdown-trigger');
+            const selectedText = trigger?.querySelector('.selected-text');
+            
+            if (!menu || !trigger) return;
+            
+            const value = item.getAttribute('data-value');
+            const text = item.querySelector('span')?.textContent || value;
+            
+            // Update selected state
+            wrapper.querySelectorAll('.packaging-dropdown-item').forEach(i => i.classList.remove('selected'));
+            item.classList.add('selected');
+            
+            // Update trigger text
+            if (selectedText) {
+                selectedText.textContent = text;
+            }
+            
+            // Close dropdown
+            menu.classList.remove('show');
+            trigger.classList.remove('active');
+            trigger.setAttribute('aria-expanded', 'false');
+            
+            // Re-initialize icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+            return;
+        }
+        
+        // Click outside - close all packaging dropdowns
         if (!e.target.closest('.packaging-dropdown-wrapper')) {
             document.querySelectorAll('.packaging-dropdown-menu.show').forEach(menu => {
                 menu.classList.remove('show');
@@ -1902,6 +1860,7 @@ function t(key) {
 }
 
 // Update contact form texts based on language
+// Uses non-destructive text node updates
 function updateContactTexts() {
     const elements = {
         'contactTitle': t('contact.title'),
@@ -1925,18 +1884,28 @@ function updateContactTexts() {
         if (el) el.textContent = text;
     }
     
-    // Update labels with required asterisk
-    const nameLabel = document.getElementById('nameLabel');
-    if (nameLabel) nameLabel.innerHTML = `${t('contact.form.name')} <span class="text-red-500">*</span>`;
+    // Update labels with required asterisk - non-destructive
+    const updateLabelWithAsterisk = (labelElement, text) => {
+        if (!labelElement) return;
+        const existingSpan = labelElement.querySelector('span.text-red-500');
+        const textNodes = Array.from(labelElement.childNodes).filter(node => node.nodeType === Node.TEXT_NODE);
+        if (textNodes.length > 0) {
+            textNodes[0].nodeValue = text + ' ';
+        } else {
+            labelElement.textContent = text + ' ';
+        }
+        if (!existingSpan) {
+            const asterisk = document.createElement('span');
+            asterisk.className = 'text-red-500';
+            asterisk.textContent = '*';
+            labelElement.appendChild(asterisk);
+        }
+    };
     
-    const emailLabel = document.getElementById('emailLabel');
-    if (emailLabel) emailLabel.innerHTML = `${t('contact.form.email')} <span class="text-red-500">*</span>`;
-    
-    const phoneLabel = document.getElementById('phoneLabel');
-    if (phoneLabel) phoneLabel.innerHTML = `${t('contact.form.phone')} <span class="text-red-500">*</span>`;
-    
-    const messageLabel = document.getElementById('messageLabel');
-    if (messageLabel) messageLabel.innerHTML = `${t('contact.form.message')} <span class="text-red-500">*</span>`;
+    updateLabelWithAsterisk(document.getElementById('nameLabel'), t('contact.form.name'));
+    updateLabelWithAsterisk(document.getElementById('emailLabel'), t('contact.form.email'));
+    updateLabelWithAsterisk(document.getElementById('phoneLabel'), t('contact.form.phone'));
+    updateLabelWithAsterisk(document.getElementById('messageLabel'), t('contact.form.message'));
     
     // Update placeholders
     const nameInput = document.getElementById('contact-name');
@@ -1951,18 +1920,30 @@ function updateContactTexts() {
     const messageInput = document.getElementById('contact-message');
     if (messageInput) messageInput.placeholder = t('contact.form.messagePlaceholder');
     
-    // Update KVKK text
+    // Update KVKK text - use dedicated container for HTML
     const kvkkText = document.getElementById('kvkkText');
-    const kvkkLink = document.getElementById('kvkkLink');
-    if (kvkkText && kvkkLink) {
-        kvkkText.innerHTML = `${t('contact.form.kvkk')} <button type="button" id="kvkkLink" class="underline text-[#0061FF] hover:text-[#0052E6] transition-colors font-medium">${t('contact.form.kvkkLink')}</button> ${t('contact.form.kvkkEnd')}`;
-        // Re-attach event listener
-        document.getElementById('kvkkLink')?.addEventListener('click', openKvkkModal);
+    if (kvkkText) {
+        let container = kvkkText.querySelector('[data-kvkk-container]');
+        if (!container) {
+            container = document.createElement('span');
+            container.setAttribute('data-kvkk-container', '');
+            kvkkText.appendChild(container);
+        }
+        container.innerHTML = `${t('contact.form.kvkk')} <button type="button" id="kvkkLink" class="underline text-[#0061FF] hover:text-[#0052E6] transition-colors font-medium">${t('contact.form.kvkkLink')}</button> ${t('contact.form.kvkkEnd')}`;
+        // Event delegation handles this, no need to re-attach
     }
     
-    // Update address text (with HTML)
+    // Update address text - use dedicated container for HTML
     const addressText = document.getElementById('addressText');
-    if (addressText) addressText.innerHTML = t('contact.addressText');
+    if (addressText) {
+        let container = addressText.querySelector('[data-address-container]');
+        if (!container) {
+            container = document.createElement('span');
+            container.setAttribute('data-address-container', '');
+            addressText.appendChild(container);
+        }
+        container.innerHTML = t('contact.addressText');
+    }
 }
 
 // KVKK Modal Functions
@@ -2011,17 +1992,7 @@ function initContactForm() {
     // ========================================
     // KVKK MODAL HANDLERS
     // ========================================
-    if (kvkkLink) {
-        kvkkLink.addEventListener('click', openKvkkModal);
-    }
-    
-    if (kvkkModalClose) {
-        kvkkModalClose.addEventListener('click', closeKvkkModal);
-    }
-    
-    if (kvkkModalAccept) {
-        kvkkModalAccept.addEventListener('click', closeKvkkModal);
-    }
+    // Event delegation handles these - no need for direct listeners
     
     // Close modal on backdrop click
     if (kvkkModal) {
@@ -2296,15 +2267,75 @@ function initLanguageSwitcher() {
     });
 }
 
-// Initialize all functionality
+// ============================================
+// GLOBAL EVENT DELEGATION SETUP
+// All interactive elements use event delegation on document.body
+// This ensures functionality works even if DOM is modified by i18n
+// ============================================
+
+let eventDelegationSetup = false;
+
+// Contact form and KVKK modal event delegation
+function setupContactFormDelegation() {
+    // KVKK link click
+    document.body.addEventListener('click', (e) => {
+        const kvkkLink = e.target.closest('#kvkkLink');
+        if (kvkkLink) {
+            e.preventDefault();
+            openKvkkModal(e);
+        }
+        
+        // KVKK modal close buttons
+        const kvkkModalClose = e.target.closest('#kvkkModalClose, #kvkkModalAccept');
+        if (kvkkModalClose) {
+            e.preventDefault();
+            closeKvkkModal();
+        }
+        
+        // KVKK modal backdrop click
+        const kvkkModal = e.target.closest('#kvkkModal');
+        if (kvkkModal && e.target === kvkkModal) {
+            closeKvkkModal();
+        }
+    });
+    
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const kvkkModal = document.getElementById('kvkkModal');
+            if (kvkkModal && !kvkkModal.classList.contains('hidden')) {
+                closeKvkkModal();
+            }
+        }
+    });
+}
+
+function setupAllEventDelegation() {
+    // Only setup once - event delegation persists even if DOM changes
+    if (eventDelegationSetup) return;
+    eventDelegationSetup = true;
+    
+    // Setup all event delegation handlers
+    setupNavDropdownDelegation();
+    setupPackagingDropdownDelegation();
+    setupMobileMenuDelegation();
+    setupMobileProductDropdownDelegation();
+    setupContactFormDelegation();
+}
+
+// ============================================
+// INITIALIZATION
+// ============================================
+
 async function initAll() {
-    // Wait for i18n to be ready before initializing (ensures translations are loaded)
+    // Setup event delegation once (never needs re-initialization)
+    setupAllEventDelegation();
+    
+    // Initialize i18n if available
     if (window.i18n && typeof window.i18n.initLanguage === 'function') {
         try {
-            // Check if language is already initialized, if not initialize it
             const currentLang = window.i18n.getCurrentLanguage();
             if (!currentLang || currentLang === 'en') {
-                // Try to initialize language (this will load translations if not already loaded)
                 await window.i18n.initLanguage();
             }
         } catch (error) {
@@ -2312,7 +2343,7 @@ async function initAll() {
         }
     }
     
-    // Wait for Lucide to be available before initializing icons
+    // Initialize icons
     const initIcons = () => {
         if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
             try {
@@ -2323,48 +2354,41 @@ async function initAll() {
         }
     };
     
-    // Try to initialize icons immediately
     initIcons();
     
     // Initialize language switcher
     initLanguageSwitcher();
     
-    // Navbar initialization
+    // Visual setup only (event handling is via delegation)
     initNavbarAnimation();
     initDesktopDropdowns();
     initMobileMenu();
     initEnhancedNavigation();
     
-    // Existing functionality
+    // Initialize functionality
     initCorporateTabs();
     initApplicationForm();
     initProductsTabs();
     initProductParallax();
-    
-    // Contact form initialization
     initContactForm();
     
-    // Re-initialize icons for any dynamically added content
-    setTimeout(() => {
-        initIcons();
-    }, 100);
-    
-    // Also initialize after a longer delay to catch any late-loading content
-    setTimeout(() => {
-        initIcons();
-    }, 500);
+    // Re-initialize icons for dynamically added content
+    setTimeout(initIcons, 100);
+    setTimeout(initIcons, 500);
 }
 
-// Export initAll to window for i18n.js to use
+// Export initAll to window
 if (typeof window !== 'undefined') {
     window.initAll = initAll;
     
-    // Listen for language change events and re-initialize
-    window.addEventListener('languagechange', async () => {
-        // Small delay to ensure DOM updates are complete
-        setTimeout(async () => {
-            await initAll();
-        }, 100);
+    // Listen for language change events - only re-initialize icons
+    // Event delegation persists, so no need to re-setup
+    window.addEventListener('languagechange', () => {
+        setTimeout(() => {
+            if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
+        }, 50);
     });
 }
 

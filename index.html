@@ -46,75 +46,7 @@
     <!-- GSAP -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     
-    <!-- Load i18n.js early in head to ensure it's available -->
-    <script>
-        // Get base path for GitHub Pages
-        (function() {
-            const getBasePath = () => {
-                // Check multiple conditions for GitHub Pages
-                if (window.location.hostname === 'omerzdl.github.io' || 
-                    window.location.pathname.startsWith('/Ais')) {
-                    return '/Ais';
-                }
-                return '';
-            };
-            
-            const basePath = getBasePath();
-            const i18nPath = basePath ? `${basePath}/i18n.js` : './i18n.js';
-            
-            // Create and load script synchronously
-            const script = document.createElement('script');
-            script.src = i18nPath;
-            script.async = false; // Load synchronously to ensure i18n is available
-            script.defer = false;
-            script.onload = function() {
-                // Verify that window.i18n was set
-                if (!window.i18n) {
-                    console.warn('i18n.js loaded but window.i18n not found');
-                } else {
-                    console.log('i18n.js loaded successfully');
-                }
-            };
-            script.onerror = function() {
-                console.warn('Failed to load i18n.js from:', i18nPath);
-                // Try alternative paths
-                const alternativePaths = [
-                    basePath ? `${basePath}/i18n.js` : './i18n.js',
-                    './i18n.js',
-                    '/i18n.js'
-                ];
-                
-                let attemptIndex = 0;
-                const tryNextPath = () => {
-                    if (attemptIndex >= alternativePaths.length) {
-                        console.error('Failed to load i18n from all paths');
-                        return;
-                    }
-                    
-                    const fallbackScript = document.createElement('script');
-                    fallbackScript.src = alternativePaths[attemptIndex];
-                    fallbackScript.async = false;
-                    fallbackScript.defer = false;
-                    fallbackScript.onload = function() {
-                        if (window.i18n) {
-                            console.log('i18n.js loaded from fallback path:', alternativePaths[attemptIndex]);
-                        } else {
-                            attemptIndex++;
-                            tryNextPath();
-                        }
-                    };
-                    fallbackScript.onerror = function() {
-                        attemptIndex++;
-                        tryNextPath();
-                    };
-                    document.head.appendChild(fallbackScript);
-                };
-                
-                tryNextPath();
-            };
-            document.head.appendChild(script);
-        })();
-    </script>
+    <!-- i18n.js is now imported via src/main.js (Single Source of Truth: src/i18n.js) -->
 
     <script>
         tailwind.config = {
@@ -1085,7 +1017,6 @@
         (async () => {
             // Get base path for GitHub Pages
             const getBasePath = () => {
-                // Check multiple conditions for GitHub Pages
                 if (window.location.hostname === 'omerzdl.github.io' || 
                     window.location.pathname.startsWith('/Ais')) {
                     return '/Ais';
@@ -1095,40 +1026,8 @@
             
             const basePath = getBasePath();
             
-            // Wait for Lucide to be available
-            let lucideAttempts = 0;
-            const maxLucideAttempts = 50; // Wait up to 5 seconds
-            while (typeof lucide === 'undefined' && lucideAttempts < maxLucideAttempts) {
-                await new Promise(resolve => setTimeout(resolve, 100));
-                lucideAttempts++;
-            }
-            
-            // Wait for i18n to load (check if window.i18n exists)
-            let attempts = 0;
-            const maxAttempts = 100; // Wait up to 10 seconds (100 * 100ms) - increased timeout
-            
-            while (!window.i18n && attempts < maxAttempts) {
-                await new Promise(resolve => setTimeout(resolve, 100));
-                attempts++;
-            }
-            
-            // Initialize language
-            if (window.i18n && typeof window.i18n.initLanguage === 'function') {
-                try {
-                    await window.i18n.initLanguage();
-                } catch (error) {
-                    console.error('Error initializing i18n:', error);
-                    // Fall through to initialize icons anyway
-                }
-            } else {
-                // If i18n failed to load, still initialize icons and functionality
-                console.warn('i18n not loaded, initializing without translations');
-            }
-            
-            // Always initialize icons regardless of i18n status
-            // Wait a bit for DOM to be ready
-            setTimeout(() => {
-                // Initialize icons
+            // Helper: initialize icons without blocking anything else
+            const ensureIcons = () => {
                 if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
                     try {
                         lucide.createIcons();
@@ -1136,10 +1035,7 @@
                         console.warn('Error initializing icons:', e);
                     }
                 }
-                
-                // Note: initAll will be called after main.js loads (for home page)
-                // or immediately for catalog page
-            }, 100);
+            };
             
             // Check if we're on the catalog route
             const catalogPath = basePath ? `${basePath}/catalog` : '/catalog';
@@ -1159,17 +1055,17 @@
                 } else {
                     await import('./src/main.tsx');
                 }
+                ensureIcons();
             } else {
-                // Load static JS for home page using script tag (not dynamic import to avoid Vite build issues)
-                const mainJsPath = basePath ? `${basePath}/main.js` : './main.js';
+                // Load static JS for home page immediately (no 10s wait for i18n)
+                const mainJsPath = basePath ? `${basePath}/src/main.js` : './src/main.js';
                 const script = document.createElement('script');
                 script.src = mainJsPath;
-                script.type = 'text/javascript';
+                script.type = 'module';
                 script.onload = async function() {
                     console.log('main.js loaded successfully');
-                    // Initialize all functionality after main.js loads
-                    // Wait a bit to ensure i18n translations are loaded
-                    await new Promise(resolve => setTimeout(resolve, 100));
+                    // Give i18n a brief moment to finish fetching translations
+                    await new Promise(resolve => setTimeout(resolve, 50));
                     if (typeof window !== 'undefined' && window.initAll) {
                         try {
                             await window.initAll();
@@ -1177,6 +1073,7 @@
                             console.warn('Error initializing functionality:', e);
                         }
                     }
+                    ensureIcons();
                 };
                 script.onerror = function() {
                     console.error('Failed to load main.js from:', mainJsPath);
@@ -1186,11 +1083,7 @@
             
             // Ensure icons are initialized after everything loads
             window.addEventListener('load', () => {
-                setTimeout(() => {
-                    if (typeof lucide !== 'undefined') {
-                        lucide.createIcons();
-                    }
-                }, 200);
+                setTimeout(ensureIcons, 200);
             });
         })();
     </script>
