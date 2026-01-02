@@ -1058,11 +1058,19 @@
                 ensureIcons();
             } else {
                 // Load static JS for home page immediately (no long wait for i18n)
-                // Prefer /src/main.js first (latest source), then built main.js fallback
-                const versionTag = 'v20260103-2'; // cache-bust for GH Pages
+                // Prefer built bundle paths (GH Pages does not serve /src/)
+                const versionTag = 'v20260103-3'; // cache-bust for GH Pages
                 const candidates = basePath
-                    ? [`${basePath}/src/main.js?${versionTag}`, `${basePath}/main.js?${versionTag}`]
-                    : [`./src/main.js?${versionTag}`, `./main.js?${versionTag}`];
+                    ? [
+                        `${basePath}/main.js?${versionTag}`,          // root bundle on GH Pages
+                        `${basePath}/dist/main.js?${versionTag}`,      // fallback to dist
+                        `${basePath}/src/main.js?${versionTag}`        // final fallback (local dev)
+                      ]
+                    : [
+                        `./main.js?${versionTag}`,
+                        `./dist/main.js?${versionTag}`,
+                        `./src/main.js?${versionTag}`
+                      ];
                 
                 const loadMain = (urls) => {
                     if (!urls.length) {
