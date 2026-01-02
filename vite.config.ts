@@ -4,7 +4,8 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/Ais/',
+  // Only use base path in production build, not in dev server
+  base: process.env.NODE_ENV === 'production' ? '/Ais/' : '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

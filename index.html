@@ -53,13 +53,13 @@
     
     <link rel="stylesheet" href="/src/styles.css">
 </head>
-    <body class="bg-white text-[#1E293B] font-sans antialiased text-lg relative overflow-x-hidden">
+    <body class="bg-white text-[#1E293B] font-sans antialiased text-lg relative overflow-x-hidden max-w-full">
 
     <!-- WATER DROPLETS CONTAINER (Fixed background layer) -->
-    <div id="droplet-layer" class="fixed inset-0 w-full h-full pointer-events-none overflow-hidden z-0">
+    <div id="droplet-layer" class="fixed inset-0 w-full h-full pointer-events-none overflow-hidden z-0 max-w-full">
         <!-- Droplets will be animated via JS based on scroll -->
         <!-- Large one top right -->
-        <div class="water-droplet w-32 h-32 md:w-64 md:h-64 top-20 -right-10 md:right-[5%]" data-speed="-0.2"></div>
+        <div class="water-droplet w-32 h-32 md:w-64 md:h-64 top-20 right-0 md:right-[5%]" data-speed="-0.2"></div>
         
         <!-- Medium one floating near text -->
         <div class="water-droplet w-16 h-16 md:w-24 md:h-24 top-[40%] left-[10%]" data-speed="-0.5"></div>
@@ -68,13 +68,13 @@
         <div class="water-droplet w-8 h-8 md:w-12 md:h-12 top-[15%] left-[20%]" data-speed="-0.8"></div>
         
         <!-- Bottom area droplets -->
-        <div class="water-droplet w-20 h-20 md:w-40 md:h-40 top-[80%] left-[80%]" data-speed="-0.3"></div>
+        <div class="water-droplet w-20 h-20 md:w-40 md:h-40 top-[80%] left-[70%] md:left-[80%]" data-speed="-0.3"></div>
         <div class="water-droplet w-10 h-10 top-[60%] right-[30%]" data-speed="-0.6"></div>
         <div class="water-droplet w-14 h-14 top-[90%] left-[15%]" data-speed="-0.4"></div>
     </div>
 
     <!-- HYGIENIC BUBBLES CONTAINER (Scroll-linked animation) - Zarif ve Şeffaf -->
-    <div id="bubble-layer" class="fixed inset-0 w-full h-full pointer-events-none overflow-hidden" style="z-index: 50;">
+    <div id="bubble-layer" class="fixed inset-0 w-full h-full pointer-events-none overflow-hidden max-w-full" style="z-index: 50;">
         <!-- Layer 1: Slowest movement (background layer) -->
         <div class="bubble-layer" data-layer="1" data-speed="-0.08">
             <div class="hygienic-bubble bubble-size-md" style="top: 25%; left: 15%;"></div>
@@ -96,7 +96,7 @@
     </div>
 
     <!-- NAVBAR -->
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-[100] py-4 md:py-6 px-4 md:px-8">
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-[100] py-4 md:py-6 px-4 md:px-8 max-w-full overflow-x-hidden">
         <!-- Logo (Fixed Position) -->
         <div id="logo-container" class="fixed left-4 md:left-8 top-4 md:top-6 z-[100]">
             <div class="rounded-full w-16 h-16 md:w-24 md:h-24 flex items-center justify-center p-2 md:p-3 overflow-hidden border border-white/30 bg-white/25 backdrop-blur-[20px] backdrop-saturate-[180%] shadow-[0_8px_32px_rgba(0,0,0,0.1),0_2px_8px_rgba(0,0,0,0.05)]">
@@ -239,19 +239,19 @@
     </div>
 
     <!-- HERO SECTION -->
-    <section id="hero" class="relative w-full min-h-[600px] lg:min-h-screen pt-28 md:pt-32 pb-20 overflow-hidden flex items-center z-10" style="background-image: url('/hero-background.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <section id="hero" class="relative w-full min-h-[600px] lg:min-h-screen pt-28 md:pt-32 pb-20 overflow-hidden flex items-center z-10 max-w-full" style="background-image: url('/hero-background.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <!-- Overlay for readability -->
         <div class="absolute inset-0 bg-white/10 z-0"></div>
 
         <!-- Glassmorphism Layer - Left Side -->
-        <div class="absolute top-0 left-0 w-full lg:w-[56%] xl:w-[52%] h-full bg-white/5 backdrop-blur-md border-r border-b border-white/30 rounded-br-[200px] z-[1] bg-gradient-to-br from-white/10 to-transparent"></div>
+        <div class="absolute top-0 left-0 w-full lg:w-[56%] xl:w-[52%] h-full bg-white/5 backdrop-blur-md border-r border-b border-white/30 rounded-br-[200px] z-[1] bg-gradient-to-br from-white/10 to-transparent max-w-full overflow-hidden"></div>
 
-        <div class="relative max-w-7xl mx-auto px-6 lg:px-12 xl:px-20 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 z-10">
+        <div class="relative max-w-7xl mx-auto px-4 lg:px-8 xl:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 z-10">
             
-            <div class="flex flex-col justify-center items-start pt-10 w-full break-words px-6 md:px-12 lg:px-16 xl:px-20 overflow-visible">
+            <div class="flex flex-col justify-center items-start pt-10 w-full break-words px-2 md:px-4 lg:px-6 xl:px-8 overflow-visible max-w-full">
                 <h1 class="font-subheading font-bold tracking-tight mb-5 antialiased text-left flex flex-col gap-y-3 w-full break-words">
                     <!-- Satır 1: Ais: -->
-                    <div class="text-[#FF8C00] leading-[1.4] w-full overflow-visible" style="font-size: clamp(1.75rem, 5vw, 3rem);" data-i18n="hero.brand">Ais:</div>
+                    <div class="text-[#FF8C00] leading-[1.5] w-full overflow-visible" style="font-size: clamp(1.25rem, 3.5vw, 2.25rem);" data-i18n="hero.brand">Ais:</div>
                     <!-- Satır 2: The Depth of Purity, -->
                     <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent leading-[1.5] w-full overflow-visible" style="font-size: clamp(1.25rem, 3.5vw, 2.25rem);" data-i18n="hero.title1">The Depth of Purity,</div>
                     <!-- Satır 3: The Next Generation of Clean. -->
@@ -302,7 +302,7 @@
     </section>
 
     <!-- CORPORATE SECTION (Tab-based) -->
-    <section id="about" class="py-4 md:py-4 pb-20 md:pb-32 px-6 bg-[#F8FAFC] relative z-10">
+    <section id="about" class="py-4 md:py-4 pb-20 md:pb-32 px-6 bg-[#F8FAFC] relative z-10 max-w-full overflow-x-hidden">
         <div class="max-w-7xl mx-auto">
             <!-- Section Header -->
             <div class="text-center mb-12 md:mb-16">
@@ -474,7 +474,7 @@
     </section>
 
     <!-- PRODUCTS SECTION (Tab-based) -->
-    <section id="products" class="py-4 md:py-4 pb-20 md:pb-32 px-6 bg-white relative z-10">
+    <section id="products" class="py-4 md:py-4 pb-20 md:pb-32 px-6 bg-white relative z-10 max-w-full overflow-x-hidden">
         <div class="max-w-7xl mx-auto">
             <!-- Header -->
             <div class="text-center max-w-2xl mx-auto mb-12">
@@ -815,7 +815,7 @@
     </section>
 
     <!-- PRIVATE LABEL MANUFACTURING SECTION -->
-    <section id="private-label" class="py-24 px-6 bg-[#F8FAFC] relative z-10">
+    <section id="private-label" class="py-24 px-6 bg-[#F8FAFC] relative z-10 max-w-full overflow-x-hidden">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <!-- Left Column: Text Content with Glassmorphism -->
@@ -878,7 +878,7 @@
     </section>
 
     <!-- CONTACT SECTION -->
-    <section id="contact" class="py-32 px-6 bg-white relative z-10 scroll-mt-32">
+    <section id="contact" class="py-32 px-6 bg-white relative z-10 scroll-mt-32 max-w-full overflow-x-hidden">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
                 <div class="flex flex-col justify-center">
@@ -942,7 +942,7 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-[#153A60] pt-20 pb-10 px-6 relative z-10">
+    <footer class="bg-[#153A60] pt-20 pb-10 px-6 relative z-10 max-w-full overflow-x-hidden">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mb-16">
                 <div class="col-span-2 lg:col-span-2">
@@ -995,11 +995,30 @@
             const basePath = getBasePath();
             
             // Load i18n first
-            await import(`${basePath}/src/i18n.js`);
+            try {
+                if (basePath) {
+                    await import(`${basePath}/src/i18n.js`);
+                } else {
+                    // For local development, use absolute path from root
+                    await import('/src/i18n.js');
+                }
+            } catch (error) {
+                console.error('Failed to load i18n:', error);
+                // Continue without i18n - page will still work with default language
+            }
             
             // Initialize language
             if (window.i18n) {
                 await window.i18n.initLanguage();
+            } else {
+                // If i18n failed to load, still initialize icons and functionality
+                console.warn('i18n not loaded, initializing without translations');
+                // Wait a bit for DOM to be ready
+                setTimeout(() => {
+                    if (typeof window !== 'undefined' && window.initAll) {
+                        window.initAll();
+                    }
+                }, 100);
             }
             
             // Check if we're on the catalog route
@@ -1015,10 +1034,18 @@
                     });
                 }
                 // Load React app
-                import(`${basePath}/src/main.tsx`);
+                if (basePath) {
+                    await import(`${basePath}/src/main.tsx`);
+                } else {
+                    await import('/src/main.tsx');
+                }
             } else {
                 // Load static JS for home page
-                import(`${basePath}/src/main.js`);
+                if (basePath) {
+                    await import(`${basePath}/src/main.js`);
+                } else {
+                    await import('/src/main.js');
+                }
             }
         })();
     </script>

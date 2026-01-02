@@ -119,10 +119,31 @@ async function setLanguage(lang) {
         window.dispatchEvent(new CustomEvent('languagechange', { detail: lang }));
     }
     
-    // Re-initialize icons after content update
+    // Re-initialize icons immediately after content update
+    // First, ensure all data-lucide attributes are preserved
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        // Small delay to ensure DOM is updated
+        setTimeout(() => {
+            // Re-create all icons
+            lucide.createIcons();
+            
+            // Double-check: if icons still don't exist, try again
+            setTimeout(() => {
+                const missingIcons = document.querySelectorAll('[data-lucide]:not(svg)');
+                if (missingIcons.length > 0) {
+                    lucide.createIcons();
+                }
+            }, 50);
+        }, 10);
     }
+    
+    // Re-initialize all functionality (dropdowns, tabs, etc.)
+    // Use longer timeout to ensure DOM updates and icon creation are complete
+    setTimeout(() => {
+        if (typeof window !== 'undefined' && window.initAll) {
+            window.initAll();
+        }
+    }, 200);
 }
 
 // Update all elements with data-i18n attribute
@@ -145,7 +166,35 @@ function updatePageContent() {
             if (element.hasAttribute('data-i18n-html')) {
                 element.innerHTML = translation;
             } else {
-                element.textContent = translation;
+                // CRITICAL: Preserve all child elements (icons, spans, etc.) and only update text nodes
+                // Never use textContent as it removes all child elements including icons
+                
+                // Find all text nodes (not element nodes)
+                const textNodes = Array.from(element.childNodes).filter(node => node.nodeType === Node.TEXT_NODE);
+                
+                if (textNodes.length > 0) {
+                    // Update first text node with translation
+                    textNodes[0].textContent = translation;
+                    // Remove other text nodes (but keep all element nodes like icons)
+                    textNodes.slice(1).forEach(node => {
+                        // Only remove text nodes, never remove element nodes
+                        if (node.nodeType === Node.TEXT_NODE) {
+                            node.remove();
+                        }
+                    });
+                } else {
+                    // No text nodes found - element might only have child elements (like icons)
+                    // Check if element has any child elements
+                    if (element.children.length > 0) {
+                        // Has children (icons, etc.), insert translation as text before first child
+                        // This preserves all existing child elements
+                        element.insertBefore(document.createTextNode(translation), element.firstChild);
+                    } else {
+                        // No children at all - element is empty, safe to set text
+                        // But still use textContent only if absolutely no children exist
+                        element.textContent = translation;
+                    }
+                }
             }
         }
     });

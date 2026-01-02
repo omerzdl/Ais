@@ -2152,6 +2152,19 @@ function initAll() {
     }
 }
 
+// Export initAll to window for i18n.js to use
+if (typeof window !== 'undefined') {
+    window.initAll = initAll;
+    
+    // Listen for language change events and re-initialize
+    window.addEventListener('languagechange', () => {
+        // Small delay to ensure DOM updates are complete
+        setTimeout(() => {
+            initAll();
+        }, 100);
+    });
+}
+
 // Initialize when DOM is ready
 // Check if DOM is already loaded (for dynamic imports)
 if (document.readyState === 'loading') {

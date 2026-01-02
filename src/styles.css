@@ -1,3 +1,12 @@
+/* Prevent horizontal scroll on mobile */
+@media (max-width: 768px) {
+    html, body {
+        max-width: 100vw;
+        overflow-x: hidden;
+        position: relative;
+    }
+}
+
 /* Gradient Text Fix - Prevents clipping of last letters */
 .gradient-text-fix,
 [class*="bg-clip-text"] {
@@ -5,6 +14,7 @@
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
     overflow: visible !important;
+    max-width: 100%;
 }
 
 /* Specific fix for gradient text elements with padding/margin combo */
@@ -25,6 +35,8 @@ h3[class*="bg-clip-text"] {
 /* Ensure parent containers don't clip */
 h1, h2, h3 {
     overflow: visible !important;
+    max-width: 100%;
+    word-wrap: break-word;
 }
 
 /* Hero section gradient text - prevent clipping of descenders */
@@ -39,6 +51,8 @@ h1, h2, h3 {
 /* Hero section text container - allow overflow for descenders */
 #hero .flex.flex-col.gap-y-3 {
     overflow: visible !important;
+    max-width: 100%;
+    width: 100%;
 }
 
 /* Scroll offset for fixed navbar - ensures sections are not covered by navbar */
@@ -544,10 +558,23 @@ section[id] {
 
 /* Responsive adjustments for mobile */
 @media (max-width: 480px) {
+    /* Prevent horizontal scroll on mobile */
+    body, html {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+    }
+    
+    /* Ensure all containers respect viewport width */
+    section, div, main {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
     .glass-radio-group-wrapper {
         padding: 0 0.5rem 0.5rem;
         margin: 0;
         width: 100%;
+        max-width: 100%;
         justify-content: center;
         overflow-x: hidden;
     }
@@ -1506,4 +1533,108 @@ section[id] {
         display: block !important;
     }
 }
+
+/* ============================================
+   MOBILE HORIZONTAL SCROLL PREVENTION
+   ============================================ */
+
+/* Prevent water droplets from causing horizontal scroll on mobile */
+@media (max-width: 768px) {
+    /* Base overflow prevention for mobile */
+    html, body {
+        max-width: 100vw;
+        overflow-x: hidden;
+        position: relative;
+    }
+    
+    /* Water Droplet Container - Prevent overflow */
+    #droplet-layer {
+        overflow: hidden !important;
+        max-width: 100vw !important;
+        width: 100% !important;
+    }
+
+    /* Bubble Layer Container - Prevent overflow */
+    #bubble-layer {
+        overflow: hidden !important;
+        max-width: 100vw !important;
+        width: 100% !important;
+    }
+    
+    .water-droplet {
+        max-width: 100vw !important;
+    }
+    
+    /* Ensure droplets don't extend beyond viewport */
+    .water-droplet[class*="-right-"],
+    .water-droplet.right-0 {
+        right: 0 !important;
+        transform-origin: center;
+    }
+    
+    .water-droplet[class*="left-[80%]"] {
+        left: 70% !important;
+    }
+    
+    /* Ensure all sections respect viewport */
+    section {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* Container max-width constraints */
+    .max-w-7xl,
+    .max-w-4xl,
+    .max-w-2xl {
+        max-width: calc(100vw - 2rem) !important;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    /* Hero section fixes */
+    #hero {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+    }
+    
+    /* Grid containers */
+    .grid {
+        max-width: 100% !important;
+    }
+    
+    /* Flex containers */
+    .flex {
+        max-width: 100% !important;
+    }
+    
+    /* Mobile menu portal */
+    #mobile-menu-portal {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+    }
+}
+
+/* Extra small screens - additional constraints */
+@media (max-width: 480px) {
+    /* Ensure padding doesn't cause overflow */
+    .px-4,
+    .px-6,
+    .px-8 {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+    /* Hero text container */
+    #hero .flex.flex-col {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+    
+    /* Glassmorphism layer in hero */
+    #hero > div[class*="absolute"] {
+        max-width: 100vw !important;
+        overflow: hidden !important;
+    }
+}
+
 
