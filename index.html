@@ -1058,9 +1058,10 @@
                 ensureIcons();
             } else {
                 // Load static JS for home page immediately (no long wait for i18n)
+                // Prefer /src/main.js first (latest source), then built main.js fallback
                 const candidates = basePath
-                    ? [`${basePath}/main.js`, `${basePath}/src/main.js`]
-                    : ['./main.js', './src/main.js'];
+                    ? [`${basePath}/src/main.js`, `${basePath}/main.js`]
+                    : ['./src/main.js', './main.js'];
                 
                 const loadMain = (urls) => {
                     if (!urls.length) {
