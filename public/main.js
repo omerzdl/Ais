@@ -1,10 +1,82 @@
-// Initialize Lucide Icons (will be called after DOM is ready)
+// ============================================
+// MAIN.JS - PERFORMANS OPTİMİZE EDİLMİŞ SÜRÜM
+// Bekleme döngüleri kaldırıldı, anında çalışır
+// ============================================
+
+// Import i18n module (Single Source of Truth: src/i18n.js)
+import './i18n.js';
+
+// ============================================
+// 🚀 HARD-WIRED LANGUAGE SELECTOR (EN TEPE - ANINDA ÇALIŞIR)
+// Bu kod init fonksiyonunu BEKLEMEZ, sayfa yüklenir yüklenmez aktif olur
+// ============================================
+document.addEventListener('click', (e) => {
+    // Dil seçeneği kontrolü - [data-lang] attribute'u olan herhangi bir element
+    const langBtn = e.target.closest('[data-lang]');
+    if (langBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const lang = langBtn.getAttribute('data-lang');
+        console.log('[Lang] Dil seçildi:', lang);
+        
+        if (window.i18n && typeof window.i18n.setLanguage === 'function') {
+            // i18n hazır - dili değiştir
+            window.i18n.setLanguage(lang);
+        } else {
+            // i18n henüz yüklenmediyse localStorage'a yaz ve sayfayı yenile
+            console.warn('[Lang] i18n not ready, saving to localStorage and reloading...');
+            localStorage.setItem('ais_language', lang);
+            location.reload();
+        }
+    }
+});
+
+// CSS inject - Dropdown öğelerinin tıklanabilir görünmesi için
+(function injectCursorStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        .dropdown-item, [data-lang], .lang-option, .lang-btn, 
+        .products-mobile-item, .packaging-dropdown-item,
+        .mobile-dropdown-toggle, .nav-dropdown a {
+            cursor: pointer !important;
+        }
+    `;
+    document.head.appendChild(style);
+})();
 
 // ============================================
 // GLOBAL CONSTANTS
 // ============================================
 const CORPORATE_TABS = ['about', 'mission-vision', 'application'];
 const PRODUCT_ITEMS = ['surface-cleaners', 'concentrated-detergents', 'disinfectants', 'liquid-soap', 'shampoo'];
+
+// ============================================
+// I18N İÇERIK GÜNCELLEME SONRASI UI YENİLEME
+// Çeviri tamamlandığında Lucide ikonlarını zorla yenile
+// ============================================
+window.addEventListener('i18n-content-updated', () => {
+    console.log('[i18n] Content updated, refreshing UI components...');
+    
+    // 1. Lucide ikonlarını zorla yenile (re-render)
+    initIcons();
+    
+    // 2. Dropdown chevron'larını sıfırla (eğer açık kalmışlarsa)
+    document.querySelectorAll('.nav-dropdown .dropdown-menu.show').forEach(menu => {
+        menu.classList.remove('show');
+    });
+    document.querySelectorAll('.nav-dropdown a[aria-expanded="true"]').forEach(trigger => {
+        trigger.setAttribute('aria-expanded', 'false');
+    });
+    
+    // 3. Mobil dropdown'ları da sıfırla
+    document.querySelectorAll('.mobile-dropdown-content.show').forEach(content => {
+        content.classList.remove('show');
+    });
+    document.querySelectorAll('.mobile-dropdown-toggle.active').forEach(toggle => {
+        toggle.classList.remove('active');
+    });
+});
 
 // ============================================
 // NAVBAR FUNCTIONALITY
@@ -209,10 +281,10 @@ function setupNavDropdownDelegation() {
         const menu = dropdown.querySelector('.dropdown-menu');
         if (!menu) return;
         
-        // Add a small delay before hiding
+        // Add a slightly longer delay before hiding to allow cursor to enter menu
         navDropdownState.hoverTimeout = setTimeout(() => {
             hideNavDropdown(dropdown, menu);
-        }, 100);
+        }, 250);
     }, true);
     
     // Close dropdowns on escape key
@@ -1220,6 +1292,9 @@ function switchProduct(productId) {
         
         // Re-initialize icons
         lucide.createIcons();
+        
+        // Packaging dropdowns are now handled via event delegation
+        // No need to re-initialize them here
     }
 }
 
@@ -2184,87 +2259,113 @@ function initContactForm() {
 
 // ============================================
 // LANGUAGE SWITCHER FUNCTIONALITY
+// Event Delegation Pattern - "Ölümsüz" Listener
 // ============================================
 
-function initLanguageSwitcher() {
-    // Desktop language switcher
-    const desktopButton = document.getElementById('language-switcher-desktop-button');
+// Global state for language switcher
+let languageSwitcherState = {
+    isOpen: false
+};
+
+// Helper functions for language switcher
+function openLanguageSwitcher() {
     const desktopDropdown = document.getElementById('language-switcher-desktop-dropdown');
-    const desktopOptions = document.querySelectorAll('#language-switcher-desktop .lang-option');
+    const desktopButton = document.getElementById('language-switcher-desktop-button');
     
-    if (desktopButton && desktopDropdown) {
-        let isOpen = false;
-        
-        // Toggle dropdown
-        desktopButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            isOpen = !isOpen;
-            
-            if (isOpen) {
-                desktopDropdown.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
-                desktopDropdown.classList.add('opacity-100', 'visible');
-                desktopDropdown.style.transform = 'translateY(0)';
-                const chevron = desktopButton.querySelector('[data-lucide="chevron-down"]');
-                if (chevron) {
-                    chevron.style.transform = 'rotate(180deg)';
-                }
-            } else {
-                desktopDropdown.classList.add('opacity-0', 'invisible', 'pointer-events-none');
-                desktopDropdown.classList.remove('opacity-100', 'visible');
-                desktopDropdown.style.transform = 'translateY(-10px)';
-                const chevron = desktopButton.querySelector('[data-lucide="chevron-down"]');
-                if (chevron) {
-                    chevron.style.transform = 'rotate(0deg)';
-                }
-            }
-        });
-        
-        // Handle language selection
-        desktopOptions.forEach(option => {
-            option.addEventListener('click', async (e) => {
-                e.stopPropagation();
-                const lang = option.dataset.lang;
-                if (window.i18n && lang) {
-                    await window.i18n.setLanguage(lang);
-                    isOpen = false;
-                    desktopDropdown.classList.add('opacity-0', 'invisible', 'pointer-events-none');
-                    desktopDropdown.classList.remove('opacity-100', 'visible');
-                    desktopDropdown.style.transform = 'translateY(-10px)';
-                    const chevron = desktopButton.querySelector('[data-lucide="chevron-down"]');
-                    if (chevron) {
-                        chevron.style.transform = 'rotate(0deg)';
-                    }
-                }
-            });
-        });
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!desktopButton.contains(e.target) && !desktopDropdown.contains(e.target)) {
-                isOpen = false;
-                desktopDropdown.classList.add('opacity-0', 'invisible', 'pointer-events-none');
-                desktopDropdown.classList.remove('opacity-100', 'visible');
-                desktopDropdown.style.transform = 'translateY(-10px)';
-                const chevron = desktopButton.querySelector('[data-lucide="chevron-down"]');
-                if (chevron) {
-                    chevron.style.transform = 'rotate(0deg)';
-                }
-            }
-        });
+    if (!desktopDropdown) return;
+    
+    languageSwitcherState.isOpen = true;
+    desktopDropdown.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
+    desktopDropdown.classList.add('opacity-100', 'visible');
+    desktopDropdown.style.transform = 'translateY(0)';
+    
+    if (desktopButton) {
+        const chevron = desktopButton.querySelector('[data-lucide="chevron-down"]') || 
+                        desktopButton.querySelector('svg.lucide-chevron-down');
+        if (chevron) {
+            chevron.style.transform = 'rotate(180deg)';
+            chevron.style.transition = 'transform 0.2s ease';
+        }
     }
+}
+
+function closeLanguageSwitcher() {
+    const desktopDropdown = document.getElementById('language-switcher-desktop-dropdown');
+    const desktopButton = document.getElementById('language-switcher-desktop-button');
     
-    // Mobile language switcher
-    const mobileButtons = document.querySelectorAll('#language-switcher-mobile .lang-btn');
+    if (!desktopDropdown) return;
     
-    mobileButtons.forEach(btn => {
-        btn.addEventListener('click', async (e) => {
+    languageSwitcherState.isOpen = false;
+    desktopDropdown.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+    desktopDropdown.classList.remove('opacity-100', 'visible');
+    desktopDropdown.style.transform = 'translateY(-10px)';
+    
+    if (desktopButton) {
+        const chevron = desktopButton.querySelector('[data-lucide="chevron-down"]') || 
+                        desktopButton.querySelector('svg.lucide-chevron-down');
+        if (chevron) {
+            chevron.style.transform = 'rotate(0deg)';
+        }
+    }
+}
+
+// Event delegation for language switcher (setup once, works forever)
+function setupLanguageSwitcherDelegation() {
+    // Desktop language switcher - click delegation
+    document.body.addEventListener('click', async (e) => {
+        // 1. Desktop button click (toggle)
+        const desktopButton = e.target.closest('#language-switcher-desktop-button');
+        if (desktopButton) {
             e.stopPropagation();
-            const lang = btn.dataset.lang;
+            if (languageSwitcherState.isOpen) {
+                closeLanguageSwitcher();
+            } else {
+                openLanguageSwitcher();
+            }
+            return;
+        }
+        
+        // 2. Desktop option click (select language)
+        const langOption = e.target.closest('#language-switcher-desktop .lang-option');
+        if (langOption) {
+            e.stopPropagation();
+            const lang = langOption.dataset.lang;
+            if (window.i18n && lang) {
+                closeLanguageSwitcher();
+                await window.i18n.setLanguage(lang);
+            }
+            return;
+        }
+        
+        // 3. Mobile language button click
+        const mobileLangBtn = e.target.closest('#language-switcher-mobile .lang-btn');
+        if (mobileLangBtn) {
+            e.stopPropagation();
+            const lang = mobileLangBtn.dataset.lang;
             if (window.i18n && lang) {
                 await window.i18n.setLanguage(lang);
             }
-        });
+            return;
+        }
+        
+        // 4. Click outside - close dropdown
+        if (!e.target.closest('#language-switcher-desktop')) {
+            closeLanguageSwitcher();
+        }
     });
+    
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && languageSwitcherState.isOpen) {
+            closeLanguageSwitcher();
+        }
+    });
+}
+
+// Backward compatibility wrapper (now just a placeholder)
+function initLanguageSwitcher() {
+    // Event delegation is already set up in setupAllEventDelegation()
+    // This function kept for backward compatibility
 }
 
 // ============================================
@@ -2315,115 +2416,142 @@ function setupAllEventDelegation() {
     if (eventDelegationSetup) return;
     eventDelegationSetup = true;
     
+    console.log('[Event Delegation] Setting up all event delegation handlers...');
+    
     // Setup all event delegation handlers
     setupNavDropdownDelegation();
     setupPackagingDropdownDelegation();
     setupMobileMenuDelegation();
     setupMobileProductDropdownDelegation();
     setupContactFormDelegation();
+    setupLanguageSwitcherDelegation();
+    
+    console.log('[Event Delegation] All handlers set up successfully');
 }
 
 // ============================================
 // INITIALIZATION
 // ============================================
 
+// initAll - Geriye dönük uyumluluk için (artık quickInit kullanılıyor)
 async function initAll() {
-    // Setup event delegation once (never needs re-initialization)
-    setupAllEventDelegation();
-    
-    // Initialize i18n if available
-    if (window.i18n && typeof window.i18n.initLanguage === 'function') {
-        try {
-            const currentLang = window.i18n.getCurrentLanguage();
-            if (!currentLang || currentLang === 'en') {
-                await window.i18n.initLanguage();
-            }
-        } catch (error) {
-            console.warn('Error ensuring i18n is ready:', error);
-        }
+    // quickInit zaten çalışmış olmalı, sadece ikonları yenile
+    if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
     }
-    
-    // Initialize icons
-    const initIcons = () => {
-        if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-            try {
-                lucide.createIcons();
-            } catch (e) {
-                console.warn('Error initializing icons:', e);
-            }
-        }
-    };
-    
-    initIcons();
-    
-    // Initialize language switcher
-    initLanguageSwitcher();
-    
-    // Visual setup only (event handling is via delegation)
-    initNavbarAnimation();
-    initDesktopDropdowns();
-    initMobileMenu();
-    initEnhancedNavigation();
-    
-    // Initialize functionality
-    initCorporateTabs();
-    initApplicationForm();
-    initProductsTabs();
-    initProductParallax();
-    initContactForm();
-    
-    // Re-initialize icons for dynamically added content
-    setTimeout(initIcons, 100);
-    setTimeout(initIcons, 500);
 }
 
 // Export initAll to window
 if (typeof window !== 'undefined') {
     window.initAll = initAll;
     
-    // Listen for language change events - only re-initialize icons
-    // Event delegation persists, so no need to re-setup
+    // Listen for language change events - only re-initialize icons (slightly delayed)
     window.addEventListener('languagechange', () => {
         setTimeout(() => {
-            if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-                lucide.createIcons();
-            }
-        }, 50);
+            initIcons();
+        }, 300); // DOM güncellemesi tamamlandıktan sonra ikonları çiz
     });
 }
 
-// Initialize when DOM is ready
-// Check if DOM is already loaded (for dynamic imports)
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        // Wait for Lucide to be available
-        const waitForLucide = async () => {
-            if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-                await initAll();
-            } else {
-                setTimeout(waitForLucide, 50);
+// ============================================
+// 🚀 HIZLI BAŞLATMA - BEKLEMESİZ
+// waitForLucide döngüleri KALDIRILDI
+// ============================================
+
+// Smart Icon Loader (Akıllı ve Güvenli Retry)
+let iconRetryInterval = null;
+let iconRetryAttempts = 0;
+
+const initIcons = () => {
+    // Lucide hazırsa hemen çiz
+    if (typeof window !== 'undefined' && window.lucide && typeof window.lucide.createIcons === 'function') {
+        try {
+            window.lucide.createIcons();
+            // Başarılıysa varsa açık interval'i temizle
+            if (iconRetryInterval) {
+                clearInterval(iconRetryInterval);
+                iconRetryInterval = null;
+                iconRetryAttempts = 0;
             }
-        };
-        waitForLucide();
-    });
-} else {
-    // DOM already loaded, wait for Lucide
-    const waitForLucide = async () => {
-        if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-            await initAll();
-        } else {
-            setTimeout(waitForLucide, 50);
+            console.log('[Init] Lucide icons created');
+        } catch (e) {
+            console.warn('[Init] Error creating icons:', e);
         }
-    };
-    waitForLucide();
-}
-
-// Also initialize on window load as a fallback
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-            lucide.createIcons();
+        return;
+    }
+    
+    // Lucide yoksa kontrollü polling: max 3s (30 * 100ms)
+    if (iconRetryInterval) return; // Halihazırda polling yapılıyorsa tekrar başlatma
+    
+    iconRetryAttempts = 0;
+    iconRetryInterval = setInterval(() => {
+        iconRetryAttempts++;
+        
+        if (typeof window !== 'undefined' && window.lucide && typeof window.lucide.createIcons === 'function') {
+            try {
+                window.lucide.createIcons();
+                console.log('[Init] Lucide icons created after retry');
+            } catch (e) {
+                console.warn('[Init] Error creating icons during retry:', e);
+            }
+            clearInterval(iconRetryInterval);
+            iconRetryInterval = null;
+            iconRetryAttempts = 0;
+        } else if (iconRetryAttempts >= 30) { // 30 * 100ms = 3 saniye
+            clearInterval(iconRetryInterval);
+            iconRetryInterval = null;
+            console.warn('Lucide icons could not be loaded.');
         }
     }, 100);
-});
+};
+
+// Ana başlatma fonksiyonu - senkron ve hızlı
+function quickInit() {
+    console.log('[Init] Quick initialization started...');
+    const startTime = performance.now();
+    
+    // 1. Event delegation'ı kur (EN ÖNEMLİ - tüm tıklamalar için)
+    setupAllEventDelegation();
+    
+    // 2. Ikonları çiz (akıllı retry ile)
+    initIcons();
+    
+    // 3. i18n'i başlat (async ama beklemiyoruz)
+    if (window.i18n && typeof window.i18n.initLanguage === 'function') {
+        window.i18n.initLanguage().catch(err => {
+            console.warn('[Init] i18n init error:', err);
+        });
+    }
+    
+    // 4. Diğer görsel başlatmalar
+    initLanguageSwitcher();
+    initNavbarAnimation();
+    initDesktopDropdowns();
+    initMobileMenu();
+    initEnhancedNavigation();
+    initCorporateTabs();
+    initApplicationForm();
+    initProductsTabs();
+    initProductParallax();
+    initContactForm();
+    
+    // 5. İkonları bir kez daha çiz (dinamik içerik için)
+    requestAnimationFrame(() => {
+        initIcons();
+    });
+    
+    const endTime = performance.now();
+    console.log(`[Init] Initialization completed in ${(endTime - startTime).toFixed(2)}ms`);
+}
+
+// DOM hazır olduğunda HEMEN başlat (bekleme yok!)
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', quickInit);
+} else {
+    // DOM zaten hazır - hemen başlat
+    quickInit();
+}
+
+// Window load'da son bir ikon kontrolü
+window.addEventListener('load', initIcons);
 
