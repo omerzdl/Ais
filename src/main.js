@@ -46,10 +46,19 @@ document.addEventListener('click', (e) => {
 })();
 
 // ============================================
-// GLOBAL CONSTANTS
+// GLOBAL CONSTANTS & HELPERS
 // ============================================
 const CORPORATE_TABS = ['about', 'mission-vision', 'application'];
 const PRODUCT_ITEMS = ['surface-cleaners', 'concentrated-detergents', 'disinfectants', 'liquid-soap', 'shampoo'];
+
+// GH Pages base path helper
+function getBasePath() {
+    if (window.location.hostname === 'omerzdl.github.io' || 
+        window.location.pathname.startsWith('/Ais')) {
+        return '/Ais';
+    }
+    return '';
+}
 
 // ============================================
 // I18N İÇERIK GÜNCELLEME SONRASI UI YENİLEME
@@ -281,10 +290,10 @@ function setupNavDropdownDelegation() {
         const menu = dropdown.querySelector('.dropdown-menu');
         if (!menu) return;
         
-        // Add a slightly longer delay before hiding to allow cursor to enter menu
+        // Add a longer delay before hiding to allow cursor to enter menu comfortably
         navDropdownState.hoverTimeout = setTimeout(() => {
             hideNavDropdown(dropdown, menu);
-        }, 250);
+        }, 600);
     }, true);
     
     // Close dropdowns on escape key
@@ -481,8 +490,10 @@ function initEnhancedNavigation() {
             // Handle /catalog and other path-based routes
             if (href.startsWith('/') && !href.startsWith('//')) {
                 e.preventDefault();
-                // Navigate to the route - this will work with React Router if set up correctly
-                window.location.href = href;
+                // Navigate with base path support (GH Pages)
+                const basePath = getBasePath();
+                const targetHref = basePath ? `${basePath}${href}` : href;
+                window.location.href = targetHref;
                 return;
             }
         });
