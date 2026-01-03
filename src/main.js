@@ -50,6 +50,7 @@ document.addEventListener('click', (e) => {
 // ============================================
 const CORPORATE_TABS = ['about', 'mission-vision', 'application'];
 const PRODUCT_ITEMS = ['surface-cleaners', 'concentrated-detergents', 'disinfectants', 'liquid-soap', 'shampoo'];
+const NAV_HOVER_ENABLED = false; // disable hover-open for nav dropdowns
 
 // GH Pages base path helper
 function getBasePath() {
@@ -261,6 +262,7 @@ function setupNavDropdownDelegation() {
     
     // Hover events - delegation for desktop only
     document.body.addEventListener('mouseenter', (e) => {
+        if (!NAV_HOVER_ENABLED) return;
         if (!isDesktop()) return;
         
         const dropdown = e.target.closest('.nav-dropdown');
@@ -279,6 +281,7 @@ function setupNavDropdownDelegation() {
     }, true);
     
     document.body.addEventListener('mouseleave', (e) => {
+        if (!NAV_HOVER_ENABLED) return;
         if (!isDesktop()) return;
         
         const dropdown = e.target.closest('.nav-dropdown');
