@@ -3,8 +3,8 @@
     "home": "Ana Sayfa",
     "corporate": "Kurumsal",
     "about": "Hakkımızda",
-    "missionVision": "Misyon & Vizyon",
-    "jobApplication": "İş Başvurusu",
+    "missionVision": "Misyon &<br>Vizyon",
+    "jobApplication": "İş<br>Başvurusu",
     "products": "Ürünler",
     "powderDetergent": "Toz Deterjan",
     "liquidDetergent": "Sıvı Deterjan",
@@ -86,27 +86,32 @@
     "powderDetergent": {
       "title": "Toz Deterjan",
       "description": "Liflerin Derinlerinde Moleküler Güç: Ais'in imza toz teknolojisi temizliği yüzeyin ötesine taşıyarak kumaşın kalbine ulaşır. Lif bütünlüğünü bozmadan en zor lekeleri moleküler seviyede parçalayarak görünür bir saflık ve yenilenmiş bir yumuşaklık bırakır. Profesyonel yıkama gücü artık evinizin yeni standardı.",
-      "getQuote": "Fiyat Al"
+      "getQuote": "Fiyat Al",
+      "privateLabelNote": "*Tüm ürün yelpazemiz için tercih ettiğiniz formül ve paketleme çeşitlerine göre özelleştirilmiş Private Label çözümleri sunuyoruz."
     },
     "liquidDetergent": {
       "title": "Sıvı Deterjan",
       "description": "Akışkan Dinamikleri ile Kusursuz Temizlik: Gelişmiş üretim teknolojileriyle geliştirilen sıvı formülümüz, suyla temas ettiği anda kumaş gözeneklerine nüfuz etmek için anında aktifleşir. Hem renkli hem beyaz için optimize edilmiş, laboratuvar hassasiyetiyle renk canlılığını korur. Derin temizlik ve kalıcı tazelik Ais'in akıllı temizlik formülünde buluşur.",
-      "getQuote": "Fiyat Al"
+      "getQuote": "Fiyat Al",
+      "privateLabelNote": "*Tüm ürün yelpazemiz için tercih ettiğiniz formül ve paketleme çeşitlerine göre özelleştirilmiş Private Label çözümleri sunuyoruz."
     },
     "wetWipe": {
       "title": "Islak Mendil",
       "description": "Cildiniz için Nefes Alabilir Hijyen: Doğanın yumuşak dokusunu bilimsel saflıkla harmanladık. pH dengeli Ais ıslak mendillerimiz, cildinizde ve dokundukları her yüzeyde 'nefes alabilir temizlik' etkisi yaratır. Çevre dostu yapısı ve ferahlatıcı dokunuşuyla, her zaman yanınızda olan hijyenin en zarif biçimidir.",
-      "getQuote": "Fiyat Al"
+      "getQuote": "Fiyat Al",
+      "privateLabelNote": "*Tüm ürün yelpazemiz için tercih ettiğiniz formül ve paketleme çeşitlerine göre özelleştirilmiş Private Label çözümleri sunuyoruz."
     },
     "liquidSoap": {
       "title": "Sıvı Sabun",
       "description": "Botanik Bakım & Moleküler Nem Dengesi: Sadece sabun değil; elleriniz için bir nem banyosu. Doğanın en saf bileşenlerini teknolojiyle birleştiren formülümüz, cildinizi beslerken ve bariyerini yenilerken arındırır. Her kullanımda duyularınızı uyandıran ferahlatıcı ve onarıcı bir hijyen deneyimi sunar.",
-      "getQuote": "Fiyat Al"
+      "getQuote": "Fiyat Al",
+      "privateLabelNote": "*Tüm ürün yelpazemiz için tercih ettiğiniz formül ve paketleme çeşitlerine göre özelleştirilmiş Private Label çözümleri sunuyoruz."
     },
     "shampoo": {
       "title": "Şampuan",
       "description": "Kökten Uca Bilimsel Parlaklık: Özel formülümüz, saç tellerini ağırlaştırmadan derinlemesine arındırırken saç derisinin nefes almasına izin verir. Bilimsel verilerle optimize edilmiş, besleyici yapısı saçın doğal dengesini korurken imza Ais parlaklığını sağlar. Profesyonel saç bakımı, en saf haliyle artık banyonuzda.",
-      "getQuote": "Fiyat Al"
+      "getQuote": "Fiyat Al",
+      "privateLabelNote": "*Tüm ürün yelpazemiz için tercih ettiğiniz formül ve paketleme çeşitlerine göre özelleştirilmiş Private Label çözümleri sunuyoruz."
     }
   },
   "privateLabel": {
@@ -124,7 +129,7 @@
       "title": "Kalite Güvencesi",
       "description": "ISO ve GMP sertifikalı üretim standartları."
     },
-    "startPartnership": "Ortaklığınıza Başlayın"
+    "startPartnership": "Bize Ulaşın"
   },
   "production": {
     "label": "Üretim",
@@ -149,8 +154,8 @@
       "placeholderMessage": "İsteğinizi buraya yazın..."
     },
     "factory": {
-      "title": "Fabrika & Merkez",
-      "address": "Organize Sanayi Bölgesi 4. Cadde<br>34000 İstanbul"
+      "title": "RN Tarım HQ",
+      "address": "Islamsaray Mah. 929 Sk. No: 17<br>Bergama, Izmir/TURKIYE"
     },
     "customerLine": {
       "title": "Müşteri Hattı",

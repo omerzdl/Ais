@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIS</title>
-    <link rel="icon" type="image/png" href="./Ais.png">
+    <link rel="icon" type="image/png" href="/Ais.png">
     
     <!-- Google Fonts: Syne, Montserrat, Playfair Display & EB Garamond -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,37 +16,9 @@
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        // Ensure Lucide is loaded and available
-        (function() {
-            let attempts = 0;
-            const maxAttempts = 50;
-            const checkLucide = setInterval(() => {
-                attempts++;
-                if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-                    clearInterval(checkLucide);
-                    // Initialize icons immediately when Lucide is ready
-                    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                        setTimeout(() => {
-                            try {
-                                lucide.createIcons();
-                            } catch (e) {
-                                console.warn('Early icon initialization failed:', e);
-                            }
-                        }, 50);
-                    }
-                } else if (attempts >= maxAttempts) {
-                    clearInterval(checkLucide);
-                    console.warn('Lucide icons library failed to load');
-                }
-            }, 100);
-        })();
-    </script>
     
     <!-- GSAP -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    
-    <!-- i18n.js is now imported via src/main.js (Single Source of Truth: src/i18n.js) -->
 
     <script>
         tailwind.config = {
@@ -79,106 +51,17 @@
         }
     </script>
     
-    <link rel="stylesheet" href="./src/styles.css">
-
-    <!-- Minimal i18n fallback: ensures language click works even if bundled main.js is missing -->
-    <script type="module">
-        (() => {
-            const getBasePath = () => {
-                if (window.location.hostname === 'omerzdl.github.io' ||
-                    window.location.pathname.startsWith('/Ais')) {
-                    return '/Ais';
-                }
-                return '';
-            };
-            
-            let i18nReadyPromise = null;
-            const ensureI18n = () => {
-                if (window.i18n && typeof window.i18n.setLanguage === 'function') {
-                    return Promise.resolve(window.i18n);
-                }
-                if (i18nReadyPromise) return i18nReadyPromise;
-                const basePath = getBasePath();
-                const fallbackUrl = basePath ? `${basePath}/dist/i18n.js` : './dist/i18n.js';
-                i18nReadyPromise = import(fallbackUrl).then(mod => {
-                    const i18n = mod.default || mod;
-                    window.i18n = i18n;
-                    return i18n;
-                }).catch(err => {
-                    console.warn('Fallback i18n load failed:', err);
-                    return null;
-                });
-                return i18nReadyPromise;
-            };
-            
-            document.addEventListener('click', (e) => {
-                const langBtn = e.target.closest('[data-lang]');
-                if (!langBtn) return;
-                e.preventDefault();
-                const lang = langBtn.getAttribute('data-lang');
-                if (!lang) return;
-                ensureI18n().then(i18n => {
-                    if (i18n && typeof i18n.setLanguage === 'function') {
-                        i18n.setLanguage(lang);
-                    } else {
-                        // store selection so when main.js loads it can pick up
-                        localStorage.setItem('ais_language', lang);
-                        location.reload();
-                    }
-                });
-            });
-        })();
-    </script>
+    <link rel="stylesheet" href="/src/styles.css">
 </head>
-    <body class="bg-white text-[#1E293B] font-sans antialiased text-lg relative overflow-x-hidden max-w-full">
-
-    <!-- WATER DROPLETS CONTAINER (Fixed background layer) -->
-    <div id="droplet-layer" class="fixed inset-0 w-full h-full pointer-events-none overflow-hidden z-0 max-w-full">
-        <!-- Droplets will be animated via JS based on scroll -->
-        <!-- Large one top right -->
-        <div class="water-droplet w-32 h-32 md:w-64 md:h-64 top-20 right-0 md:right-[5%]" data-speed="-0.2"></div>
-        
-        <!-- Medium one floating near text -->
-        <div class="water-droplet w-16 h-16 md:w-24 md:h-24 top-[40%] left-[10%]" data-speed="-0.5"></div>
-        
-        <!-- Small fast one -->
-        <div class="water-droplet w-8 h-8 md:w-12 md:h-12 top-[15%] left-[20%]" data-speed="-0.8"></div>
-        
-        <!-- Bottom area droplets -->
-        <div class="water-droplet w-20 h-20 md:w-40 md:h-40 top-[80%] left-[70%] md:left-[80%]" data-speed="-0.3"></div>
-        <div class="water-droplet w-10 h-10 top-[60%] right-[30%]" data-speed="-0.6"></div>
-        <div class="water-droplet w-14 h-14 top-[90%] left-[15%]" data-speed="-0.4"></div>
-    </div>
-
-    <!-- HYGIENIC BUBBLES CONTAINER (Scroll-linked animation) - Zarif ve Şeffaf -->
-    <div id="bubble-layer" class="fixed inset-0 w-full h-full pointer-events-none overflow-hidden max-w-full" style="z-index: 50;">
-        <!-- Layer 1: Slowest movement (background layer) -->
-        <div class="bubble-layer" data-layer="1" data-speed="-0.08">
-            <div class="hygienic-bubble bubble-size-md" style="top: 25%; left: 15%;"></div>
-            <div class="hygienic-bubble bubble-size-sm" style="top: 65%; left: 75%;"></div>
-        </div>
-        
-        <!-- Layer 2: Medium movement (middle layer) -->
-        <div class="bubble-layer" data-layer="2" data-speed="-0.18">
-            <div class="hygienic-bubble bubble-size-sm" style="top: 40%; left: 60%;"></div>
-            <div class="hygienic-bubble bubble-size-md" style="top: 80%; left: 30%;"></div>
-            <div class="hygienic-bubble bubble-size-sm" style="top: 20%; left: 85%;"></div>
-        </div>
-        
-        <!-- Layer 3: Fastest movement (foreground layer) -->
-        <div class="bubble-layer" data-layer="3" data-speed="-0.28">
-            <div class="hygienic-bubble bubble-size-sm" style="top: 50%; left: 25%;"></div>
-            <div class="hygienic-bubble bubble-size-sm" style="top: 75%; left: 70%;"></div>
-        </div>
-    </div>
+    <body class="bg-white text-[#1E293B] font-sans antialiased text-lg relative overflow-x-hidden">
 
     <!-- NAVBAR -->
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-[100] py-4 md:py-6 px-4 md:px-8 max-w-full overflow-x-hidden">
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-[100] py-4 md:py-6 px-4 md:px-8">
         <!-- Logo (Fixed Position) -->
         <div id="logo-container" class="fixed left-4 md:left-8 top-4 md:top-6 z-[100]">
             <div class="rounded-full w-16 h-16 md:w-24 md:h-24 flex items-center justify-center p-2 md:p-3 overflow-hidden border border-white/30 bg-white/25 backdrop-blur-[20px] backdrop-saturate-[180%] shadow-[0_8px_32px_rgba(0,0,0,0.1),0_2px_8px_rgba(0,0,0,0.05)]">
                 <img 
-                    src="./Ais.png" 
+                    src="/Ais.png" 
                     alt="Ais Logo" 
                     class="w-full h-full object-cover rounded-full"
                 />
@@ -200,8 +83,8 @@
                         <div class="dropdown-menu absolute top-full left-0 pt-2 w-56 opacity-0 invisible pointer-events-none transition-all duration-300">
                             <div class="rounded-2xl p-2 shadow-xl bg-white border border-[#E2E8F0]">
                                 <a href="#about" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.about">About Us</a>
-                                <a href="#mission-vision" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.missionVision">Mission & Vision</a>
-                                <a href="#application" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.jobApplication">Job Application</a>
+                                <a href="#mission-vision" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n-html="nav.missionVision">Mission & Vision</a>
+                                <a href="#application" class="block px-4 py-2 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n-html="nav.jobApplication">Job Application</a>
                             </div>
                         </div>
                     </div>
@@ -223,7 +106,7 @@
                         </div>
                     </div>
                     
-                    <a href="/catalog" class="hover:text-[#FF8C00] transition-colors" data-i18n="nav.eCatalog">E-Catalog</a>
+                    <a href="#" class="hover:text-[#FF8C00] transition-colors catalog-download-link" data-i18n="nav.eCatalog">E-Catalog</a>
                     <a href="#private-label-title" class="hover:text-[#FF8C00] transition-colors" data-i18n="nav.privateLabel">Private Label</a>
                     <a href="#contact" class="hover:text-[#FF8C00] transition-colors" data-i18n="nav.contact">Contact</a>
                 </div>
@@ -265,8 +148,8 @@
         <!-- Menu Content -->
         <div class="absolute top-20 right-4 left-4 bg-white rounded-3xl p-6 shadow-xl border border-[#8FA895]/30 animate-fade-in-down max-h-[calc(100vh-7rem)] overflow-y-auto">
             <!-- Mobile Language Switcher (Top of Menu) -->
-            <div id="language-switcher-mobile" class="mb-6 pb-6 border-b border-[#E2E8F0] overflow-hidden">
-                <div class="flex items-center gap-2 flex-wrap w-full">
+            <div id="language-switcher-mobile" class="mb-6 pb-6 border-b border-[#E2E8F0]">
+                <div class="flex items-center gap-2 flex-wrap">
                     <button class="lang-btn px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 bg-[#FF8C00] text-white shadow-md" data-lang="en">EN</button>
                     <button class="lang-btn px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 bg-white text-[#1E293B] border border-[#E2E8F0] hover:bg-[#F8FAFC]" data-lang="tr">TR</button>
                     <button class="lang-btn px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 bg-white text-[#1E293B] border border-[#E2E8F0] hover:bg-[#F8FAFC]" data-lang="ru">RU</button>
@@ -288,8 +171,8 @@
                     </button>
                     <div class="mobile-dropdown-content hidden ml-4 mt-2 space-y-2">
                         <a href="#about" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.about">About Us</a>
-                        <a href="#mission-vision" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.missionVision">Mission & Vision</a>
-                        <a href="#application" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.jobApplication">Job Application</a>
+                        <a href="#mission-vision" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n-html="nav.missionVision">Mission & Vision</a>
+                        <a href="#application" class="block px-4 py-2 rounded-xl text-sm text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n-html="nav.jobApplication">Job Application</a>
                     </div>
                 </div>
                 
@@ -308,7 +191,7 @@
                     </div>
                 </div>
                 
-                <a href="/catalog" class="block px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors border-b border-[#E2E8F0]" data-i18n="nav.eCatalog">E-Catalog</a>
+                <a href="#" class="block px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors border-b border-[#E2E8F0] catalog-download-link" data-i18n="nav.eCatalog">E-Catalog</a>
                 <a href="#private-label-title" class="block px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors border-b border-[#E2E8F0]" data-i18n="nav.privateLabel">Private Label</a>
                 <a href="#contact" class="block px-4 py-3 rounded-xl text-[#1E293B] hover:text-[#FF8C00] hover:bg-[#F8FAFC] transition-colors" data-i18n="nav.contact">Contact</a>
             </div>
@@ -316,27 +199,27 @@
     </div>
 
     <!-- HERO SECTION -->
-    <section id="hero" class="relative w-full min-h-[600px] lg:min-h-screen pt-28 md:pt-32 pb-20 overflow-hidden flex items-center z-10 max-w-full" style="background-image: url('./hero-background.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <section id="hero" class="relative w-full min-h-[600px] lg:min-h-screen pt-28 md:pt-32 pb-20 overflow-hidden flex items-center z-10" style="background-image: url('/hero-background.png'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <!-- Overlay for readability -->
         <div class="absolute inset-0 bg-white/10 z-0"></div>
 
         <!-- Glassmorphism Layer - Left Side -->
-        <div class="absolute top-0 left-0 w-full lg:w-[56%] xl:w-[52%] h-full bg-white/5 backdrop-blur-md border-r border-b border-white/30 rounded-br-[200px] z-[1] bg-gradient-to-br from-white/10 to-transparent max-w-full overflow-hidden"></div>
+        <div class="absolute top-0 left-0 w-full lg:w-[56%] xl:w-[52%] h-full bg-white/5 backdrop-blur-md border-r border-b border-white/30 rounded-br-[200px] z-[1] bg-gradient-to-br from-white/10 to-transparent"></div>
 
-        <div class="relative max-w-7xl mx-auto px-4 lg:px-8 xl:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 z-10">
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-12 xl:px-20 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 z-10">
             
-            <div class="flex flex-col justify-center items-start pt-10 w-full break-words px-2 md:px-4 lg:px-6 xl:px-8 overflow-visible">
-                <h1 class="font-subheading font-bold tracking-tight mb-5 antialiased text-left flex flex-col gap-y-3 w-[175%] min-w-max" style="max-width: none;">
+            <div class="flex flex-col justify-center items-start pt-10 w-full break-words px-6 md:px-12 lg:px-16 xl:px-20 overflow-visible">
+                <h1 class="font-subheading font-bold tracking-tight mb-5 antialiased text-left flex flex-col gap-y-3 w-full break-words">
                     <!-- Satır 1: Ais: -->
-                    <div class="text-[#FF8C00] leading-[1.5] overflow-visible hero-brand-title whitespace-nowrap" style="font-size: clamp(1.125rem, 3.15vw, 2.025rem);" data-i18n="hero.brand">Ais:</div>
+                    <div class="text-[#FF8C00] leading-[1.4] w-full overflow-visible" style="font-size: clamp(1.75rem, 5vw, 3rem);" data-i18n="hero.brand">Ais:</div>
                     <!-- Satır 2: The Depth of Purity, -->
-                    <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent leading-[1.5] overflow-visible whitespace-nowrap" style="font-size: clamp(1.125rem, 3.15vw, 2.025rem);" data-i18n="hero.title1">The Depth of Purity,</div>
-                    <!-- Satır 3: The Next Generation -->
-                    <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent leading-[1.5] overflow-visible whitespace-nowrap" style="font-size: clamp(1.125rem, 3.15vw, 2.025rem);" data-i18n="hero.title2">The Next Generation</div>
+                    <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent leading-[1.5] w-full overflow-visible" style="font-size: clamp(1.25rem, 3.5vw, 2.25rem);" data-i18n="hero.title1">The Depth of Purity,</div>
+                    <!-- Satır 3: The Next Generation of Clean. -->
+                    <div class="bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent leading-[1.5] w-full overflow-visible" style="font-size: clamp(1.25rem, 3.5vw, 2.25rem);" data-i18n="hero.title2">The Next Generation of Clean.</div>
                 </h1>
 
                 <div class="flex flex-wrap items-center gap-4">
-                    <a href="/catalog" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue">
+                    <a href="#" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue catalog-download-link">
                         <span data-i18n="hero.productCatalog">Product Catalog</span>
                         <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </a>
@@ -379,7 +262,7 @@
     </section>
 
     <!-- CORPORATE SECTION (Tab-based) -->
-    <section id="about" class="py-4 md:py-4 pb-20 md:pb-32 px-6 bg-[#F8FAFC] relative z-10 max-w-full overflow-x-hidden">
+    <section id="about" class="py-4 md:py-4 pb-20 md:pb-32 px-6 bg-[#F8FAFC] relative z-10">
         <div class="max-w-7xl mx-auto">
             <!-- Section Header -->
             <div class="text-center mb-12 md:mb-16">
@@ -396,10 +279,10 @@
                     <label for="corporate-about" data-tab="about" data-i18n="nav.about">About Us</label>
                     
                     <input type="radio" name="corporate-tab" id="corporate-mission-vision" value="mission-vision">
-                    <label for="corporate-mission-vision" data-tab="mission-vision" data-i18n="nav.missionVision">Mission & Vision</label>
+                    <label for="corporate-mission-vision" data-tab="mission-vision" data-i18n-html="nav.missionVision">Mission & Vision</label>
                     
                     <input type="radio" name="corporate-tab" id="corporate-application" value="application">
-                    <label for="corporate-application" data-tab="application" data-i18n="nav.jobApplication">Job Application</label>
+                    <label for="corporate-application" data-tab="application" data-i18n-html="nav.jobApplication">Job Application</label>
                     
                     <div class="glass-glider"></div>
                 </div>
@@ -499,7 +382,11 @@
                     </div>
 
                     <!-- Application Form -->
-                    <form id="application-form" class="text-left max-w-2xl mx-auto space-y-6">
+                    <form id="application-form" name="job-application" netlify netlify-honeypot="bot-field" data-netlify="true" class="text-left max-w-2xl mx-auto space-y-6">
+                        <input type="hidden" name="form-name" value="job-application">
+                        <p class="hidden">
+                            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                        </p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label for="app-name" class="block text-sm font-medium text-[#1E293B] mb-2"><span data-i18n="corporate.application.form.fullName">Full Name</span> <span class="text-[#FF8C00]">*</span></label>
@@ -551,7 +438,7 @@
     </section>
 
     <!-- PRODUCTS SECTION (Tab-based) -->
-    <section id="products" class="py-4 md:py-4 pb-20 md:pb-32 px-6 bg-white relative z-10 max-w-full overflow-x-hidden">
+    <section id="products" class="py-4 md:py-4 pb-20 md:pb-32 px-6 bg-white relative z-10">
         <div class="max-w-7xl mx-auto">
             <!-- Header -->
             <div class="text-center max-w-2xl mx-auto mb-12">
@@ -566,7 +453,7 @@
                         <span class="selected-text truncate" data-i18n="nav.powderDetergent">Powder Detergent</span>
                         <i data-lucide="chevron-down" class="w-4 h-4 flex-shrink-0 transition-transform duration-300"></i>
                     </button>
-                    <div id="products-mobile-menu" class="products-mobile-menu absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl border border-[#8FA895]/20 shadow-2xl max-h-[400px] overflow-y-auto overscroll-contain" role="listbox">
+                    <div id="products-mobile-menu" class="products-mobile-menu absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl border border-[#8FA895]/20 shadow-2xl z-50 max-h-[400px] overflow-y-auto overscroll-contain opacity-0 invisible transform translate-y-[-10px] transition-all duration-300" role="listbox">
                         <div class="p-2 space-y-1">
                             <button type="button" class="products-mobile-item w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-3 bg-[#FF8C00] text-white" data-value="surface-cleaners" role="option" aria-selected="true">
                                 <i data-lucide="washing-machine" class="w-5 h-5 flex-shrink-0 product-tab-icon"></i>
@@ -667,13 +554,14 @@
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
                         <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
-                            <img src="./Powder Detergent.png" alt="Surface Cleaners" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.surface-cleaners">
+                            <img src="/Powder Detergent.png?v=2" alt="Surface Cleaners" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.surface-cleaners">
                         </div>
-                        <div class="flex justify-center">
+                        <div class="flex flex-col items-center gap-3">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
                                 <span data-i18n="products.powderDetergent.getQuote">Get Quote</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5 stroke-[1.5]"></i>
                             </a>
+                            <p class="text-sm text-[#64748B] text-center max-w-md" data-i18n="products.powderDetergent.privateLabelNote">We provide Private Label solutions for our entire product range, tailored to your preferred formulas and packaging designs.</p>
                         </div>
                     </div>
 
@@ -706,13 +594,14 @@
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
                         <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
-                            <img src="./Liquid Detergent.png" alt="Concentrated Detergents" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.concentrated-detergents">
+                            <img src="/Liquid Detergent.png?v=2" alt="Concentrated Detergents" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.concentrated-detergents">
                         </div>
-                        <div class="flex justify-center">
+                        <div class="flex flex-col items-center gap-3">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
                                 <span data-i18n="products.liquidDetergent.getQuote">Get Quote</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5 stroke-[1.5]"></i>
                             </a>
+                            <p class="text-sm text-[#64748B] text-center max-w-md" data-i18n="products.liquidDetergent.privateLabelNote">We provide Private Label solutions for our entire product range, tailored to your preferred formulas and packaging designs.</p>
                         </div>
                     </div>
 
@@ -750,13 +639,14 @@
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
                         <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
-                            <img src="./Wet Wipe.png" alt="Disinfectant Products" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.disinfectants">
+                            <img src="/Wet Wipe.png?v=2" alt="Disinfectant Products" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.disinfectants">
                         </div>
-                        <div class="flex justify-center">
+                        <div class="flex flex-col items-center gap-3">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
                                 <span data-i18n="products.wetWipe.getQuote">Get Quote</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5 stroke-[1.5]"></i>
                             </a>
+                            <p class="text-sm text-[#64748B] text-center max-w-md" data-i18n="products.wetWipe.privateLabelNote">We provide Private Label solutions for our entire product range, tailored to your preferred formulas and packaging designs.</p>
                         </div>
                     </div>
 
@@ -794,13 +684,14 @@
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
                         <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
-                            <img src="./Liquid Soap.png" alt="Liquid Soap" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.liquid-soap">
+                            <img src="/Liquid Soap.png?v=2" alt="Liquid Soap" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.liquid-soap">
                         </div>
-                        <div class="flex justify-center">
+                        <div class="flex flex-col items-center gap-3">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
                                 <span data-i18n="products.liquidSoap.getQuote">Get Quote</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5 stroke-[1.5]"></i>
                             </a>
+                            <p class="text-sm text-[#64748B] text-center max-w-md" data-i18n="products.liquidSoap.privateLabelNote">We provide Private Label solutions for our entire product range, tailored to your preferred formulas and packaging designs.</p>
                         </div>
                     </div>
 
@@ -833,13 +724,14 @@
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
                         <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
-                            <img src="./Shampoo.png" alt="Shampoo" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.shampoo">
+                            <img src="/Shampoo.png?v=2" alt="Shampoo" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.shampoo">
                         </div>
-                        <div class="flex justify-center">
+                        <div class="flex flex-col items-center gap-3">
                             <a href="tel:+905556211529" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-blue inline-flex items-center gap-2">
                                 <span data-i18n="products.shampoo.getQuote">Get Quote</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5 stroke-[1.5]"></i>
                             </a>
+                            <p class="text-sm text-[#64748B] text-center max-w-md" data-i18n="products.shampoo.privateLabelNote">We provide Private Label solutions for our entire product range, tailored to your preferred formulas and packaging designs.</p>
                         </div>
                     </div>
                 </div>
@@ -850,7 +742,7 @@
                     <div id="product-image-surface-cleaners" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
                         <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
-                                <img src="./Powder Detergent.png" alt="Surface Cleaners" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.surface-cleaners">
+                                <img src="/Powder Detergent.png?v=2" alt="Surface Cleaners" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.surface-cleaners">
                             </div>
                         </div>
                     </div>
@@ -858,7 +750,7 @@
                     <div id="product-image-concentrated-detergents" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
                         <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
-                                <img src="./Liquid Detergent.png" alt="Concentrated Detergents" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.concentrated-detergents">
+                                <img src="/Liquid Detergent.png?v=2" alt="Concentrated Detergents" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.concentrated-detergents">
                             </div>
                         </div>
                     </div>
@@ -866,7 +758,7 @@
                     <div id="product-image-disinfectants" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
                         <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
-                                <img src="./Wet Wipe.png" alt="Disinfectant Products" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.disinfectants">
+                                <img src="/Wet Wipe.png?v=2" alt="Disinfectant Products" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.disinfectants">
                             </div>
                         </div>
                     </div>
@@ -874,7 +766,7 @@
                     <div id="product-image-liquid-soap" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
                         <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
-                                <img src="./Liquid Soap.png" alt="Liquid Soap" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.liquid-soap">
+                                <img src="/Liquid Soap.png?v=2" alt="Liquid Soap" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.liquid-soap">
                             </div>
                         </div>
                     </div>
@@ -882,7 +774,7 @@
                     <div id="product-image-shampoo" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
                         <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
-                                <img src="./Shampoo.png" alt="Shampoo" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.shampoo">
+                                <img src="/Shampoo.png?v=2" alt="Shampoo" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.shampoo">
                             </div>
                         </div>
                     </div>
@@ -892,7 +784,7 @@
     </section>
 
     <!-- PRIVATE LABEL MANUFACTURING SECTION -->
-    <section id="private-label" class="py-24 px-6 bg-[#F8FAFC] relative z-10 max-w-full overflow-x-hidden">
+    <section id="private-label" class="py-24 px-6 bg-[#F8FAFC] relative z-10">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <!-- Left Column: Text Content with Glassmorphism -->
@@ -947,7 +839,7 @@
                 <!-- Right Column: Image -->
                 <div class="relative">
                     <div class="relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] border border-white/30">
-                        <img src="./production.png" alt="Private Label Manufacturing" class="w-full h-full object-cover min-h-[500px]">
+                        <img src="/production.png" alt="Private Label Manufacturing" class="w-full h-full object-cover min-h-[500px]">
                     </div>
                 </div>
             </div>
@@ -955,36 +847,44 @@
     </section>
 
     <!-- CONTACT SECTION -->
-    <section id="contact" class="py-32 px-6 bg-white relative z-10 scroll-mt-32 max-w-full overflow-x-hidden">
+    <section id="contact" class="py-32 px-6 bg-white relative z-10 scroll-mt-32">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
                 <div class="flex flex-col justify-center">
                     <h2 class="text-4xl font-subheading font-bold tracking-tight mb-2 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent" data-i18n="contact.title">Contact Us</h2>
                     <p class="text-[#64748B] mb-10 text-lg font-sans font-normal" data-i18n="contact.subtitle">Fill out the form for wholesale orders and dealership applications.</p>
 
-                    <form action="#" class="space-y-6">
+                    <form id="contact-wholesale-form" name="contact" netlify netlify-honeypot="bot-field" data-netlify="true" class="space-y-6">
+                        <input type="hidden" name="form-name" value="contact">
+                        <p class="hidden">
+                            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                        </p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="space-y-2">
                                 <label for="contact-wholesale-name" class="text-sm font-medium text-[#1E293B] ml-1" data-i18n="contact.form.fullName">Full Name</label>
-                                <input type="text" id="contact-wholesale-name" name="name" data-i18n-placeholder="contact.form.placeholderName" placeholder="Your Name" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm">
+                                <input type="text" id="contact-wholesale-name" name="name" required data-i18n-placeholder="contact.form.placeholderName" placeholder="Your Name" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm">
+                                <p id="contact-wholesale-name-error" class="text-xs text-red-500 mt-1 hidden"></p>
                             </div>
                             <div class="space-y-2">
                                 <label for="contact-wholesale-email" class="text-sm font-medium text-[#1E293B] ml-1" data-i18n="contact.form.email">Email</label>
-                                <input type="email" id="contact-wholesale-email" name="email" data-i18n-placeholder="contact.form.placeholderEmail" placeholder="example@company.com" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm">
+                                <input type="email" id="contact-wholesale-email" name="email" required data-i18n-placeholder="contact.form.placeholderEmail" placeholder="example@company.com" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm">
+                                <p id="contact-wholesale-email-error" class="text-xs text-red-500 mt-1 hidden"></p>
                             </div>
                         </div>
 
                         <div class="space-y-2">
                             <label for="contact-wholesale-phone" class="text-sm font-medium text-[#1E293B] ml-1" data-i18n="contact.form.phone">Phone</label>
-                            <input type="tel" id="contact-wholesale-phone" name="phone" pattern="[0-9]*" inputmode="numeric" data-i18n-placeholder="contact.form.placeholderPhone" placeholder="Your Phone Number" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <input type="tel" id="contact-wholesale-phone" name="phone" required pattern="[0-9]*" inputmode="numeric" data-i18n-placeholder="contact.form.placeholderPhone" placeholder="Your Phone Number" class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                            <p id="contact-wholesale-phone-error" class="text-xs text-red-500 mt-1 hidden"></p>
                         </div>
 
                         <div class="space-y-2">
                             <label for="contact-wholesale-message" class="text-sm font-medium text-[#1E293B] ml-1" data-i18n="contact.form.message">Your Message</label>
-                            <textarea id="contact-wholesale-message" name="message" rows="4" data-i18n-placeholder="contact.form.placeholderMessage" placeholder="Write your request here..." class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm resize-none"></textarea>
+                            <textarea id="contact-wholesale-message" name="message" required rows="4" data-i18n-placeholder="contact.form.placeholderMessage" placeholder="Write your request here..." class="w-full rounded-xl px-4 py-3 glass-input text-[#1E293B] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] transition-all shadow-sm resize-none"></textarea>
+                            <p id="contact-wholesale-message-error" class="text-xs text-red-500 mt-1 hidden"></p>
                         </div>
 
-                        <button type="button" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-full glassmorphism-button-blue flex justify-center items-center gap-2">
+                        <button type="submit" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-full glassmorphism-button-blue flex justify-center items-center gap-2">
                             <span data-i18n="contact.form.send">Send</span>
                             <i data-lucide="send" class="w-4 h-4"></i>
                         </button>
@@ -993,38 +893,29 @@
 
                 <div class="relative h-full min-h-[500px] rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] border border-[#E2E8F0]">
                     <div class="absolute top-6 left-6 z-10 glass-panel p-6 rounded-2xl max-w-xs shadow-lg">
-                        <div class="flex items-start gap-3 mb-4">
+                        <div class="flex items-start gap-3">
                             <div class="bg-[#F8FAFC] p-2 rounded-lg text-[#FF8C00] shadow-[0_4px_16px_rgba(128,224,255,0.2)]">
                                 <i data-lucide="map-pin" class="w-5 h-5"></i>
                             </div>
                             <div>
                                 <h4 class="font-semibold text-[#153A60]" data-i18n="contact.factory.title">Factory & Headquarters</h4>
-                                <p class="text-sm text-[#64748B] mt-1" data-i18n-html="contact.factory.address">Organized Industrial Zone 4th Street<br>34000 Istanbul</p>
+                                <p class="text-sm text-[#64748B] mt-1" data-i18n-html="contact.factory.address">Islamsaray Mah. 929 Sk. No: 17<br>Bergama, Izmir/TURKIYE</p>
+                            </div>
                         </div>
                     </div>
-                        <div class="flex items-center gap-3">
-                             <div class="bg-[#F8FAFC] p-2 rounded-lg text-[#FF8C00] shadow-[0_4px_16px_rgba(128,224,255,0.2)]">
-                                <i data-lucide="phone" class="w-5 h-5"></i>
-                </div>
-                            <div>
-                                <h4 class="font-semibold text-[#153A60]" data-i18n="contact.customerLine.title">Customer Line</h4>
-                                <p class="text-sm text-[#64748B]" data-i18n="contact.customerLine.phone">444 0 123</p>
-            </div>
-        </div>
-            </div>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d192698.55213238692!2d28.871754593417725!3d41.00532148784157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa7040068086b%3A0xe1ccfe98bc01b0d0!2zxLBzdGFuYnVs!5e0!3m2!1str!2str!4v1698765432100!5m2!1str!2str" width="100%" height="100%" style="border:0; filter: grayscale(1) contrast(1.2) opacity(0.8);" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps?q=TÜVTÜRK+Bergama+Araç+Muayene+İstasyonu,+İslam+Saray+Mah.+DSİ+Cad.+No:1,+35700+Bergama,+İzmir,+Türkiye&output=embed" width="100%" height="100%" style="border:0; filter: grayscale(1) contrast(1.2) opacity(0.8);" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-[#153A60] pt-20 pb-10 px-6 relative z-10 max-w-full overflow-x-hidden">
+    <footer class="bg-[#153A60] pt-20 pb-10 px-6 relative z-10">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 mb-16">
                 <div class="col-span-2 lg:col-span-2">
                     <a href="#" class="flex items-center gap-2 mb-6">
-                        <img src="./Ais.png" alt="Ais Logo" class="h-10 w-auto object-contain" style="aspect-ratio: auto;">
+                        <img src="/Ais.png" alt="Ais Logo" class="h-10 w-auto object-contain" style="aspect-ratio: auto;">
                     </a>
                     <p class="text-white max-w-sm mb-6 font-sans font-normal" data-i18n="footer.description">
                         Next generation technology in cleaning. The purest, most effective solutions for your home and workplace.
@@ -1059,13 +950,21 @@
 
     <!-- React root for catalog page -->
     <div id="root"></div>
-    
     <script type="module">
         (async () => {
             // Get base path for GitHub Pages
             const getBasePath = () => {
-                if (window.location.hostname === 'omerzdl.github.io' || 
-                    window.location.pathname.startsWith('/Ais')) {
+                // Check if we're on GitHub Pages
+                if (window.location.hostname === 'omerzdl.github.io') {
+                    return '/Ais';
+                }
+                // Check if path starts with /Ais
+                if (window.location.pathname.startsWith('/Ais')) {
+                    return '/Ais';
+                }
+                // Check if Vite's script tag has /Ais in the path (production build with base path)
+                const viteScript = document.querySelector('script[src*="/assets/"]');
+                if (viteScript && viteScript.getAttribute('src')?.includes('/Ais/')) {
                     return '/Ais';
                 }
                 return '';
@@ -1073,90 +972,47 @@
             
             const basePath = getBasePath();
             
-            // Helper: initialize icons without blocking anything else
-            const ensureIcons = () => {
-                if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-                    try {
-                        lucide.createIcons();
-                    } catch (e) {
-                        console.warn('Error initializing icons:', e);
-                    }
-                }
-            };
+            // Load i18n first - use script tag for public/i18n.js, import for src/i18n.js
+            const isDevMode = window.location.port === '4182' || window.location.hostname === 'localhost';
+            const i18nBase = basePath || '';
             
-            // Check if we're on the catalog route
-            const catalogPath = basePath ? `${basePath}/catalog` : '/catalog';
-            if (window.location.pathname === catalogPath || window.location.pathname === '/catalog') {
-                // Hide all static HTML content
-                const staticContent = document.querySelector('body > *:not(#root):not(script)');
-                if (staticContent) {
-                    Array.from(document.body.children).forEach(child => {
-                        if (child.id !== 'root' && child.tagName !== 'SCRIPT') {
-                            child.style.display = 'none';
-                        }
-                    });
+            if (isDevMode) {
+                // Development: use src/i18n.js as module
+                try {
+                    await import('/src/i18n.js');
+                } catch (e) {
+                    console.warn('Could not load src/i18n.js:', e);
                 }
-                // Load React app
-                if (basePath) {
-                    await import(`${basePath}/src/main.tsx`);
-                } else {
-                    await import('./src/main.tsx');
-                }
-                ensureIcons();
             } else {
-                // Load static JS for home page immediately (no long wait for i18n)
-                // Prefer built bundle paths (GH Pages does not serve /src/)
-                const versionTag = 'v20260103-6'; // cache-bust for GH Pages
-                const candidates = basePath
-                    ? [
-                        `${basePath}/main.js?${versionTag}`,          // root bundle on GH Pages
-                        `${basePath}/dist/main.js?${versionTag}`,      // fallback to dist
-                        `${basePath}/src/main.js?${versionTag}`        // final fallback (local dev)
-                      ]
-                    : [
-                        `./main.js?${versionTag}`,
-                        `./dist/main.js?${versionTag}`,
-                        `./src/main.js?${versionTag}`
-                      ];
-                
-                const loadMain = (urls) => {
-                    if (!urls.length) {
-                        console.error('Failed to load main.js from all fallbacks');
-                        return;
+                // Production: use script tag for public/i18n.js
+                const i18nScript = document.createElement('script');
+                i18nScript.src = i18nBase + '/i18n.js';
+                i18nScript.type = 'text/javascript';
+                i18nScript.onload = () => {
+                    // Initialize language after i18n loads
+                    if (window.i18n && typeof window.i18n.initLanguage === 'function') {
+                        window.i18n.initLanguage();
                     }
-                    const url = urls[0];
-                    const script = document.createElement('script');
-                    script.src = url;
-                    script.type = 'module';
-                    script.onload = async function() {
-                        console.log('main.js loaded successfully from:', url);
-                        // Give i18n a brief moment to finish fetching translations
-                        await new Promise(resolve => setTimeout(resolve, 50));
-                        if (typeof window !== 'undefined' && window.initAll) {
-                            try {
-                                await window.initAll();
-                            } catch (e) {
-                                console.warn('Error initializing functionality:', e);
-                            }
-                        }
-                        ensureIcons();
-                    };
-                    script.onerror = function() {
-                        console.error('Failed to load main.js from:', url);
-                        loadMain(urls.slice(1)); // try next candidate
-                    };
-                    document.head.appendChild(script);
                 };
-                
-                loadMain(candidates);
+                document.head.appendChild(i18nScript);
+                // Wait a bit for script to load
+                await new Promise(resolve => setTimeout(resolve, 100));
             }
             
-            // Ensure icons are initialized after everything loads
-            window.addEventListener('load', () => {
-                setTimeout(ensureIcons, 200);
-            });
+            // Initialize language (for dev mode)
+            if (window.i18n && typeof window.i18n.initLanguage === 'function') {
+                await window.i18n.initLanguage();
+            }
+            
+            // Load static JS for home page
+            // Use src/main.js directly as a module (Vite will handle it)
+            const script = document.createElement('script');
+            script.src = '/src/main.js';
+            script.type = 'module';
+            document.body.appendChild(script);
         })();
     </script>
 </body>
 </html>
+
 

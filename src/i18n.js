@@ -276,6 +276,15 @@ function updateTextNodes(element, translation) {
  * @param {string} translation - Translation text (may contain HTML like <b>bold</b>)
  */
 function updateWithHTML(element, translation) {
+    // First, remove all direct text node children to prevent duplication
+    // Keep only element nodes (like icons, etc.)
+    const childNodes = Array.from(element.childNodes);
+    childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+            node.remove();
+        }
+    });
+    
     // Find or create a dedicated container for HTML content
     // This container is separate from the main element's structure
     let htmlContainer = element.querySelector('[data-i18n-html-container]');
@@ -327,6 +336,11 @@ function updatePageContent() {
     }
     
     elements.forEach(element => {
+        // Skip if element has data-i18n-html (it will be handled separately)
+        if (element.hasAttribute('data-i18n-html')) {
+            return;
+        }
+        
         const key = element.getAttribute('data-i18n');
         if (!key) return;
         
@@ -347,15 +361,18 @@ function updatePageContent() {
             // For images: ONLY update alt text, NEVER touch src
             element.alt = translation;
         } else {
-            // For other elements: check if HTML content is needed
-            if (element.hasAttribute('data-i18n-html')) {
-                // HTML content: use dedicated container
-                updateWithHTML(element, translation);
-            } else {
-                // Plain text: update only text nodes, preserve HTML structure
-                updateTextNodes(element, translation);
-            }
+            // Plain text: update only text nodes, preserve HTML structure
+            updateTextNodes(element, translation);
         }
+    });
+    
+    // Handle data-i18n-html elements separately
+    document.querySelectorAll('[data-i18n-html]').forEach(element => {
+        const key = element.getAttribute('data-i18n-html');
+        if (!key) return;
+        
+        const translation = t(key);
+        updateWithHTML(element, translation);
     });
     
     // Update placeholders separately (safe - attribute update)

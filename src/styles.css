@@ -174,257 +174,7 @@ section[id] {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* 3D Hygienic Bubble Styling */
-.water-droplet {
-    position: absolute;
-    border-radius: 50%;
-    /* 3D gradient with hygienic blue-white tones */
-    background: 
-        radial-gradient(
-            circle at 25% 25%, 
-            rgba(255, 255, 255, 1) 0%, 
-            rgba(240, 248, 255, 0.95) 10%,
-            rgba(230, 240, 255, 0.9) 20%,
-            rgba(200, 230, 255, 0.85) 35%,
-            rgba(180, 220, 255, 0.75) 50%,
-            rgba(150, 200, 255, 0.65) 70%,
-            rgba(120, 180, 255, 0.5) 100%
-        ),
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.9) 0%,
-            rgba(240, 248, 255, 0.8) 50%,
-            rgba(200, 230, 255, 0.7) 100%
-        );
-    /* Enhanced 3D shadows for depth */
-    box-shadow: 
-        /* Inner highlights for 3D effect */
-        inset -15px -15px 30px rgba(255, 255, 255, 0.95),
-        inset 15px 15px 30px rgba(200, 230, 255, 0.6),
-        inset 0 0 40px rgba(255, 255, 255, 0.8),
-        /* Outer 3D shadow */
-        0 15px 35px rgba(128, 224, 255, 0.25),
-        0 5px 15px rgba(128, 224, 255, 0.2),
-        /* Glow effect for hygienic appearance */
-        0 0 30px rgba(128, 224, 255, 0.4),
-        0 0 60px rgba(128, 224, 255, 0.2),
-        /* Border highlight */
-        0 0 0 2px rgba(255, 255, 255, 0.95),
-        0 0 0 4px rgba(128, 224, 255, 0.3),
-        /* Sparkle glow effects */
-        0 0 20px rgba(255, 255, 255, 0.6),
-        0 0 40px rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(3px) saturate(180%);
-    -webkit-backdrop-filter: blur(3px) saturate(180%);
-    z-index: 0;
-    opacity: 1;
-    pointer-events: none;
-    will-change: transform;
-    filter: brightness(1.15) contrast(1.1);
-    /* 3D transform perspective */
-    transform-style: preserve-3d;
-    animation: bubbleFloat 8s ease-in-out infinite, sparklePulse 4s ease-in-out infinite;
-}
-
-/* Different animation speeds for different bubble sizes */
-.water-droplet.w-8,
-.water-droplet.w-10,
-.water-droplet.w-12 {
-    animation: bubbleFloatFast 6s ease-in-out infinite;
-    animation-delay: 0s;
-}
-
-.water-droplet.w-14,
-.water-droplet.w-16,
-.water-droplet.w-20 {
-    animation: bubbleFloat 8s ease-in-out infinite;
-    animation-delay: 1s;
-}
-
-.water-droplet.w-24,
-.water-droplet.w-32,
-.water-droplet.w-40,
-.water-droplet.w-64 {
-    animation: bubbleFloatSlow 12s ease-in-out infinite;
-    animation-delay: 2s;
-}
-
-/* Staggered delays for more natural movement */
-.water-droplet:nth-child(1) { animation-delay: 0s; }
-.water-droplet:nth-child(2) { animation-delay: 1.5s; }
-.water-droplet:nth-child(3) { animation-delay: 0.5s; }
-.water-droplet:nth-child(4) { animation-delay: 2.5s; }
-.water-droplet:nth-child(5) { animation-delay: 1s; }
-.water-droplet:nth-child(6) { animation-delay: 2s; }
-
-/* 3D floating animation - different speeds for different sizes */
-@keyframes bubbleFloat {
-    0%, 100% {
-        transform: translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg);
-    }
-    25% {
-        transform: translateY(-15px) translateZ(10px) rotateX(5deg) rotateY(5deg);
-    }
-    50% {
-        transform: translateY(-25px) translateZ(15px) rotateX(-5deg) rotateY(-5deg);
-    }
-    75% {
-        transform: translateY(-15px) translateZ(10px) rotateX(3deg) rotateY(-3deg);
-    }
-}
-
-@keyframes bubbleFloatSlow {
-    0%, 100% {
-        transform: translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg);
-    }
-    33% {
-        transform: translateY(-20px) translateZ(12px) rotateX(4deg) rotateY(4deg);
-    }
-    66% {
-        transform: translateY(-30px) translateZ(18px) rotateX(-4deg) rotateY(-4deg);
-    }
-}
-
-@keyframes bubbleFloatFast {
-    0%, 100% {
-        transform: translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg);
-    }
-    20% {
-        transform: translateY(-10px) translateZ(8px) rotateX(6deg) rotateY(6deg);
-    }
-    40% {
-        transform: translateY(-18px) translateZ(12px) rotateX(-6deg) rotateY(-6deg);
-    }
-    60% {
-        transform: translateY(-12px) translateZ(10px) rotateX(4deg) rotateY(-4deg);
-    }
-    80% {
-        transform: translateY(-8px) translateZ(6px) rotateX(-3deg) rotateY(3deg);
-    }
-}
-
-/* Enhanced shine reflection for 3D effect */
-.water-droplet::before {
-    content: '';
-    position: absolute;
-    top: 20%;
-    left: 20%;
-    width: 35%;
-    height: 25%;
-    border-radius: 50%;
-    background: radial-gradient(
-        ellipse at center, 
-        rgba(255, 255, 255, 1) 0%, 
-        rgba(255, 255, 255, 0.9) 20%,
-        rgba(240, 248, 255, 0.7) 40%, 
-        rgba(200, 230, 255, 0.4) 60%,
-        rgba(255, 255, 255, 0) 80%
-    );
-    transform: rotate(-35deg) translateZ(20px);
-    box-shadow: 
-        0 0 20px rgba(255, 255, 255, 0.9),
-        0 0 40px rgba(200, 230, 255, 0.6);
-    filter: blur(1px);
-    z-index: 2;
-    /* Sparkle shimmer animation */
-    animation: sparkleShimmer 3s ease-in-out infinite;
-}
-
-/* Sparkle particles around the bubble */
-.water-droplet::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 3;
-    pointer-events: none;
-    /* Multiple sparkle particles using box-shadow */
-    box-shadow: 
-        /* Top sparkles */
-        0 -120% 0 2px rgba(255, 255, 255, 0.9),
-        0 -120% 0 0 rgba(255, 255, 255, 0.6),
-        /* Right sparkles */
-        120% 0 0 2px rgba(255, 255, 255, 0.9),
-        120% 0 0 0 rgba(255, 255, 255, 0.6),
-        /* Bottom sparkles */
-        0 120% 0 2px rgba(255, 255, 255, 0.9),
-        0 120% 0 0 rgba(255, 255, 255, 0.6),
-        /* Left sparkles */
-        -120% 0 0 2px rgba(255, 255, 255, 0.9),
-        -120% 0 0 0 rgba(255, 255, 255, 0.6),
-        /* Diagonal sparkles */
-        85% -85% 0 1.5px rgba(255, 255, 255, 0.8),
-        -85% 85% 0 1.5px rgba(255, 255, 255, 0.8),
-        85% 85% 0 1.5px rgba(255, 255, 255, 0.8),
-        -85% -85% 0 1.5px rgba(255, 255, 255, 0.8);
-    animation: sparkleTwinkle 2s ease-in-out infinite;
-    filter: blur(0.5px);
-}
-
-/* Sparkle shimmer animation - moves across the bubble */
-@keyframes sparkleShimmer {
-    0%, 100% {
-        opacity: 0.6;
-        transform: rotate(-35deg) translateZ(20px) scale(1);
-    }
-    50% {
-        opacity: 1;
-        transform: rotate(-35deg) translateZ(20px) scale(1.2);
-    }
-}
-
-/* Sparkle twinkle animation - particles fade in and out */
-@keyframes sparkleTwinkle {
-    0%, 100% {
-        opacity: 0.3;
-        transform: translate(-50%, -50%) scale(1) rotate(0deg);
-    }
-    25% {
-        opacity: 0.8;
-        transform: translate(-50%, -50%) scale(1.1) rotate(90deg);
-    }
-    50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
-    }
-    75% {
-        opacity: 0.8;
-        transform: translate(-50%, -50%) scale(1.1) rotate(270deg);
-    }
-}
-
-/* Sparkle pulse animation for the bubble itself */
-@keyframes sparklePulse {
-    0%, 100% {
-        filter: brightness(1.15) contrast(1.1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
-    }
-    50% {
-        filter: brightness(1.3) contrast(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 30px rgba(150, 200, 255, 0.6));
-    }
-}
-
-/* Hover effect for interactivity (if needed) */
-.water-droplet:hover {
-    transform: scale(1.1) translateZ(30px);
-    filter: brightness(1.3) contrast(1.2);
-    box-shadow: 
-        inset -15px -15px 30px rgba(255, 255, 255, 0.95),
-        inset 15px 15px 30px rgba(200, 230, 255, 0.6),
-        inset 0 0 40px rgba(255, 255, 255, 0.8),
-        0 20px 45px rgba(128, 224, 255, 0.35),
-        0 8px 20px rgba(128, 224, 255, 0.25),
-        0 0 40px rgba(128, 224, 255, 0.5),
-        0 0 80px rgba(128, 224, 255, 0.3),
-        0 0 0 2px rgba(255, 255, 255, 0.95),
-        0 0 0 4px rgba(128, 224, 255, 0.4),
-        /* Enhanced sparkles on hover */
-        0 0 30px rgba(255, 255, 255, 0.9),
-        0 0 60px rgba(255, 255, 255, 0.5);
-}
+/* Removed: All water droplet bubble styling and animations */
 
 .no-scrollbar::-webkit-scrollbar { 
     display: none; 
@@ -496,6 +246,13 @@ section[id] {
     white-space: nowrap;
     pointer-events: auto;
     text-align: center;
+}
+
+/* Allow 2-line labels for RO language (when br tag is present) */
+.glass-radio-group label[data-i18n-html] {
+    white-space: normal;
+    line-height: 1.3;
+    flex-direction: column;
 }
 
 .glass-radio-group label:hover {
@@ -754,6 +511,14 @@ section[id] {
 
 .product-image {
     transition: transform 0.3s ease-out;
+}
+
+/* Disable transition and animation for mobile product images */
+@media (max-width: 1023px) {
+    .lg\:hidden .product-image {
+        transition: none !important;
+        transform: none !important;
+    }
 }
 
 /* Prevent parallax/scroll movement for images in right column */
@@ -1413,200 +1178,7 @@ section[id] {
     }
 }
 
-/* ============================================
-   HYGIENIC BUBBLE ANIMATION SYSTEM
-   ============================================ */
-
-/* Bubble Layer Container */
-#bubble-layer {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-    /* Z-index: İçeriğin üstünde görünmesi için z-index: 50 */
-    z-index: 50;
-    /* Görünürlük garantisi */
-    display: block !important;
-    opacity: 1 !important;
-    background: transparent;
-}
-
-.bubble-layer {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* Hygienic Bubble Base Styling - Zarif ve Şeffaf (Subtle) */
-.hygienic-bubble {
-    position: absolute;
-    border-radius: 50%;
-    will-change: transform;
-    pointer-events: none;
-    display: block !important;
-    /* Opacity JavaScript ile rastgele 0.03-0.1 arası atanacak */
-    opacity: 0.06;
-    
-    /* İç dolgu tamamen şeffaf - sadece kenar highlight */
-    background: transparent;
-    
-    /* Sadece çok ince (0.5px) beyaz kenar parlama */
-    border: 0.5px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 
-        /* Çok hafif dış glow - bokeh efekti için */
-        0 0 8px rgba(128, 224, 255, 0.08),
-        0 0 15px rgba(128, 224, 255, 0.04);
-    
-    /* Derinlik için blur efekti - "odak dışı" (bokeh) görünümü */
-    backdrop-filter: blur(3px) saturate(150%);
-    -webkit-backdrop-filter: blur(3px) saturate(150%);
-    
-    filter: brightness(1.05) contrast(0.95);
-    transform-style: preserve-3d;
-    
-    /* Scroll transform - JS'den gelen --scroll-y */
-    transform: translateY(var(--scroll-y, 0px));
-    
-    /* Salınım animasyonu - daha yavaş ve akışkan */
-    animation: bubbleFloat 18s ease-in-out infinite;
-}
-
-/* Bubble Size Variants - Çeşitlendirilmiş ama büyükler kaldırıldı */
-.bubble-size-sm {
-    width: 18px !important;
-    height: 18px !important;
-    min-width: 18px !important;
-    min-height: 18px !important;
-    animation-duration: 16s;
-}
-
-.bubble-size-md {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
-    min-height: 32px !important;
-    animation-duration: 20s;
-}
-
-/* Büyük baloncuklar kaldırıldı - sadece sm ve md var */
-
-@media (min-width: 768px) {
-    .bubble-size-sm {
-        width: 24px !important;
-        height: 24px !important;
-        min-width: 24px !important;
-        min-height: 24px !important;
-    }
-    
-    .bubble-size-md {
-        width: 40px !important;
-        height: 40px !important;
-        min-width: 40px !important;
-        min-height: 40px !important;
-    }
-}
-
-/* Parlaklık (Shine) - Çok hafif, sadece ışık vurduğunda görünür */
-.hygienic-bubble::before {
-    content: '';
-    position: absolute;
-    top: 20%;
-    left: 20%;
-    width: 30%;
-    height: 30%;
-    border-radius: 50%;
-    background: radial-gradient(
-        ellipse at center,
-        rgba(255, 255, 255, 0.3) 0%,
-        rgba(255, 255, 255, 0.15) 40%,
-        transparent 80%
-    );
-    transform: rotate(-35deg);
-    filter: blur(1px);
-    z-index: 2;
-    pointer-events: none;
-    animation: shineShimmer 8s ease-in-out infinite;
-    opacity: 0.4;
-}
-
-/* Turuncu Kenar Işıması (#FF8C00) - Sadece küçük baloncukların %5'inde */
-/* Bu class JavaScript ile sadece seçili küçük baloncuklara eklenecek */
-.hygienic-bubble.has-orange-glow::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: 
-        /* Çok düşük opaklıkta turuncu yansıma */
-        radial-gradient(
-            circle at 80% 20%,
-            rgba(255, 140, 0, 0.04) 0%,
-            rgba(255, 140, 0, 0.02) 30%,
-            transparent 60%
-        );
-    z-index: 1;
-    pointer-events: none;
-    animation: orangeGlow 10s ease-in-out infinite;
-}
-
-/* Salınım Animasyonu - Daha yavaş ve akışkan (slow-motion) */
-@keyframes bubbleFloat {
-    0%, 100% {
-        margin-left: 0px;
-        margin-top: 0px;
-    }
-    25% {
-        margin-left: 3px;
-        margin-top: -5px;
-    }
-    50% {
-        margin-left: -3px;
-        margin-top: -8px;
-    }
-    75% {
-        margin-left: 2px;
-        margin-top: -4px;
-    }
-}
-
-/* Shine Shimmer Animation - Çok hafif */
-@keyframes shineShimmer {
-    0%, 100% {
-        opacity: 0.3;
-        transform: rotate(-35deg) scale(1);
-    }
-    50% {
-        opacity: 0.5;
-        transform: rotate(-35deg) scale(1.1);
-    }
-}
-
-/* Orange Glow Pulse - Çok hafif */
-@keyframes orangeGlow {
-    0%, 100% {
-        opacity: 0.3;
-    }
-    50% {
-        opacity: 0.5;
-    }
-}
-
-/* Staggered animation delays for natural movement - Zarif ve dağınık */
-.bubble-layer[data-layer="1"] .hygienic-bubble:nth-child(1) { animation-delay: 0s; }
-.bubble-layer[data-layer="1"] .hygienic-bubble:nth-child(2) { animation-delay: 6s; }
-
-.bubble-layer[data-layer="2"] .hygienic-bubble:nth-child(1) { animation-delay: 2s; }
-.bubble-layer[data-layer="2"] .hygienic-bubble:nth-child(2) { animation-delay: 8s; }
-.bubble-layer[data-layer="2"] .hygienic-bubble:nth-child(3) { animation-delay: 4s; }
-
-.bubble-layer[data-layer="3"] .hygienic-bubble:nth-child(1) { animation-delay: 1s; }
-.bubble-layer[data-layer="3"] .hygienic-bubble:nth-child(2) { animation-delay: 7s; }
+/* Removed: All hygienic bubble animation system */
 
 /* ============================================
    LANGUAGE SWITCHER STYLES
@@ -1689,31 +1261,13 @@ section[id] {
    MOBILE HORIZONTAL SCROLL PREVENTION
    ============================================ */
 
-/* Prevent water droplets from causing horizontal scroll on mobile */
+/* Prevent horizontal scroll on mobile */
 @media (max-width: 768px) {
     /* Base overflow prevention for mobile */
     html, body {
         max-width: 100vw;
         overflow-x: hidden;
         position: relative;
-    }
-    
-    /* Water Droplet Container - Prevent overflow */
-    #droplet-layer {
-        overflow: hidden !important;
-        max-width: 100vw !important;
-        width: 100% !important;
-    }
-
-    /* Bubble Layer Container - Prevent overflow */
-    #bubble-layer {
-        overflow: hidden !important;
-        max-width: 100vw !important;
-        width: 100% !important;
-    }
-    
-    .water-droplet {
-        max-width: 100vw !important;
     }
     
     /* Ensure droplets don't extend beyond viewport */

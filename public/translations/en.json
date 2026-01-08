@@ -3,8 +3,8 @@
     "home": "Home",
     "corporate": "Corporate",
     "about": "About Us",
-    "missionVision": "Mission & Vision",
-    "jobApplication": "Job Application",
+    "missionVision": "Mission &<br>Vision",
+    "jobApplication": "Job<br>Application",
     "products": "Products",
     "powderDetergent": "Powder Detergent",
     "liquidDetergent": "Liquid Detergent",
@@ -87,27 +87,32 @@
     "powderDetergent": {
       "title": "Powder Detergent",
       "description": "Molecular Power Deep Within Fibers: Ais's signature powder technology takes cleaning beyond the surface and into the heart of the fabric. It breaks down the toughest stains at a molecular level without compromising fiber integrity, leaving behind a visible purity and a renewed softness. Professional washing power is now your home's new standard.",
-      "getQuote": "Get Quote"
+      "getQuote": "Get Quote",
+      "privateLabelNote": "*We provide Private Label solutions for our entire product range, tailored to your preferred formulas and packaging varieties."
     },
     "liquidDetergent": {
       "title": "Liquid Detergent",
       "description": "Flawless Clean Through Fluid Dynamics: Developed with advanced production technologies, our liquid formula activates instantly upon contact with water to penetrate fabric pores. Optimized for both colors and whites, it preserves color vibrancy with laboratory precision. Deep cleaning and lasting freshness meet in the smart cleaning formula of Ais.",
-      "getQuote": "Get Quote"
+      "getQuote": "Get Quote",
+      "privateLabelNote": "*We provide Private Label solutions for our entire product range, tailored to your preferred formulas and packaging varieties."
     },
     "wetWipe": {
       "title": "Wet Wipe",
       "description": "Breathable Hygiene for Your Skin: We've blended the soft texture of nature with scientific purity. Our pH-balanced Ais wet wipes create a 'breathable cleaning' effect on your skin and every surface they touch. With an eco-friendly structure and a refreshing touch, it is the most elegant form of hygiene, always by your side.",
-      "getQuote": "Get Quote"
+      "getQuote": "Get Quote",
+      "privateLabelNote": "*We provide Private Label solutions for our entire product range, tailored to your preferred formulas and packaging varieties."
     },
     "liquidSoap": {
       "title": "Liquid Soap",
       "description": "Botanical Care & Molecular Moisture Balance: More than just soap; it's a moisture bath for your hands. Combining the purest ingredients of nature with technology, our formula purifies your skin while nourishing and renewing its barrier. It offers a refreshing and restorative hygiene experience that awakens your senses with every use.",
-      "getQuote": "Get Quote"
+      "getQuote": "Get Quote",
+      "privateLabelNote": "*We provide Private Label solutions for our entire product range, tailored to your preferred formulas and packaging varieties."
     },
     "shampoo": {
       "title": "Shampoo",
       "description": "Scientific Radiance from Root to Tip: Our specialized formula allows the scalp to breathe while deeply purifying hair strands without weighing them down. Optimized with scientific data, its nourishing structure protects the hair's natural balance while providing the signature Ais glow. Professional hair care, in its purest form, is now in your bathroom.",
-      "getQuote": "Get Quote"
+      "getQuote": "Get Quote",
+      "privateLabelNote": "*We provide Private Label solutions for our entire product range, tailored to your preferred formulas and packaging varieties."
     }
   },
   "privateLabel": {
@@ -125,7 +130,7 @@
       "title": "Quality Assurance",
       "description": "ISO and GMP certified production standards."
     },
-    "startPartnership": "Start Your Partnership"
+    "startPartnership": "Contact Us"
   },
   "production": {
     "label": "Production",
@@ -150,8 +155,8 @@
       "placeholderMessage": "Write your request here..."
     },
     "factory": {
-      "title": "Factory & Headquarters",
-      "address": "Organized Industrial Zone 4th Street<br>34000 Istanbul"
+      "title": "RN Tarım HQ",
+      "address": "Islamsaray Mah. 929 Sk. No: 17<br>Bergama, Izmir/TURKIYE"
     },
     "customerLine": {
       "title": "Customer Line",

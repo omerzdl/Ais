@@ -64,6 +64,10 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
       newErrors.department = 'Department selection is required';
     }
 
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+    }
+
     if (!formData.kvkkConsent) {
       newErrors.kvkkConsent = 'KVKK consent is required';
     }
@@ -231,8 +235,21 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
           value={formData.message}
           onChange={(e) => handleChange('message', e.target.value)}
           rows={3}
-          className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-white text-[#1E293B] resize-none focus:outline-none focus:ring-2 focus:ring-[#FF8C00] focus:border-transparent transition-all duration-200"
+          required
+          className={`
+            w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-white text-[#1E293B] resize-none
+            focus:outline-none focus:ring-2 focus:ring-[#FF8C00] focus:border-transparent
+            transition-all duration-200
+            ${errors.message ? 'border-red-500' : ''}
+          `}
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? 'message-error' : undefined}
         />
+        {errors.message && (
+          <p id="message-error" className="mt-1 text-xs text-red-500" role="alert">
+            {errors.message}
+          </p>
+        )}
       </div>
 
       {/* KVKK Checkbox */}

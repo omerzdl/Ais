@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIS - E-Katalog İndir</title>
+    <link rel="icon" type="image/png" href="/Ais.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        h1 {
+            color: #153A60;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #64748B;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #FF8C00;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .success {
+            color: #10b981;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        .error {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        .link {
+            color: #FF8C00;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="/Ais.png" alt="AIS Logo">
+        </div>
+        <h1>E-Katalog İndiriliyor</h1>
+        <p>Lütfen bekleyin...</p>
+        <div class="spinner" id="spinner"></div>
+        <div id="message"></div>
+        <a href="/" class="link" id="homeLink" style="display: none;">Ana Sayfaya Dön</a>
+    </div>
+
+    <script>
+        function downloadPDF() {
+            // Get base path if needed (for GitHub Pages)
+            const basePath = window.location.pathname.includes('/Ais') ? '/Ais' : '';
+            // Add cache-busting parameter to ensure latest PDF is downloaded
+            const timestamp = new Date().getTime();
+            const pdfPath = basePath ? `${basePath}/Ais_Catalog.pdf?v=${timestamp}` : `/Ais_Catalog.pdf?v=${timestamp}`;
+            
+            // Create download link
+            const link = document.createElement('a');
+            link.href = pdfPath;
+            link.download = 'Ais_Catalog.pdf';
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            
+            // Trigger download
+            link.click();
+            
+            // Clean up
+            setTimeout(() => {
+                document.body.removeChild(link);
+            }, 100);
+            
+            // Show success message
+            setTimeout(() => {
+                const spinner = document.getElementById('spinner');
+                const message = document.getElementById('message');
+                const homeLink = document.getElementById('homeLink');
+                
+                if (spinner) spinner.style.display = 'none';
+                if (message) {
+                    message.innerHTML = '<div class="success">✓ Katalog başarıyla indirildi!</div>';
+                }
+                if (homeLink) homeLink.style.display = 'inline-block';
+            }, 500);
+        }
+        
+        // Start download immediately when page loads
+        window.addEventListener('load', () => {
+            setTimeout(downloadPDF, 300);
+        });
+        
+        // Fallback: try download again if it didn't work
+        setTimeout(() => {
+            downloadPDF();
+        }, 1000);
+    </script>
+</body>
+</html>
+

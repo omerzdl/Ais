@@ -3,8 +3,8 @@
     "home": "Početna",
     "corporate": "Korporativno",
     "about": "O nama",
-    "missionVision": "Misija i Vizija",
-    "jobApplication": "Prijava za posao",
+    "missionVision": "Misija i<br>Vizija",
+    "jobApplication": "Prijava za<br>posao",
     "products": "Proizvodi",
     "powderDetergent": "Prašak za pranje",
     "liquidDetergent": "Tekuće sredstvo za pranje",
@@ -87,27 +87,32 @@
     "powderDetergent": {
       "title": "Prašak za pranje",
       "description": "Molekularna moć duboko u vlaknima: Ais-ova zaštitna tehnologija praška izvodi čišćenje izvan površine i u srce tkanine. Razlaže najteže mrlje na molekularnoj razini bez kompromitiranja integriteta vlakana, ostavljajući vidljivu čistoću i obnovljenu mekoću. Profesionalna moć pranja sada je novi standard vašeg doma.",
-      "getQuote": "Zatraži ponudu"
+      "getQuote": "Zatraži ponudu",
+      "privateLabelNote": "*Nudimo rješenja za privatnu marku za cijeli naš asortiman proizvoda, prilagođena vašim željenim formulama i vrstama pakiranja."
     },
     "liquidDetergent": {
       "title": "Tekuće sredstvo za pranje",
       "description": "Besprijekorna čistoća kroz dinamiku tekućine: Razvijena s naprednim proizvodnim tehnologijama, naša tekuća formula se aktivira trenutno pri kontaktu s vodom kako bi prodrela u pore tkanine. Optimizirana i za boje i za bijelo, čuva živahnost boje s laboratorijskom preciznošću. Duboko čišćenje i trajna svježina se susreću u pametnoj formuli čišćenja Ais-a.",
-      "getQuote": "Zatraži ponudu"
+      "getQuote": "Zatraži ponudu",
+      "privateLabelNote": "*Nudimo rješenja za privatnu marku za cijeli naš asortiman proizvoda, prilagođena vašim željenim formulama i vrstama pakiranja."
     },
     "wetWipe": {
       "title": "Vlažne maramice",
       "description": "Disajuća higijena za vašu kožu: Kombinirali smo meku teksturu prirode sa znanstvenom čistoćom. Naše pH-uravnotežene Ais vlažne maramice stvaraju učinak 'disajućeg čišćenja' na vašoj koži i svakoj površini koju dodirnu. S ekološkom strukturom i osvježavajućim dodirom, to je najelegantniji oblik higijene, uvijek uz vas.",
-      "getQuote": "Zatraži ponudu"
+      "getQuote": "Zatraži ponudu",
+      "privateLabelNote": "*Nudimo rješenja za privatnu marku za cijeli naš asortiman proizvoda, prilagođena vašim željenim formulama i vrstama pakiranja."
     },
     "liquidSoap": {
       "title": "Tekući sapun",
       "description": "Botanička njega i molekularni balans vlage: Više od sapuna; to je kupalište vlage za vaše ruke. Kombinirajući najčišće sastojke prirode s tehnologijom, naša formula pročišćava vašu kožu dok je hrani i obnavlja njezinu barijeru. Nudi osvježavajuće i restaurativno higijensko iskustvo koje budi vaša osjetila pri svakoj upotrebi.",
-      "getQuote": "Zatraži ponudu"
+      "getQuote": "Zatraži ponudu",
+      "privateLabelNote": "*Nudimo rješenja za privatnu marku za cijeli naš asortiman proizvoda, prilagođena vašim željenim formulama i vrstama pakiranja."
     },
     "shampoo": {
       "title": "Šampon",
       "description": "Znanstveni sjaj od korijena do vrha: Naša specijalizirana formula omogućava vlasištu da diše dok duboko pročišćava vlasi kose bez opterećenja. Optimizirana sa znanstvenim podacima, njezina hranjiva struktura štiti prirodni balans kose dok pruža zaštitni Ais sjaj. Profesionalna njega kose, u svom najčišćem obliku, sada je u vašoj kupaonici.",
-      "getQuote": "Zatraži ponudu"
+      "getQuote": "Zatraži ponudu",
+      "privateLabelNote": "*Nudimo rješenja za privatnu marku za cijeli naš asortiman proizvoda, prilagođena vašim željenim formulama i vrstama pakiranja."
     }
   },
   "privateLabel": {
@@ -125,7 +130,7 @@
       "title": "Garancija kvalitete",
       "description": "ISO i GMP certificirani standardi proizvodnje."
     },
-    "startPartnership": "Započnite partnerstvo"
+    "startPartnership": "Kontaktirajte nas"
   },
   "production": {
     "label": "Proizvodnja",
@@ -150,8 +155,8 @@
       "placeholderMessage": "Napišite vaš zahtjev ovdje..."
     },
     "factory": {
-      "title": "Tvornica i sjedište",
-      "address": "Organizirana industrijska zona 4. ulica<br>34000 Istanbul"
+      "title": "RN Tarım HQ",
+      "address": "Islamsaray Mah. 929 Sk. No: 17<br>Bergama, Izmir/TURKIYE"
     },
     "customerLine": {
       "title": "Linija za klijente",

@@ -478,10 +478,39 @@ function setupMobileMenuDelegation() {
 }
 
 
+// PDF Download Function
+function downloadCatalogPDF() {
+    const basePath = getBasePath();
+    // Add cache-busting parameter to ensure latest PDF is downloaded
+    const timestamp = new Date().getTime();
+    const pdfPath = basePath ? `${basePath}/Ais_Catalog.pdf?v=${timestamp}` : `/Ais_Catalog.pdf?v=${timestamp}`;
+    
+    // Create a temporary anchor element to trigger download
+    const link = document.createElement('a');
+    link.href = pdfPath;
+    link.download = 'Ais_Catalog.pdf';
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 // Enhanced Navigation with Scroll Offsets
 function initEnhancedNavigation() {
-    // Handle path-based navigation links (like /catalog)
-    document.querySelectorAll('a[href^="/"]').forEach(anchor => {
+    // Handle catalog PDF download links
+    document.querySelectorAll('.catalog-download-link').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            // Close mobile menu if open
+            if (mobileMenuOpen) {
+                closeMobileMenu(false);
+            }
+            downloadCatalogPDF();
+        });
+    });
+    
+    // Handle path-based navigation links (excluding catalog download links)
+    document.querySelectorAll('a[href^="/"]:not(.catalog-download-link)').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
             
@@ -490,7 +519,7 @@ function initEnhancedNavigation() {
                 closeMobileMenu(false);
             }
             
-            // Handle /catalog and other path-based routes
+            // Handle path-based routes
             if (href.startsWith('/') && !href.startsWith('//')) {
                 e.preventDefault();
                 // Navigate with base path support (GH Pages)
@@ -617,125 +646,6 @@ function initEnhancedNavigation() {
 }
 
 // Parallax Effect for Water Droplets
-window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    const droplets = document.querySelectorAll('.water-droplet');
-    
-    droplets.forEach(droplet => {
-        const speed = parseFloat(droplet.getAttribute('data-speed'));
-        // Apply translation based on scroll position and speed factor
-        // Also adding a slight easing feel by dividing scrollY
-        droplet.style.transform = `translateY(${scrollY * speed}px)`;
-    });
-});
-
-// ============================================
-// HYGIENIC BUBBLE SCROLL-LINKED ANIMATION
-// ============================================
-(function() {
-    let ticking = false;
-    
-    // Get all bubble layers
-    const bubbleLayers = document.querySelectorAll('.bubble-layer');
-    
-    // Performance-optimized scroll handler using requestAnimationFrame
-    function updateBubblePositions() {
-        const scrollY = window.scrollY;
-        
-        bubbleLayers.forEach(layer => {
-            const speed = parseFloat(layer.getAttribute('data-speed')) || -0.3;
-            const bubbles = layer.querySelectorAll('.hygienic-bubble');
-            
-            bubbles.forEach(bubble => {
-                // Calculate vertical offset based on scroll position
-                // Negative speed means bubbles move upward as user scrolls down
-                const scrollOffset = scrollY * speed;
-                
-                // Transform: translateY(var(--scroll-y)) - CSS'te tanımlı
-                // CSS custom property --scroll-y kullanılıyor
-                // Salınım animasyonu margin ile yapılıyor, transform ile çakışmıyor
-                bubble.style.setProperty('--scroll-y', `${scrollOffset}px`);
-                
-                // Doğrulama: window.scrollY * data-speed = --scroll-y
-                // Debug: İlk baloncuk için console log (sadece ilk layer'dan)
-                if (layer === bubbleLayers[0] && bubbles.length > 0 && bubble === bubbles[0]) {
-                    console.log(`Bubble Scroll - scrollY: ${scrollY}, speed: ${speed}, offset: ${scrollOffset}px`);
-                }
-            });
-        });
-        
-        ticking = false;
-    }
-    
-    // Throttled scroll handler
-    function onScroll() {
-        if (!ticking) {
-            window.requestAnimationFrame(updateBubblePositions);
-            ticking = true;
-        }
-    }
-    
-    // Initialize on page load
-    function initBubbleAnimation() {
-        if (bubbleLayers.length === 0) {
-            console.warn('Bubble layers not found!');
-            return;
-        }
-        
-        console.log(`Initialized ${bubbleLayers.length} bubble layers`);
-        
-        // Count total bubbles and apply random opacity
-        let totalBubbles = 0;
-        let smallBubbles = [];
-        
-        bubbleLayers.forEach(layer => {
-            const bubbles = layer.querySelectorAll('.hygienic-bubble');
-            totalBubbles += bubbles.length;
-            
-            bubbles.forEach(bubble => {
-                // Rastgele opacity: 0.03 ile 0.1 arası
-                const randomOpacity = 0.03 + Math.random() * 0.07; // 0.03 - 0.1
-                bubble.style.opacity = randomOpacity;
-                
-                // Küçük baloncukları topla (turuncu glow için)
-                if (bubble.classList.contains('bubble-size-sm')) {
-                    smallBubbles.push(bubble);
-                }
-            });
-        });
-        
-        console.log(`Total bubbles: ${totalBubbles}`);
-        
-        // Küçük baloncukların %5'ine turuncu glow ekle
-        const orangeGlowCount = Math.max(1, Math.floor(smallBubbles.length * 0.05));
-        const shuffled = smallBubbles.sort(() => 0.5 - Math.random());
-        for (let i = 0; i < orangeGlowCount && i < shuffled.length; i++) {
-            shuffled[i].classList.add('has-orange-glow');
-        }
-        
-        // Set initial positions
-        updateBubblePositions();
-        
-        // Listen to scroll events with passive flag for better performance
-        window.addEventListener('scroll', onScroll, { passive: true });
-        
-        // Also update on resize to recalculate positions
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                updateBubblePositions();
-            }, 100);
-        });
-    }
-    
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initBubbleAnimation);
-    } else {
-        initBubbleAnimation();
-    }
-})();
 
 // Corporate Tab Navigation
 function handleCorporateTabNavigation(hash) {
@@ -1180,6 +1090,17 @@ function initApplicationForm() {
             } else if (!/^\d+$/.test(phone)) {
                 showError(phoneError, 'Phone number can only contain digits.');
                 if (!hasErrors) phoneInput?.focus();
+                hasErrors = true;
+            }
+            
+            // Validate CV file
+            const cvInput = document.getElementById('app-cv');
+            const cvError = document.getElementById('app-cv-error');
+            if (!cvInput || !cvInput.files || cvInput.files.length === 0) {
+                if (cvError) {
+                    showError(cvError, 'CV file is required.');
+                }
+                if (!hasErrors && cvInput) cvInput.focus();
                 hasErrors = true;
             }
             
@@ -1715,9 +1636,20 @@ function setupPackagingDropdownDelegation() {
     });
 }
 
-// Parallax effect for product images (excluding right column images)
+// Parallax effect for product images (excluding right column images and mobile images)
 function initProductParallax() {
     const productImages = document.querySelectorAll('.product-image[data-parallax="true"]');
+    
+    // Check if we're on mobile (lg breakpoint is 1024px)
+    const isMobile = window.innerWidth < 1024;
+    
+    // Don't apply parallax on mobile
+    if (isMobile) {
+        productImages.forEach(img => {
+            img.style.transform = 'none';
+        });
+        return;
+    }
     
     window.addEventListener('scroll', () => {
         const scrollY = window.scrollY;
@@ -1725,6 +1657,12 @@ function initProductParallax() {
         productImages.forEach(img => {
             // Skip parallax for images in the right column (product-image-container)
             if (img.closest('.product-image-container')) {
+                img.style.transform = 'none';
+                return;
+            }
+            
+            // Skip parallax for mobile images (lg:hidden class)
+            if (img.closest('.lg\\:hidden')) {
                 img.style.transform = 'none';
                 return;
             }
@@ -1738,6 +1676,20 @@ function initProductParallax() {
                 img.style.transform = `translateY(${yPos}px)`;
             }
         });
+    });
+    
+    // Handle window resize to disable/enable parallax
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            const isMobileNow = window.innerWidth < 1024;
+            if (isMobileNow) {
+                productImages.forEach(img => {
+                    img.style.transform = 'none';
+                });
+            }
+        }, 100);
     });
 }
 
@@ -1766,8 +1718,8 @@ const contactTranslations = {
             title: 'İletişim',
             subtitle: 'Toptan satış siparişleri ve bayilik başvuruları için formu doldurun.',
             companyTagline: 'Profesyonel Temizlik Çözümleri',
-            addressTitle: 'Fabrika & Merkez',
-            addressText: 'Organize Sanayi Bölgesi 4. Cadde<br>34000 İstanbul, Türkiye',
+            addressTitle: 'RN Tarım HQ',
+            addressText: 'Islamsaray Mah. 929 Sk. No: 17<br>Bergama, Izmir/TURKIYE',
             phoneTitle: 'Telefon',
             emailTitle: 'E-posta',
             form: {
@@ -1807,8 +1759,8 @@ const contactTranslations = {
             title: 'Contact Us',
             subtitle: 'Fill out the form for wholesale orders and dealership applications.',
             companyTagline: 'Professional Cleaning Solutions',
-            addressTitle: 'Factory & Headquarters',
-            addressText: 'Organized Industrial Zone 4th Street<br>34000 Istanbul, Turkey',
+            addressTitle: 'RN Tarım HQ',
+            addressText: 'Islamsaray Mah. 929 Sk. No: 17<br>Bergama, Izmir/TURKIYE',
             phoneTitle: 'Phone',
             emailTitle: 'Email',
             form: {
@@ -2208,6 +2160,72 @@ function initContactForm() {
             if (formSuccess) formSuccess.classList.add('hidden');
             if (formError) formError.classList.add('hidden');
             
+            // Validate form fields before submission
+            const name = nameInput?.value.trim() || '';
+            const email = emailInput?.value.trim() || '';
+            const phone = phoneInput?.value.trim() || '';
+            const message = messageInput?.value.trim() || '';
+            
+            let hasErrors = false;
+            
+            // Validate name
+            if (!name) {
+                if (nameInput) {
+                    nameInput.classList.add('border-red-500');
+                    nameInput.focus();
+                }
+                hasErrors = true;
+            } else {
+                if (nameInput) nameInput.classList.remove('border-red-500');
+            }
+            
+            // Validate email
+            if (!email) {
+                if (emailInput) {
+                    emailInput.classList.add('border-red-500');
+                    if (!hasErrors) emailInput.focus();
+                }
+                hasErrors = true;
+            } else {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    if (emailInput) {
+                        emailInput.classList.add('border-red-500');
+                        if (!hasErrors) emailInput.focus();
+                    }
+                    hasErrors = true;
+                } else {
+                    if (emailInput) emailInput.classList.remove('border-red-500');
+                }
+            }
+            
+            // Validate phone
+            if (!phone) {
+                if (phoneInput) {
+                    phoneInput.classList.add('border-red-500');
+                    if (!hasErrors) phoneInput.focus();
+                }
+                hasErrors = true;
+            } else {
+                if (phoneInput) phoneInput.classList.remove('border-red-500');
+            }
+            
+            // Validate message
+            if (!message) {
+                if (messageInput) {
+                    messageInput.classList.add('border-red-500');
+                    if (!hasErrors) messageInput.focus();
+                }
+                hasErrors = true;
+            } else {
+                if (messageInput) messageInput.classList.remove('border-red-500');
+            }
+            
+            // If validation fails, stop submission
+            if (hasErrors) {
+                return;
+            }
+            
             // Update marketing opt-in value before submit
             if (marketingCheckbox && marketingHidden) {
                 marketingHidden.value = marketingCheckbox.checked ? 'true' : 'false';
@@ -2269,6 +2287,153 @@ function initContactForm() {
     
     // Initialize texts based on current language
     updateContactTexts();
+}
+
+// Initialize Wholesale Contact Form
+function initWholesaleContactForm() {
+    const form = document.getElementById('contact-wholesale-form');
+    const nameInput = document.getElementById('contact-wholesale-name');
+    const emailInput = document.getElementById('contact-wholesale-email');
+    const phoneInput = document.getElementById('contact-wholesale-phone');
+    const messageInput = document.getElementById('contact-wholesale-message');
+    const nameError = document.getElementById('contact-wholesale-name-error');
+    const emailError = document.getElementById('contact-wholesale-email-error');
+    const phoneError = document.getElementById('contact-wholesale-phone-error');
+    const messageError = document.getElementById('contact-wholesale-message-error');
+    
+    function showError(errorElement, message) {
+        if (errorElement) {
+            errorElement.textContent = message;
+            errorElement.classList.remove('hidden');
+        }
+    }
+    
+    function hideError(errorElement) {
+        if (errorElement) {
+            errorElement.classList.add('hidden');
+        }
+    }
+    
+    // Clear errors on input
+    if (nameInput) {
+        nameInput.addEventListener('input', () => {
+            hideError(nameError);
+            nameInput.classList.remove('border-red-500');
+        });
+    }
+    
+    if (emailInput) {
+        emailInput.addEventListener('input', () => {
+            hideError(emailError);
+            emailInput.classList.remove('border-red-500');
+        });
+    }
+    
+    if (phoneInput) {
+        phoneInput.addEventListener('input', () => {
+            hideError(phoneError);
+            phoneInput.classList.remove('border-red-500');
+        });
+    }
+    
+    if (messageInput) {
+        messageInput.addEventListener('input', () => {
+            hideError(messageError);
+            messageInput.classList.remove('border-red-500');
+        });
+    }
+    
+    if (form) {
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Reset errors
+            hideError(nameError);
+            hideError(emailError);
+            hideError(phoneError);
+            hideError(messageError);
+            
+            // Get form values
+            const name = nameInput?.value.trim() || '';
+            const email = emailInput?.value.trim() || '';
+            const phone = phoneInput?.value.trim() || '';
+            const message = messageInput?.value.trim() || '';
+            
+            // Validate required fields
+            let hasErrors = false;
+            
+            if (!name) {
+                showError(nameError, t('contact.form.nameRequired') || 'Full name is required.');
+                if (nameInput) {
+                    nameInput.classList.add('border-red-500');
+                    nameInput.focus();
+                }
+                hasErrors = true;
+            }
+            
+            if (!email) {
+                showError(emailError, t('contact.form.emailRequired') || 'Email is required.');
+                if (emailInput) {
+                    emailInput.classList.add('border-red-500');
+                    if (!hasErrors) emailInput.focus();
+                }
+                hasErrors = true;
+            } else {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showError(emailError, t('contact.form.emailInvalid') || 'Please enter a valid email address.');
+                    if (emailInput) {
+                        emailInput.classList.add('border-red-500');
+                        if (!hasErrors) emailInput.focus();
+                    }
+                    hasErrors = true;
+                }
+            }
+            
+            if (!phone) {
+                showError(phoneError, t('contact.form.phoneRequired') || 'Phone number is required.');
+                if (phoneInput) {
+                    phoneInput.classList.add('border-red-500');
+                    if (!hasErrors) phoneInput.focus();
+                }
+                hasErrors = true;
+            }
+            
+            if (!message) {
+                showError(messageError, t('contact.form.messageRequired') || 'Message is required.');
+                if (messageInput) {
+                    messageInput.classList.add('border-red-500');
+                    if (!hasErrors) messageInput.focus();
+                }
+                hasErrors = true;
+            }
+            
+            // If validation fails, stop submission
+            if (hasErrors) {
+                return;
+            }
+            
+            // Submit form
+            try {
+                const formData = new FormData(form);
+                const response = await fetch('/', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    // Success - reset form
+                    form.reset();
+                    alert(t('contact.form.successTitle') || 'Form submitted successfully!');
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                console.error('Form submission error:', error);
+                alert(t('contact.form.errorTitle') || 'An error occurred. Please try again.');
+            }
+        });
+    }
 }
 
 // ============================================
@@ -2548,6 +2713,7 @@ function quickInit() {
     initProductsTabs();
     initProductParallax();
     initContactForm();
+    initWholesaleContactForm();
     
     // 5. İkonları bir kez daha çiz (dinamik içerik için)
     requestAnimationFrame(() => {

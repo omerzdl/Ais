@@ -4,7 +4,30 @@ import { LanguageProvider } from "./contexts/LanguageContext"
 import { Testimonial } from "@/components/ui/design-testimonial"
 import { PackagingDropdown } from "@/components/ui/packaging-dropdown"
 import { ContactForm } from "@/components/ui/contact-form"
-import { CatalogPage } from "@/pages/CatalogPage"
+
+// Helper function to detect base path (matches logic in index.html)
+function getBasePath(): string {
+  // In dev mode (localhost with port 4182), always use empty base path
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    if (window.location.port === '4182' || window.location.port === '') {
+      return ''
+    }
+  }
+  // Check if we're on GitHub Pages
+  if (window.location.hostname === 'omerzdl.github.io') {
+    return '/Ais'
+  }
+  // Check if path starts with /Ais (but not in dev mode)
+  if (window.location.pathname.startsWith('/Ais')) {
+    return '/Ais'
+  }
+  // Check if Vite's script tag has /Ais in the path (production build with base path)
+  const viteScript = document.querySelector('script[src*="/assets/"]')
+  if (viteScript && viteScript.getAttribute('src')?.includes('/Ais/')) {
+    return '/Ais'
+  }
+  return ''
+}
 
 function HomePage() {
   const [selectedPackaging, setSelectedPackaging] = useState<string>()
@@ -72,12 +95,13 @@ function HomePage() {
 }
 
 export default function App() {
+  const basePath = getBasePath()
+  
   return (
     <LanguageProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={basePath}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/catalog" element={<CatalogPage />} />
         </Routes>
       </BrowserRouter>
     </LanguageProvider>

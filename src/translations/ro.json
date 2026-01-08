@@ -3,8 +3,8 @@
     "home": "Acasă",
     "corporate": "Corporativ",
     "about": "Despre noi",
-    "missionVision": "Misiune și Viziune",
-    "jobApplication": "Aplicare pentru locuri de muncă",
+    "missionVision": "Misiune<br>și Viziune",
+    "jobApplication": "Aplicare pentru<br>locuri de muncă",
     "products": "Produse",
     "powderDetergent": "Detergent pudră",
     "liquidDetergent": "Detergent lichid",
@@ -87,27 +87,32 @@
     "powderDetergent": {
       "title": "Detergent pudră",
       "description": "Putere moleculară adânc în fibre: Tehnologia de pudră semnătură Ais aduce curățarea dincolo de suprafață și în inima țesutului. Descompune cele mai grele pete la nivel molecular fără a compromite integritatea fibrelor, lăsând în urmă o puritate vizibilă și o moliciune reînnoită. Puterea profesională de spălare este acum noul standard al casei dvs.",
-      "getQuote": "Solicită ofertă"
+      "getQuote": "Solicită ofertă",
+      "privateLabelNote": "*Oferim soluții pentru marca privată pentru întreaga noastră gamă de produse, adaptate la formulele și varietățile de ambalare preferate."
     },
     "liquidDetergent": {
       "title": "Detergent lichid",
       "description": "Curățare impecabilă prin dinamica fluidelor: Dezvoltată cu tehnologii avansate de producție, formula noastră lichidă se activează instantaneu la contactul cu apa pentru a pătrunde în porii țesutului. Optimizată atât pentru culori, cât și pentru albe, păstrează vitalitatea culorii cu precizie de laborator. Curățarea profundă și prospețimea durabilă se întâlnesc în formula inteligentă de curățare Ais.",
-      "getQuote": "Solicită ofertă"
+      "getQuote": "Solicită ofertă",
+      "privateLabelNote": "*Oferim soluții pentru marca privată pentru întreaga noastră gamă de produse, adaptate la formulele și varietățile de ambalare preferate."
     },
     "wetWipe": {
       "title": "Șervețele umede",
       "description": "Igienă respirabilă pentru pielea dvs.: Am combinat textura moale a naturii cu puritatea științifică. Șervețelele noastre umede Ais echilibrate cu pH creează un efect de 'curățare respirabilă' pe pielea dvs. și pe fiecare suprafață pe care o ating. Cu o structură prietenoasă cu mediul și un contact revigorant, este cea mai elegantă formă de igienă, întotdeauna alături de dvs.",
-      "getQuote": "Solicită ofertă"
+      "getQuote": "Solicită ofertă",
+      "privateLabelNote": "*Oferim soluții pentru marca privată pentru întreaga noastră gamă de produse, adaptate la formulele și varietățile de ambalare preferate."
     },
     "liquidSoap": {
       "title": "Săpun lichid",
       "description": "Îngrijire botanică și echilibru molecular al umidității: Mai mult decât săpun; este o baie de umiditate pentru mâinile dvs. Combinând cele mai pure ingrediente ale naturii cu tehnologia, formula noastră purifică pielea dvs. în timp ce o hrănește și îi reînnoiește bariera. Oferă o experiență de igienă revigorantă și restaurativă care vă trezește simțurile la fiecare utilizare.",
-      "getQuote": "Solicită ofertă"
+      "getQuote": "Solicită ofertă",
+      "privateLabelNote": "*Oferim soluții pentru marca privată pentru întreaga noastră gamă de produse, adaptate la formulele și varietățile de ambalare preferate."
     },
     "shampoo": {
       "title": "Șampon",
       "description": "Strălucire științifică de la rădăcină la vârf: Formula noastră specializată permite scalpului să respire în timp ce purifică profund firele de păr fără a le îngreuna. Optimizată cu date științifice, structura sa hrănitoare protejează balanța naturală a părului oferind în același timp strălucirea semnătură Ais. Îngrijirea profesională a părului, în forma sa cea mai pură, este acum în baia dvs.",
-      "getQuote": "Solicită ofertă"
+      "getQuote": "Solicită ofertă",
+      "privateLabelNote": "*Oferim soluții pentru marca privată pentru întreaga noastră gamă de produse, adaptate la formulele și varietățile de ambalare preferate."
     }
   },
   "privateLabel": {
@@ -125,7 +130,7 @@
       "title": "Asigurarea calității",
       "description": "Standarde de producție certificate ISO și GMP."
     },
-    "startPartnership": "Începeți parteneriatul"
+    "startPartnership": "Contactați-ne"
   },
   "production": {
     "label": "Producție",
@@ -150,8 +155,8 @@
       "placeholderMessage": "Scrieți cererea dvs. aici..."
     },
     "factory": {
-      "title": "Fabrica și sediul central",
-      "address": "Zona Industrială Organizată, Strada a 4-a<br>34000 Istanbul"
+      "title": "RN Tarım HQ",
+      "address": "Islamsaray Mah. 929 Sk. No: 17<br>Bergama, Izmir/TURKIYE"
     },
     "customerLine": {
       "title": "Linia pentru clienți",
