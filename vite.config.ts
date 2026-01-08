@@ -4,8 +4,10 @@ import path from 'path';
 
 export default defineConfig(({ command, mode }) => {
   // In dev mode (serve command), always use '/' as base path
-  // In build mode, use '/Ais' for production
-  const base = command === 'serve' ? '/' : (mode === 'production' ? '/Ais' : '/');
+  // In build mode, use '/Ais' for GitHub Pages, '/' for Netlify
+  // Check if NETLIFY environment variable is set (Netlify sets this automatically)
+  const isNetlify = process.env.NETLIFY === 'true' || process.env.CONTEXT === 'production';
+  const base = command === 'serve' ? '/' : (isNetlify ? '/' : (mode === 'production' ? '/Ais' : '/'));
   
   return {
     plugins: [
