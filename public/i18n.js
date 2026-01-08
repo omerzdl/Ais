@@ -31,8 +31,10 @@ function getBasePath() {
 async function loadTranslations(lang) {
     try {
         const basePath = getBasePath();
+        // Try public/translations first (production build)
         let response = await fetch(`${basePath}/translations/${lang}.json`);
         if (!response.ok) {
+            // Fallback to src/translations (development)
             response = await fetch(`${basePath}/src/translations/${lang}.json`);
         }
         if (!response || !response.ok) {
@@ -527,43 +529,25 @@ function updateLanguageSwitcher() {
 }
 
 // ============================================
-// EXPORT
+// EXPORT TO WINDOW (for non-module scripts)
 // ============================================
 
-// ES Module exports
-export {
-    t,
-    setLanguage,
-    getCurrentLanguage,
-    initLanguage,
-    updatePageContent,
-    SUPPORTED_LANGUAGES
-};
-
-// Default export (object with all functions)
-const i18n = {
-    t,
-    setLanguage,
-    getCurrentLanguage,
-    initLanguage,
-    updatePageContent,
-    SUPPORTED_LANGUAGES
-};
-
-export default i18n;
-
-// Also export to window for backward compatibility (non-module scripts)
-try {
-    window.i18n = i18n;
-    console.log('i18n module initialized successfully');
-} catch (error) {
-    console.error('Error initializing i18n module:', error);
-    window.i18n = {
-        t: (key) => key,
-        setLanguage: async () => {},
-        getCurrentLanguage: () => 'en',
-        initLanguage: async () => {},
-        updatePageContent: () => {},
-        SUPPORTED_LANGUAGES: {}
+// Export to window for backward compatibility (non-module scripts)
+// This file is loaded via <script> tag, not as ES module
+(function() {
+    'use strict';
+    
+    const i18n = {
+        t,
+        setLanguage,
+        getCurrentLanguage,
+        initLanguage,
+        updatePageContent,
+        SUPPORTED_LANGUAGES
     };
-}
+    
+    // Attach to window object
+    window.i18n = i18n;
+    
+    console.log('i18n module initialized successfully');
+})();

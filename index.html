@@ -1007,7 +1007,7 @@
             // Load static JS for home page
             // Use src/main.js directly as a module (Vite will handle it)
             const script = document.createElement('script');
-            script.src = '/src/main.js';
+            script.src = basePath ? `${basePath}/src/main.js` : '/src/main.js';
             script.type = 'module';
             document.body.appendChild(script);
         })();
