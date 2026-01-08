@@ -1007,7 +1007,7 @@
             // Load static JS for home page
             // Use public/main.js in production (copied to dist/main.js by Vite)
             // Use src/main.js in development
-            const isDevMode = window.location.port === '4182' || window.location.hostname === 'localhost';
+            // Note: isDevMode is already defined above, reusing it here
             const script = document.createElement('script');
             if (isDevMode) {
                 // Development: use src/main.js as module
