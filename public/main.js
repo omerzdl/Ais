@@ -3,8 +3,8 @@
 // Bekleme döngüleri kaldırıldı, anında çalışır
 // ============================================
 
-// Import i18n module (Single Source of Truth: src/i18n.js)
-import './i18n.js';
+// Note: i18n.js is loaded via <script> tag in index.html
+// We use window.i18n object which is set by i18n.js
 
 // ============================================
 // 🚀 HARD-WIRED LANGUAGE SELECTOR (EN TEPE - ANINDA ÇALIŞIR)

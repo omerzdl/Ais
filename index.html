@@ -1005,10 +1005,19 @@
             }
             
             // Load static JS for home page
-            // Use src/main.js directly as a module (Vite will handle it)
+            // Use public/main.js in production (copied to dist/main.js by Vite)
+            // Use src/main.js in development
+            const isDevMode = window.location.port === '4182' || window.location.hostname === 'localhost';
             const script = document.createElement('script');
-            script.src = basePath ? `${basePath}/src/main.js` : '/src/main.js';
-            script.type = 'module';
+            if (isDevMode) {
+                // Development: use src/main.js as module
+                script.src = '/src/main.js';
+                script.type = 'module';
+            } else {
+                // Production: use public/main.js (copied to dist/main.js)
+                script.src = basePath ? `${basePath}/main.js` : '/main.js';
+                script.type = 'module';
+            }
             document.body.appendChild(script);
         })();
     </script>
