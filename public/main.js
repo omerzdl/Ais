@@ -1234,7 +1234,7 @@ function handleProductNavigation(hash) {
 }
 
 function switchProduct(productId) {
-    // Remove active class from all tabs
+    // Remove active class from all tabs (both desktop and mobile)
     document.querySelectorAll('.product-tab').forEach(tab => {
         tab.classList.remove('active');
     });
@@ -1249,10 +1249,10 @@ function switchProduct(productId) {
         image.classList.add('hidden');
     });
     
-    // Update mobile custom dropdown
+    // Update mobile custom dropdown FIRST to ensure UI is updated
     updateMobileProductDropdown(productId);
     
-    // Activate selected product
+    // Activate selected product - try both desktop tabs and mobile items
     const selectedTab = document.querySelector(`[data-product="${productId}"]`);
     const selectedContent = document.getElementById(`product-content-${productId}`);
     const selectedImage = document.getElementById(`product-image-${productId}`);
@@ -1305,13 +1305,15 @@ function updateMobileProductDropdown(productId) {
         const isSelected = item.getAttribute('data-value') === productId;
         item.setAttribute('aria-selected', String(isSelected));
         
-        // Remove all state classes first
-        item.classList.remove('selected', 'bg-[#0061FF]', 'text-white', 'text-[#1A2F25]/80', 'hover:bg-[#EDF2FB]', 'hover:text-[#0061FF]');
+        // Remove all state classes first - use correct classes from HTML
+        item.classList.remove('bg-[#FF8C00]', 'text-white', 'text-[#1E293B]', 'hover:bg-[#F8FAFC]', 'hover:text-[#FF8C00]');
         
         if (isSelected) {
-            item.classList.add('selected', 'bg-[#0061FF]', 'text-white');
+            // Selected state: orange background, white text
+            item.classList.add('bg-[#FF8C00]', 'text-white');
         } else {
-            item.classList.add('text-[#1A2F25]/80', 'hover:bg-[#EDF2FB]', 'hover:text-[#0061FF]');
+            // Unselected state: default text color, hover effects
+            item.classList.add('text-[#1E293B]', 'hover:bg-[#F8FAFC]', 'hover:text-[#FF8C00]');
         }
     });
 }
