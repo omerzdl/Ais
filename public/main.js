@@ -1174,12 +1174,18 @@ function initApplicationForm() {
                 });
                 
                 if (response.ok) {
-                    // Success
+                    // Hide error message if visible
+                    if (formError) {
+                        formError.classList.add('hidden');
+                    }
+                    
+                    // Show success message
                     if (formSuccess) {
                         formSuccess.classList.remove('hidden');
+                        // Re-initialize Lucide icons for success message
                         if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                window.lucide.createIcons();
-            }
+                            window.lucide.createIcons();
+                        }
                     }
                     
                     // Reset form
@@ -1195,17 +1201,29 @@ function initApplicationForm() {
                     }
                     
                     // Scroll to success message
-                    formSuccess?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    setTimeout(() => {
+                        formSuccess?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
                 } else {
                     throw new Error('Form submission failed');
                 }
             } catch (error) {
                 console.error('Form submission error:', error);
+                // Hide success message if visible
+                if (formSuccess) {
+                    formSuccess.classList.add('hidden');
+                }
+                // Show error message
                 if (formError) {
                     formError.classList.remove('hidden');
+                    // Re-initialize Lucide icons for error message
                     if (window.lucide && typeof window.lucide.createIcons === 'function') {
-                window.lucide.createIcons();
-            }
+                        window.lucide.createIcons();
+                    }
+                    // Scroll to error message
+                    setTimeout(() => {
+                        formError?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
                 }
             } finally {
                 // Reset button state
@@ -2545,15 +2563,52 @@ function initWholesaleContactForm() {
                 });
                 
                 if (response.ok) {
-                    // Success - reset form
+                    // Hide error message if visible
+                    const formError = document.getElementById('contact-form-error');
+                    if (formError) {
+                        formError.classList.add('hidden');
+                    }
+                    
+                    // Show success message
+                    const formSuccess = document.getElementById('contact-form-success');
+                    if (formSuccess) {
+                        formSuccess.classList.remove('hidden');
+                        // Re-initialize Lucide icons for success message
+                        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                            window.lucide.createIcons();
+                        }
+                    }
+                    
+                    // Reset form
                     form.reset();
-                    alert(t('contact.form.successTitle') || 'Form submitted successfully!');
+                    
+                    // Scroll to success message
+                    setTimeout(() => {
+                        formSuccess?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
                 } else {
                     throw new Error('Form submission failed');
                 }
             } catch (error) {
                 console.error('Form submission error:', error);
-                alert(t('contact.form.errorTitle') || 'An error occurred. Please try again.');
+                // Hide success message if visible
+                const formSuccess = document.getElementById('contact-form-success');
+                if (formSuccess) {
+                    formSuccess.classList.add('hidden');
+                }
+                // Show error message
+                const formError = document.getElementById('contact-form-error');
+                if (formError) {
+                    formError.classList.remove('hidden');
+                    // Re-initialize Lucide icons for error message
+                    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                        window.lucide.createIcons();
+                    }
+                    // Scroll to error message
+                    setTimeout(() => {
+                        formError?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100);
+                }
             }
         });
     }

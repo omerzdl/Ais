@@ -76,7 +76,11 @@
         "characters": "karakter",
         "submit": "Başvuruyu Gönder",
         "submitting": "Gönderiliyor...",
-        "fileFormat": "PDF, DOC veya DOCX formatı, maksimum 10MB"
+        "fileFormat": "PDF, DOC veya DOCX formatı, maksimum 10MB",
+        "successTitle": "Başvuru Başarıyla Gönderildi!",
+        "successMessage": "Başvurunuz alınmıştır. En kısa sürede size geri dönüş sağlayacağız.",
+        "errorTitle": "Gönderim Başarısız",
+        "errorMessage": "Başvurunuz gönderilirken bir hata oluştu. Lütfen tekrar deneyin."
       }
     }
   },
@@ -151,7 +155,11 @@
       "placeholderName": "Adınız",
       "placeholderEmail": "ornek@sirket.com",
       "placeholderPhone": "Telefon Numaranız",
-      "placeholderMessage": "İsteğinizi buraya yazın..."
+      "placeholderMessage": "İsteğinizi buraya yazın...",
+      "successTitle": "Mesaj Başarıyla Gönderildi!",
+      "successMessage": "Mesajınız alınmıştır. En kısa sürede size geri dönüş sağlayacağız.",
+      "errorTitle": "Gönderim Başarısız",
+      "errorMessage": "Mesajınız gönderilirken bir hata oluştu. Lütfen tekrar deneyin."
     },
     "factory": {
       "title": "RN Tarım HQ",
