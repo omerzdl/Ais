@@ -77,7 +77,12 @@
         "characters": "znakova",
         "submit": "Pošalji prijavu",
         "submitting": "Slanje...",
-        "fileFormat": "PDF, DOC ili DOCX format, maksimum 10MB"
+        "fileFormat": "PDF, DOC ili DOCX format, maksimum 10MB",
+        "successTitle": "Prijava je uspješno poslana!",
+        "successMessage": "Vaša prijava je primljena. Javit ćemo vam se u najkraćem roku.",
+        "errorTitle": "Greška pri slanju",
+        "errorMessage": "Došlo je do greške prilikom slanja prijave. Molimo pokušajte ponovno.",
+        "kvkkRequired": "Molimo prihvatite politiku privatnosti da biste nastavili."
       }
     }
   },
@@ -152,7 +157,12 @@
       "placeholderName": "Vaše ime",
       "placeholderEmail": "primjer@tvrtka.com",
       "placeholderPhone": "Vaš broj telefona",
-      "placeholderMessage": "Napišite vaš zahtjev ovdje..."
+      "placeholderMessage": "Napišite vaš zahtjev ovdje...",
+      "successTitle": "Poruka je uspješno poslana!",
+      "successMessage": "Vaša poruka je primljena. Javit ćemo vam se u najkraćem roku.",
+      "errorTitle": "Greška pri slanju",
+      "errorMessage": "Došlo je do greške prilikom slanja poruke. Molimo pokušajte ponovno.",
+      "kvkkRequired": "Molimo prihvatite politiku privatnosti da biste nastavili."
     },
     "factory": {
       "title": "RN Tarım HQ",

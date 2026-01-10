@@ -77,7 +77,12 @@
         "characters": "caractere",
         "submit": "Trimite aplicația",
         "submitting": "Se trimite...",
-        "fileFormat": "Format PDF, DOC sau DOCX, maxim 10MB"
+        "fileFormat": "Format PDF, DOC sau DOCX, maxim 10MB",
+        "successTitle": "Aplicația a fost trimisă cu succes!",
+        "successMessage": "Aplicația dvs. a fost primită. Vă vom contacta în cel mai scurt timp.",
+        "errorTitle": "Trimitere eșuată",
+        "errorMessage": "A apărut o eroare la trimiterea aplicației. Vă rugăm să încercați din nou.",
+        "kvkkRequired": "Vă rugăm să acceptați politica de confidențialitate pentru a continua."
       }
     }
   },
@@ -152,7 +157,12 @@
       "placeholderName": "Numele dvs.",
       "placeholderEmail": "exemplu@companie.com",
       "placeholderPhone": "Numărul dvs. de telefon",
-      "placeholderMessage": "Scrieți cererea dvs. aici..."
+      "placeholderMessage": "Scrieți cererea dvs. aici...",
+      "successTitle": "Mesajul a fost trimis cu succes!",
+      "successMessage": "Mesajul dvs. a fost primit. Vă vom contacta în cel mai scurt timp.",
+      "errorTitle": "Trimitere eșuată",
+      "errorMessage": "A apărut o eroare la trimiterea mesajului. Vă rugăm să încercați din nou.",
+      "kvkkRequired": "Vă rugăm să acceptați politica de confidențialitate pentru a continua."
     },
     "factory": {
       "title": "RN Tarım HQ",
