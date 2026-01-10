@@ -2073,9 +2073,13 @@ let kvkkModalTrigger = null;
 
 function openKvkkModal(event) {
     if (event) {
-        event.preventDefault();
+        // Only call preventDefault if it's a real event object
+        if (typeof event.preventDefault === 'function') {
+            event.preventDefault();
+        }
         // Store the element that triggered the modal (for focus return)
-        kvkkModalTrigger = event.target.closest('button, a, [data-link-id]') || event.target;
+        // event.target might be a synthetic target, so use it directly if available
+        kvkkModalTrigger = event.target || (event.currentTarget ? event.currentTarget.closest('button, a, [data-link-id]') : null);
     }
     
     // Try both ID formats: kvkk-modal and kvkkModal
