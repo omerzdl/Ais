@@ -1138,8 +1138,6 @@ function initApplicationForm() {
             }
             
             // Validate CV file
-            const cvInput = document.getElementById('app-cv');
-            const cvError = document.getElementById('app-cv-error');
             if (!cvInput || !cvInput.files || cvInput.files.length === 0) {
                 if (cvError) {
                     showError(cvError, 'CV file is required.');
