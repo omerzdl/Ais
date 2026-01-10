@@ -168,6 +168,39 @@ section[id] {
 }
 
 
+/* Form input error state - red neon border effect */
+.glass-input.error,
+input.error,
+textarea.error,
+select.error {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2), 0 0 8px rgba(239, 68, 68, 0.3) !important;
+    animation: errorPulse 1.5s ease-in-out;
+}
+
+@keyframes errorPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2), 0 0 8px rgba(239, 68, 68, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.4), 0 0 12px rgba(239, 68, 68, 0.5);
+    }
+}
+
+/* Checkbox error state */
+input[type="checkbox"].error {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2), 0 0 8px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Label/Button wrapper error state (for file upload) */
+label.error,
+label.error .glassmorphism-button {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2), 0 0 8px rgba(239, 68, 68, 0.3) !important;
+    animation: errorPulse 1.5s ease-in-out;
+}
+
 .glass-input {
     background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(4px);

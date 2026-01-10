@@ -917,64 +917,62 @@ function initApplicationForm() {
     const formSuccess = document.getElementById('app-form-success');
     const formError = document.getElementById('app-form-error');
     
-    // Helper functions to show/hide errors
-    function showError(element, message) {
-        if (element) {
-            element.textContent = message;
-            element.classList.remove('hidden');
+    // Helper functions to show/hide errors - using border effects instead of messages
+    function showError(inputElement) {
+        if (inputElement) {
+            inputElement.classList.add('error');
         }
     }
     
-    function hideError(element) {
-        if (element) {
-            element.textContent = '';
-            element.classList.add('hidden');
+    function hideError(inputElement) {
+        if (inputElement) {
+            inputElement.classList.remove('error');
         }
     }
     
     // ========================================
-    // NAME INPUT VALIDATION
+    // NAME INPUT VALIDATION - Border effect only
     // ========================================
     if (nameInput) {
-        nameInput.addEventListener('invalid', function(e) {
-            e.preventDefault();
-            if (this.validity.valueMissing) {
-                showError(nameError, 'Full name is required.');
-                this.setCustomValidity('Full name is required.');
-            }
-        });
+        // Disable native validation messages
+        nameInput.setCustomValidity('');
         
         nameInput.addEventListener('input', function() {
             this.setCustomValidity('');
-            hideError(nameError);
+            hideError(nameInput);
+        });
+        
+        nameInput.addEventListener('invalid', function(e) {
+            e.preventDefault();
+            this.setCustomValidity('');
         });
     }
     
     // ========================================
-    // EMAIL INPUT VALIDATION
+    // EMAIL INPUT VALIDATION - Border effect only
     // ========================================
     if (emailInput) {
-        emailInput.addEventListener('invalid', function(e) {
-            e.preventDefault();
-            if (this.validity.valueMissing) {
-                showError(emailError, 'Email is required.');
-                this.setCustomValidity('Email is required.');
-            } else if (this.validity.typeMismatch) {
-                showError(emailError, 'Please enter a valid email address.');
-                this.setCustomValidity('Please enter a valid email address.');
-            }
-        });
+        // Disable native validation messages
+        emailInput.setCustomValidity('');
         
         emailInput.addEventListener('input', function() {
             this.setCustomValidity('');
-            hideError(emailError);
+            hideError(emailInput);
+        });
+        
+        emailInput.addEventListener('invalid', function(e) {
+            e.preventDefault();
+            this.setCustomValidity('');
         });
     }
     
     // ========================================
-    // PHONE INPUT - ONLY NUMBERS
+    // PHONE INPUT - ONLY NUMBERS - Border effect only
     // ========================================
     if (phoneInput) {
+        // Disable native validation messages
+        phoneInput.setCustomValidity('');
+        
         phoneInput.addEventListener('input', function(e) {
             // Remove all non-digit characters
             const cleaned = this.value.replace(/\D/g, '');
@@ -982,18 +980,12 @@ function initApplicationForm() {
                 this.value = cleaned;
             }
             this.setCustomValidity('');
-            hideError(phoneError);
+            hideError(phoneInput);
         });
         
         phoneInput.addEventListener('invalid', function(e) {
             e.preventDefault();
-            if (this.validity.valueMissing) {
-                showError(phoneError, 'Phone number is required.');
-                this.setCustomValidity('Phone number is required.');
-            } else if (this.validity.patternMismatch) {
-                showError(phoneError, 'Phone number can only contain digits.');
-                this.setCustomValidity('Phone number can only contain digits.');
-            }
+            this.setCustomValidity('');
         });
         
         // Prevent non-numeric key presses
@@ -1008,6 +1000,9 @@ function initApplicationForm() {
     // CV FILE UPLOAD
     // ========================================
     if (cvInput) {
+        // Disable native validation messages
+        cvInput.setCustomValidity('');
+        
         cvInput.addEventListener('change', function() {
             const file = this.files[0];
             const maxSize = 10 * 1024 * 1024; // 10MB
@@ -1018,7 +1013,7 @@ function initApplicationForm() {
             if (file) {
                 // File size validation
                 if (file.size > maxSize) {
-                    showError(cvError, 'File size cannot exceed 10MB.');
+                    showError(cvLabel); // Apply error to the label/button wrapper
                     this.value = '';
                     if (cvText) {
                         cvText.textContent = '';
@@ -1036,7 +1031,7 @@ function initApplicationForm() {
                 const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
                 
                 if (!allowedTypes.includes(file.type) && !allowedExtensions.includes(fileExtension)) {
-                    showError(cvError, 'Only PDF, DOC or DOCX files are allowed.');
+                    showError(cvLabel); // Apply error to the label/button wrapper
                     this.value = '';
                     if (cvText) {
                         cvText.textContent = '';
@@ -1057,7 +1052,7 @@ function initApplicationForm() {
                 if (cvPlaceholder) {
                     cvPlaceholder.classList.add('hidden');
                 }
-                hideError(cvError);
+                hideError(cvLabel);
             } else {
                 // No file selected - show placeholder
                 if (cvText) {
@@ -1069,13 +1064,23 @@ function initApplicationForm() {
                 }
             }
         });
+        
+        cvInput.addEventListener('invalid', function(e) {
+            e.preventDefault();
+            this.setCustomValidity('');
+        });
     }
     
     // ========================================
     // TEXTAREA AUTO-RESIZE & CHARACTER COUNTER
     // ========================================
     if (messageTextarea) {
+        // Disable native validation messages
+        messageTextarea.setCustomValidity('');
+        
         messageTextarea.addEventListener('input', function() {
+            this.setCustomValidity('');
+            
             // Update character count
             if (charCount) {
                 charCount.textContent = this.value.length;
@@ -1085,6 +1090,49 @@ function initApplicationForm() {
             this.style.height = '48px'; // Reset to minimum
             const scrollHeight = this.scrollHeight;
             this.style.height = `${Math.max(48, scrollHeight)}px`;
+        });
+        
+        messageTextarea.addEventListener('invalid', function(e) {
+            e.preventDefault();
+            this.setCustomValidity('');
+        });
+    }
+    
+    // ========================================
+    // KVKK CHECKBOX - Disable native validation
+    // ========================================
+    const kvkkCheckbox = document.getElementById('app-kvkk');
+    if (kvkkCheckbox) {
+        // Disable native validation messages
+        kvkkCheckbox.setCustomValidity('');
+        
+        kvkkCheckbox.addEventListener('change', function() {
+            this.setCustomValidity('');
+            hideError(this);
+        });
+        
+        kvkkCheckbox.addEventListener('invalid', function(e) {
+            e.preventDefault();
+            this.setCustomValidity('');
+        });
+    }
+    
+    // ========================================
+    // KVKK CHECKBOX - Disable native validation
+    // ========================================
+    const kvkkCheckbox = document.getElementById('app-kvkk');
+    if (kvkkCheckbox) {
+        // Disable native validation messages
+        kvkkCheckbox.setCustomValidity('');
+        
+        kvkkCheckbox.addEventListener('change', function() {
+            this.setCustomValidity('');
+            hideError(this);
+        });
+        
+        kvkkCheckbox.addEventListener('invalid', function(e) {
+            e.preventDefault();
+            this.setCustomValidity('');
         });
     }
     
@@ -1099,11 +1147,12 @@ function initApplicationForm() {
             if (formSuccess) formSuccess.classList.add('hidden');
             if (formError) formError.classList.add('hidden');
             
-            // Reset all field errors
-            hideError(nameError);
-            hideError(emailError);
-            hideError(phoneError);
-            hideError(cvError);
+            // Reset all field errors (border effects)
+            hideError(nameInput);
+            hideError(emailInput);
+            hideError(phoneInput);
+            hideError(cvInput);
+            hideError(document.getElementById('app-kvkk'));
             
             // Get form values
             const name = nameInput?.value.trim() || '';
@@ -1114,65 +1163,50 @@ function initApplicationForm() {
             let hasErrors = false;
             
             if (!name) {
-                showError(nameError, 'Full name is required.');
+                showError(nameInput);
                 nameInput?.focus();
                 hasErrors = true;
             }
             
             if (!email) {
-                showError(emailError, 'Email is required.');
+                showError(emailInput);
                 if (!hasErrors) emailInput?.focus();
                 hasErrors = true;
             } else {
                 // Email format validation
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
-                    showError(emailError, 'Please enter a valid email address.');
+                    showError(emailInput);
                     if (!hasErrors) emailInput?.focus();
                     hasErrors = true;
                 }
             }
             
             if (!phone) {
-                showError(phoneError, 'Phone number is required.');
+                showError(phoneInput);
                 if (!hasErrors) phoneInput?.focus();
                 hasErrors = true;
             } else if (!/^\d+$/.test(phone)) {
-                showError(phoneError, 'Phone number can only contain digits.');
+                showError(phoneInput);
                 if (!hasErrors) phoneInput?.focus();
                 hasErrors = true;
             }
             
             // Validate CV file
             if (!cvInput || !cvInput.files || cvInput.files.length === 0) {
-                if (cvError) {
-                    showError(cvError, 'CV file is required.');
-                }
+                showError(cvLabel); // Apply error to the label/button wrapper
                 if (!hasErrors && cvInput) cvInput.focus();
                 hasErrors = true;
             }
             
             // Validate KVKK consent
             const kvkkCheckbox = document.getElementById('app-kvkk');
-            const kvkkError = document.getElementById('app-kvkk-error');
             if (!kvkkCheckbox || !kvkkCheckbox.checked) {
-                // Get translation function - use safe fallback
-                let errorMsg = 'Please accept the privacy policy to proceed.';
-                if (window.i18n && typeof window.i18n.t === 'function') {
-                    const translated = window.i18n.t('corporate.application.form.kvkkRequired');
-                    if (translated && translated !== 'corporate.application.form.kvkkRequired') {
-                        errorMsg = translated;
-                    }
-                }
-                if (kvkkError) {
-                    showError(kvkkError, errorMsg);
-                }
+                showError(kvkkCheckbox);
                 if (!hasErrors && kvkkCheckbox) kvkkCheckbox.focus();
                 hasErrors = true;
             } else {
-                if (kvkkError) {
-                    hideError(kvkkError);
-                }
+                hideError(kvkkCheckbox);
             }
             
             if (hasErrors) {
@@ -1190,10 +1224,29 @@ function initApplicationForm() {
                 // Create FormData for file upload
                 const formData = new FormData(form);
                 
+                // Ensure form-name is set for Netlify (required for file uploads)
+                if (!formData.has('form-name')) {
+                    formData.append('form-name', 'job-application');
+                }
+                
+                // Verify file is included in FormData
+                const cvFile = cvInput?.files?.[0];
+                if (cvFile) {
+                    // Ensure file is in FormData with correct name
+                    if (!formData.has('cv')) {
+                        formData.append('cv', cvFile);
+                    }
+                    console.log('CV file ready for upload:', cvFile.name, cvFile.size, 'bytes');
+                } else {
+                    console.warn('No CV file found in form');
+                }
+                
                 // Submit to Netlify
+                // Note: Netlify automatically handles file uploads and includes file links in email notifications
                 const response = await fetch('/', {
                     method: 'POST',
                     body: formData
+                    // Don't set Content-Type header - browser will set it automatically with boundary for multipart/form-data
                 });
                 
                 if (response.ok) {
@@ -2494,45 +2547,82 @@ function initWholesaleContactForm() {
     const phoneError = document.getElementById('contact-wholesale-phone-error');
     const messageError = document.getElementById('contact-wholesale-message-error');
     
-    function showError(errorElement, message) {
-        if (errorElement) {
-            errorElement.textContent = message;
-            errorElement.classList.remove('hidden');
+    // Helper functions - using border effects instead of messages
+    function showError(inputElement) {
+        if (inputElement) {
+            inputElement.classList.add('error');
         }
     }
     
-    function hideError(errorElement) {
-        if (errorElement) {
-            errorElement.classList.add('hidden');
+    function hideError(inputElement) {
+        if (inputElement) {
+            inputElement.classList.remove('error');
         }
     }
     
-    // Clear errors on input
+    // Clear errors on input and disable native validation messages
     if (nameInput) {
+        nameInput.setCustomValidity('');
         nameInput.addEventListener('input', () => {
-            hideError(nameError);
-            nameInput.classList.remove('border-red-500');
+            nameInput.setCustomValidity('');
+            hideError(nameInput);
+        });
+        nameInput.addEventListener('invalid', (e) => {
+            e.preventDefault();
+            nameInput.setCustomValidity('');
         });
     }
     
     if (emailInput) {
+        emailInput.setCustomValidity('');
         emailInput.addEventListener('input', () => {
-            hideError(emailError);
-            emailInput.classList.remove('border-red-500');
+            emailInput.setCustomValidity('');
+            hideError(emailInput);
+        });
+        emailInput.addEventListener('invalid', (e) => {
+            e.preventDefault();
+            emailInput.setCustomValidity('');
         });
     }
     
     if (phoneInput) {
+        phoneInput.setCustomValidity('');
         phoneInput.addEventListener('input', () => {
-            hideError(phoneError);
-            phoneInput.classList.remove('border-red-500');
+            phoneInput.setCustomValidity('');
+            hideError(phoneInput);
+        });
+        phoneInput.addEventListener('invalid', (e) => {
+            e.preventDefault();
+            phoneInput.setCustomValidity('');
         });
     }
     
     if (messageInput) {
+        messageInput.setCustomValidity('');
         messageInput.addEventListener('input', () => {
-            hideError(messageError);
-            messageInput.classList.remove('border-red-500');
+            messageInput.setCustomValidity('');
+            hideError(messageInput);
+        });
+        messageInput.addEventListener('invalid', (e) => {
+            e.preventDefault();
+            messageInput.setCustomValidity('');
+        });
+    }
+    
+    // KVKK checkbox - Disable native validation
+    const kvkkCheckbox = document.getElementById('contact-wholesale-kvkk');
+    if (kvkkCheckbox) {
+        // Disable native validation messages
+        kvkkCheckbox.setCustomValidity('');
+        
+        kvkkCheckbox.addEventListener('change', () => {
+            kvkkCheckbox.setCustomValidity('');
+            hideError(kvkkCheckbox);
+        });
+        
+        kvkkCheckbox.addEventListener('invalid', (e) => {
+            e.preventDefault();
+            kvkkCheckbox.setCustomValidity('');
         });
     }
     
@@ -2540,11 +2630,12 @@ function initWholesaleContactForm() {
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Reset errors
-            hideError(nameError);
-            hideError(emailError);
-            hideError(phoneError);
-            hideError(messageError);
+            // Reset errors (border effects)
+            hideError(nameInput);
+            hideError(emailInput);
+            hideError(phoneInput);
+            hideError(messageInput);
+            hideError(document.getElementById('contact-wholesale-kvkk'));
             
             // Get form values
             const name = nameInput?.value.trim() || '';
@@ -2556,79 +2647,46 @@ function initWholesaleContactForm() {
             let hasErrors = false;
             
             if (!name) {
-                showError(nameError, t('contact.form.nameRequired') || 'Full name is required.');
-                if (nameInput) {
-                    nameInput.classList.add('border-red-500');
-                    nameInput.focus();
-                }
+                showError(nameInput);
+                if (nameInput) nameInput.focus();
                 hasErrors = true;
             }
             
             if (!email) {
-                showError(emailError, t('contact.form.emailRequired') || 'Email is required.');
-                if (emailInput) {
-                    emailInput.classList.add('border-red-500');
-                    if (!hasErrors) emailInput.focus();
-                }
+                showError(emailInput);
+                if (!hasErrors && emailInput) emailInput.focus();
                 hasErrors = true;
             } else {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
-                    showError(emailError, t('contact.form.emailInvalid') || 'Please enter a valid email address.');
-                    if (emailInput) {
-                        emailInput.classList.add('border-red-500');
-                        if (!hasErrors) emailInput.focus();
-                    }
+                    showError(emailInput);
+                    if (!hasErrors && emailInput) emailInput.focus();
                     hasErrors = true;
                 }
             }
             
             if (!phone) {
-                showError(phoneError, t('contact.form.phoneRequired') || 'Phone number is required.');
-                if (phoneInput) {
-                    phoneInput.classList.add('border-red-500');
-                    if (!hasErrors) phoneInput.focus();
-                }
+                showError(phoneInput);
+                if (!hasErrors && phoneInput) phoneInput.focus();
                 hasErrors = true;
             }
             
             if (!message) {
-                showError(messageError, t('contact.form.messageRequired') || 'Message is required.');
-                if (messageInput) {
-                    messageInput.classList.add('border-red-500');
-                    if (!hasErrors) messageInput.focus();
-                }
+                showError(messageInput);
+                if (!hasErrors && messageInput) messageInput.focus();
                 hasErrors = true;
             }
             
             // Validate KVKK consent
             const kvkkCheckbox = document.getElementById('contact-wholesale-kvkk');
-            const kvkkError = document.getElementById('contact-wholesale-kvkk-error');
             if (!kvkkCheckbox || !kvkkCheckbox.checked) {
-                // Get translation function - use safe fallback
-                let errorMsg = 'Please accept the privacy policy to proceed.';
-                if (window.i18n && typeof window.i18n.t === 'function') {
-                    const translated = window.i18n.t('contact.form.kvkkRequired');
-                    if (translated && translated !== 'contact.form.kvkkRequired') {
-                        errorMsg = translated;
-                    }
-                } else if (typeof t === 'function') {
-                    const translated = t('contact.form.kvkkRequired');
-                    if (translated && translated !== 'contact.form.kvkkRequired') {
-                        errorMsg = translated;
-                    }
-                }
-                if (kvkkError) {
-                    showError(kvkkError, errorMsg);
-                }
+                showError(kvkkCheckbox);
                 if (!hasErrors && kvkkCheckbox) {
                     kvkkCheckbox.focus();
                 }
                 hasErrors = true;
             } else {
-                if (kvkkError) {
-                    hideError(kvkkError);
-                }
+                hideError(kvkkCheckbox);
             }
             
             // If validation fails, stop submission

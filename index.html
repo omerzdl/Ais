@@ -350,7 +350,7 @@
                     </div>
 
                     <!-- Application Form -->
-                    <form id="application-form" name="job-application" netlify netlify-honeypot="bot-field" data-netlify="true" class="text-left max-w-2xl mx-auto space-y-6">
+                    <form id="application-form" name="job-application" netlify netlify-honeypot="bot-field" data-netlify="true" enctype="multipart/form-data" novalidate class="text-left max-w-2xl mx-auto space-y-6">
                         <input type="hidden" name="form-name" value="job-application">
                         <p class="hidden">
                             <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -406,7 +406,6 @@
                             <label for="app-kvkk" class="text-sm text-[#1E293B] leading-relaxed cursor-pointer" data-i18n-html="kvkk.consent" data-link-id="app-kvkk-link">
                             </label>
                         </div>
-                        <p id="app-kvkk-error" class="text-xs text-red-500 mt-1 hidden"></p>
 
                         <div class="pt-4">
                             <button type="submit" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-full glassmorphism-button-blue">
@@ -863,7 +862,7 @@
                     <h2 class="text-4xl font-subheading font-bold tracking-tight mb-2 antialiased bg-gradient-to-b from-[#4DA8DA] to-[#003399] bg-clip-text text-transparent" data-i18n="contact.title">Contact Us</h2>
                     <p class="text-[#64748B] mb-10 text-lg font-sans font-normal" data-i18n="contact.subtitle">Fill out the form for wholesale orders and dealership applications.</p>
 
-                    <form id="contact-wholesale-form" name="contact" netlify netlify-honeypot="bot-field" data-netlify="true" class="space-y-6">
+                    <form id="contact-wholesale-form" name="contact" netlify netlify-honeypot="bot-field" data-netlify="true" novalidate class="space-y-6">
                         <input type="hidden" name="form-name" value="contact">
                         <p class="hidden">
                             <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -905,7 +904,6 @@
                             <label for="contact-wholesale-kvkk" class="text-sm text-[#1E293B] leading-relaxed cursor-pointer" data-i18n-html="kvkk.consent" data-link-id="contact-wholesale-kvkk-link">
                             </label>
                         </div>
-                        <p id="contact-wholesale-kvkk-error" class="text-xs text-red-500 mt-1 hidden"></p>
 
                         <button type="submit" class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-full glassmorphism-button-blue flex justify-center items-center gap-2">
                             <span data-i18n="contact.form.send">Send</span>
