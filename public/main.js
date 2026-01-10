@@ -2050,31 +2050,78 @@ function updateContactTexts() {
 }
 
 // KVKK Modal Functions - Make them globally available
+// Store the element that opened the modal for focus management
+let kvkkModalTrigger = null;
+
 function openKvkkModal(event) {
-    if (event) event.preventDefault();
+    if (event) {
+        event.preventDefault();
+        // Store the element that triggered the modal (for focus return)
+        kvkkModalTrigger = event.target.closest('button, a, [data-link-id]') || event.target;
+    }
+    
     // Try both ID formats: kvkk-modal and kvkkModal
     const kvkkModal = document.getElementById('kvkk-modal') || document.getElementById('kvkkModal');
-    if (kvkkModal) {
-        kvkkModal.classList.remove('hidden');
-        kvkkModal.classList.add('flex'); // Add flex for centering
-        kvkkModal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        
-        // Re-initialize Lucide icons
-        if (window.lucide && typeof window.lucide.createIcons === 'function') {
-            window.lucide.createIcons();
-        }
+    if (!kvkkModal) return;
+    
+    // Step 1: Set aria-hidden to false FIRST (before making visible)
+    kvkkModal.setAttribute('aria-hidden', 'false');
+    
+    // Step 2: Make modal visible
+    kvkkModal.classList.remove('hidden');
+    kvkkModal.classList.add('flex'); // Add flex for centering
+    
+    // Step 3: Prevent body scroll
+    document.body.style.overflow = 'hidden';
+    
+    // Step 4: Re-initialize Lucide icons (needed for close button icon)
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
     }
+    
+    // Step 5: Set focus to first focusable element in modal (close button or accept button)
+    // Use requestAnimationFrame to ensure DOM is fully updated
+    requestAnimationFrame(() => {
+        const firstFocusable = kvkkModal.querySelector(
+            'button[onclick*="closeKvkkModal"], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (firstFocusable) {
+            firstFocusable.focus();
+        } else {
+            // Fallback: focus the modal container itself
+            kvkkModal.setAttribute('tabindex', '-1');
+            kvkkModal.focus();
+        }
+    });
 }
 
 function closeKvkkModal() {
     // Try both ID formats: kvkk-modal and kvkkModal
     const kvkkModal = document.getElementById('kvkk-modal') || document.getElementById('kvkkModal');
-    if (kvkkModal) {
-        kvkkModal.classList.add('hidden');
-        kvkkModal.classList.remove('flex');
-        kvkkModal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
+    if (!kvkkModal) return;
+    
+    // Step 1: Return focus to the element that opened the modal
+    if (kvkkModalTrigger && typeof kvkkModalTrigger.focus === 'function') {
+        // Use requestAnimationFrame to ensure focus happens before modal is hidden
+        requestAnimationFrame(() => {
+            kvkkModalTrigger.focus();
+            kvkkModalTrigger = null;
+        });
+    }
+    
+    // Step 2: Set aria-hidden to true (before hiding)
+    kvkkModal.setAttribute('aria-hidden', 'true');
+    
+    // Step 3: Hide modal
+    kvkkModal.classList.add('hidden');
+    kvkkModal.classList.remove('flex');
+    
+    // Step 4: Restore body scroll
+    document.body.style.overflow = '';
+    
+    // Step 5: Remove tabindex if it was added
+    if (kvkkModal.hasAttribute('tabindex')) {
+        kvkkModal.removeAttribute('tabindex');
     }
 }
 
@@ -2640,7 +2687,9 @@ function setupContactFormDelegation() {
         if (kvkkLink) {
             e.preventDefault();
             e.stopPropagation();
-            openKvkkModal(e);
+            // Create a synthetic event with the correct target for focus management
+            const syntheticEvent = { ...e, target: kvkkLink };
+            openKvkkModal(syntheticEvent);
             return;
         }
         
@@ -2651,7 +2700,9 @@ function setupContactFormDelegation() {
             if (linkId === 'kvkkLink' || linkId === 'app-kvkk-link' || linkId === 'contact-wholesale-kvkk-link') {
                 e.preventDefault();
                 e.stopPropagation();
-                openKvkkModal(e);
+                // Create a synthetic event with the correct target for focus management
+                const syntheticEvent = { ...e, target: linkElement };
+                openKvkkModal(syntheticEvent);
                 return;
             }
         }
@@ -2663,7 +2714,9 @@ function setupContactFormDelegation() {
             if (parentId === 'kvkkLink' || parentId === 'app-kvkk-link' || parentId === 'contact-wholesale-kvkk-link') {
                 e.preventDefault();
                 e.stopPropagation();
-                openKvkkModal(e);
+                // Create a synthetic event with the correct target for focus management
+                const syntheticEvent = { ...e, target: parentLink };
+                openKvkkModal(syntheticEvent);
                 return;
             }
         }
