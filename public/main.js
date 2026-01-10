@@ -3,6 +3,59 @@
 // Bekleme döngüleri kaldırıldı, anında çalışır
 // ============================================
 
+// ============================================
+// ICON INITIALIZATION - Define early so Lucide can call it
+// ============================================
+// Smart Icon Loader (Akıllı ve Güvenli Retry)
+let iconRetryInterval = null;
+let iconRetryAttempts = 0;
+
+const initIcons = () => {
+    // Lucide hazırsa hemen çiz
+    if (typeof window !== 'undefined' && window.lucide && typeof window.lucide.createIcons === 'function') {
+        try {
+            window.lucide.createIcons();
+            // Başarılıysa varsa açık interval'i temizle
+            if (iconRetryInterval) {
+                clearInterval(iconRetryInterval);
+                iconRetryInterval = null;
+                iconRetryAttempts = 0;
+            }
+            console.log('[Init] Lucide icons created');
+        } catch (e) {
+            console.warn('[Init] Error creating icons:', e);
+        }
+        return;
+    }
+    
+    // Lucide yoksa kontrollü polling: max 3s (30 * 100ms)
+    if (iconRetryInterval) return; // Halihazırda polling yapılıyorsa tekrar başlatma
+    
+    iconRetryAttempts = 0;
+    iconRetryInterval = setInterval(() => {
+        iconRetryAttempts++;
+        
+        if (typeof window !== 'undefined' && window.lucide && typeof window.lucide.createIcons === 'function') {
+            try {
+                window.lucide.createIcons();
+                console.log('[Init] Lucide icons created after retry');
+            } catch (e) {
+                console.warn('[Init] Error creating icons during retry:', e);
+            }
+            clearInterval(iconRetryInterval);
+            iconRetryInterval = null;
+            iconRetryAttempts = 0;
+        } else if (iconRetryAttempts >= 30) { // 30 * 100ms = 3 saniye
+            clearInterval(iconRetryInterval);
+            iconRetryInterval = null;
+            console.warn('Lucide icons could not be loaded.');
+        }
+    }, 100);
+};
+
+// Make initIcons globally available immediately
+window.initIcons = initIcons;
+
 // Load Lucide and GSAP dynamically from CDN in production
 (async function loadLucideAndGSAP() {
     // Try to load Lucide and GSAP from CDN
@@ -3023,54 +3076,8 @@ if (typeof window !== 'undefined') {
 // ============================================
 // 🚀 HIZLI BAŞLATMA - BEKLEMESİZ
 // waitForLucide döngüleri KALDIRILDI
+// initIcons fonksiyonu yukarıda tanımlandı (satır 13)
 // ============================================
-
-// Smart Icon Loader (Akıllı ve Güvenli Retry)
-let iconRetryInterval = null;
-let iconRetryAttempts = 0;
-
-const initIcons = () => {
-    // Lucide hazırsa hemen çiz
-    if (typeof window !== 'undefined' && window.lucide && typeof window.lucide.createIcons === 'function') {
-        try {
-            window.lucide.createIcons();
-            // Başarılıysa varsa açık interval'i temizle
-            if (iconRetryInterval) {
-                clearInterval(iconRetryInterval);
-                iconRetryInterval = null;
-                iconRetryAttempts = 0;
-            }
-            console.log('[Init] Lucide icons created');
-        } catch (e) {
-            console.warn('[Init] Error creating icons:', e);
-        }
-        return;
-    }
-    
-    // Lucide yoksa kontrollü polling: max 3s (30 * 100ms)
-    if (iconRetryInterval) return; // Halihazırda polling yapılıyorsa tekrar başlatma
-    
-    iconRetryAttempts = 0;
-    iconRetryInterval = setInterval(() => {
-        iconRetryAttempts++;
-        
-        if (typeof window !== 'undefined' && window.lucide && typeof window.lucide.createIcons === 'function') {
-            try {
-                window.lucide.createIcons();
-                console.log('[Init] Lucide icons created after retry');
-            } catch (e) {
-                console.warn('[Init] Error creating icons during retry:', e);
-            }
-            clearInterval(iconRetryInterval);
-            iconRetryInterval = null;
-            iconRetryAttempts = 0;
-        } else if (iconRetryAttempts >= 30) { // 30 * 100ms = 3 saniye
-            clearInterval(iconRetryInterval);
-            iconRetryInterval = null;
-            console.warn('Lucide icons could not be loaded.');
-        }
-    }, 100);
-};
 
 // Ana başlatma fonksiyonu - senkron ve hızlı
 function quickInit() {
@@ -3122,7 +3129,4 @@ if (document.readyState === 'loading') {
 
 // Window load'da son bir ikon kontrolü
 window.addEventListener('load', initIcons);
-
-// Make initIcons globally available for Lucide loader
-window.initIcons = initIcons;
 
