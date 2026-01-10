@@ -676,7 +676,13 @@ function initEnhancedNavigation() {
                 return;
             }
             
-            // Default smooth scroll
+            // Default smooth scroll - skip if href is just '#'
+            if (href === '#') {
+                // Just prevent default, don't try to scroll
+                e.preventDefault();
+                return;
+            }
+            
             e.preventDefault();
             const target = document.querySelector(href);
             if (target) {
