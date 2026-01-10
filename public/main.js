@@ -387,7 +387,9 @@ function toggleMobileMenu() {
         // Change icon to X
         if (menuIcon) {
             menuIcon.setAttribute('data-lucide', 'x');
-            lucide.createIcons();
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
         }
         
         // Close on backdrop click
@@ -429,7 +431,9 @@ function closeMobileMenu(restoreScroll = true) {
     // Change icon back to menu
     if (menuIcon) {
         menuIcon.setAttribute('data-lucide', 'menu');
-        lucide.createIcons();
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+        }
     }
     
     // Close all mobile dropdowns
@@ -741,7 +745,9 @@ function switchTab(tabId) {
         
         // Re-initialize Lucide icons for the new content
         if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
         }
         
         // Update URL hash without triggering scroll
@@ -1167,7 +1173,9 @@ function initApplicationForm() {
                     // Success
                     if (formSuccess) {
                         formSuccess.classList.remove('hidden');
-                        lucide.createIcons();
+                        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
                     }
                     
                     // Reset form
@@ -1191,7 +1199,9 @@ function initApplicationForm() {
                 console.error('Form submission error:', error);
                 if (formError) {
                     formError.classList.remove('hidden');
-                    lucide.createIcons();
+                    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
                 }
             } finally {
                 // Reset button state
@@ -1264,7 +1274,9 @@ function switchProduct(productId) {
         }
         
         // Re-initialize icons
-        lucide.createIcons();
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+        }
         
         // Packaging dropdowns are now handled via event delegation
         // No need to re-initialize them here
@@ -1543,7 +1555,9 @@ function openMobileProductDropdown() {
     
     // Re-initialize icons
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+        }
     }
 }
 
@@ -1609,7 +1623,9 @@ function setupPackagingDropdownDelegation() {
             
             // Re-initialize icons
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
             }
             return;
         }
@@ -1647,7 +1663,9 @@ function setupPackagingDropdownDelegation() {
             
             // Re-initialize icons
             if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
+                if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
             }
             return;
         }
@@ -2025,29 +2043,39 @@ function updateContactTexts() {
     }
 }
 
-// KVKK Modal Functions
+// KVKK Modal Functions - Make them globally available
 function openKvkkModal(event) {
     if (event) event.preventDefault();
-    const kvkkModal = document.getElementById('kvkkModal');
+    // Try both ID formats: kvkk-modal and kvkkModal
+    const kvkkModal = document.getElementById('kvkk-modal') || document.getElementById('kvkkModal');
     if (kvkkModal) {
         kvkkModal.classList.remove('hidden');
+        kvkkModal.classList.add('flex'); // Add flex for centering
         kvkkModal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
         
         // Re-initialize Lucide icons
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
         }
     }
 }
 
 function closeKvkkModal() {
-    const kvkkModal = document.getElementById('kvkkModal');
+    // Try both ID formats: kvkk-modal and kvkkModal
+    const kvkkModal = document.getElementById('kvkk-modal') || document.getElementById('kvkkModal');
     if (kvkkModal) {
         kvkkModal.classList.add('hidden');
+        kvkkModal.classList.remove('flex');
         kvkkModal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
     }
+}
+
+// Make functions globally available for onclick handlers
+if (typeof window !== 'undefined') {
+    window.openKvkkModal = openKvkkModal;
+    window.closeKvkkModal = closeKvkkModal;
 }
 
 // Initialize Contact Form
@@ -2064,7 +2092,7 @@ function initContactForm() {
     const formSuccess = document.getElementById('contact-form-success');
     const formError = document.getElementById('contact-form-error');
     const kvkkLink = document.getElementById('kvkkLink');
-    const kvkkModal = document.getElementById('kvkkModal');
+    const kvkkModal = document.getElementById('kvkk-modal') || document.getElementById('kvkkModal');
     const kvkkModalClose = document.getElementById('kvkkModalClose');
     const kvkkModalAccept = document.getElementById('kvkkModalAccept');
     
@@ -2291,7 +2319,9 @@ function initContactForm() {
                     if (formSuccess) {
                         formSuccess.classList.remove('hidden');
                         if (typeof lucide !== 'undefined') {
-                            lucide.createIcons();
+                            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
                         }
                     }
                     
@@ -2309,7 +2339,9 @@ function initContactForm() {
                 if (formError) {
                     formError.classList.remove('hidden');
                     if (typeof lucide !== 'undefined') {
-                        lucide.createIcons();
+                        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
                     }
                 }
             } finally {
@@ -2595,32 +2627,64 @@ let eventDelegationSetup = false;
 
 // Contact form and KVKK modal event delegation
 function setupContactFormDelegation() {
-    // KVKK link click
+    // KVKK link click - support multiple link IDs and data-link-id attributes
     document.body.addEventListener('click', (e) => {
-        const kvkkLink = e.target.closest('#kvkkLink');
+        // Check for direct KVKK link IDs
+        const kvkkLink = e.target.closest('#kvkkLink, #app-kvkk-link, #contact-wholesale-kvkk-link');
         if (kvkkLink) {
             e.preventDefault();
+            e.stopPropagation();
             openKvkkModal(e);
+            return;
+        }
+        
+        // Check for elements with data-link-id attribute that match KVKK link IDs
+        const linkElement = e.target.closest('[data-link-id]');
+        if (linkElement) {
+            const linkId = linkElement.getAttribute('data-link-id');
+            if (linkId === 'kvkkLink' || linkId === 'app-kvkk-link' || linkId === 'contact-wholesale-kvkk-link') {
+                e.preventDefault();
+                e.stopPropagation();
+                openKvkkModal(e);
+                return;
+            }
+        }
+        
+        // Check if clicked element is inside a KVKK link (for nested elements like spans inside <a>)
+        const parentLink = e.target.closest('a, button, [data-link-id]');
+        if (parentLink) {
+            const parentId = parentLink.id || parentLink.getAttribute('data-link-id');
+            if (parentId === 'kvkkLink' || parentId === 'app-kvkk-link' || parentId === 'contact-wholesale-kvkk-link') {
+                e.preventDefault();
+                e.stopPropagation();
+                openKvkkModal(e);
+                return;
+            }
         }
         
         // KVKK modal close buttons
-        const kvkkModalClose = e.target.closest('#kvkkModalClose, #kvkkModalAccept');
+        const kvkkModalClose = e.target.closest('#kvkkModalClose, #kvkkModalAccept, button[onclick*="closeKvkkModal"]');
         if (kvkkModalClose) {
             e.preventDefault();
+            e.stopPropagation();
             closeKvkkModal();
+            return;
         }
         
-        // KVKK modal backdrop click
-        const kvkkModal = e.target.closest('#kvkkModal');
-        if (kvkkModal && e.target === kvkkModal) {
+        // KVKK modal backdrop click - check both ID formats
+        const kvkkModal = e.target.closest('#kvkk-modal, #kvkkModal');
+        if (kvkkModal && (e.target === kvkkModal || e.target.classList.contains('bg-black/50') || e.target.classList.contains('backdrop-blur-sm'))) {
+            e.preventDefault();
+            e.stopPropagation();
             closeKvkkModal();
+            return;
         }
     });
     
     // Close modal on Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            const kvkkModal = document.getElementById('kvkkModal');
+            const kvkkModal = document.getElementById('kvkk-modal') || document.getElementById('kvkkModal');
             if (kvkkModal && !kvkkModal.classList.contains('hidden')) {
                 closeKvkkModal();
             }
@@ -2654,7 +2718,9 @@ function setupAllEventDelegation() {
 async function initAll() {
     // quickInit zaten çalışmış olmalı, sadece ikonları yenile
     if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
-        lucide.createIcons();
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+        }
     }
 }
 
