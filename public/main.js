@@ -1156,9 +1156,14 @@ function initApplicationForm() {
             const kvkkCheckbox = document.getElementById('app-kvkk');
             const kvkkError = document.getElementById('app-kvkk-error');
             if (!kvkkCheckbox || !kvkkCheckbox.checked) {
-                // Get translation function
-                const t = window.i18n && typeof window.i18n.t === 'function' ? window.i18n.t : (key) => key;
-                const errorMsg = t('corporate.application.form.kvkkRequired') || 'Please accept the privacy policy to proceed.';
+                // Get translation function - use safe fallback
+                let errorMsg = 'Please accept the privacy policy to proceed.';
+                if (window.i18n && typeof window.i18n.t === 'function') {
+                    const translated = window.i18n.t('corporate.application.form.kvkkRequired');
+                    if (translated && translated !== 'corporate.application.form.kvkkRequired') {
+                        errorMsg = translated;
+                    }
+                }
                 if (kvkkError) {
                     showError(kvkkError, errorMsg);
                 }
@@ -1200,6 +1205,24 @@ function initApplicationForm() {
                     // Show success message
                     if (formSuccess) {
                         formSuccess.classList.remove('hidden');
+                        
+                        // Update translations for success message elements
+                        if (window.i18n && typeof window.i18n.t === 'function') {
+                            const successElements = formSuccess.querySelectorAll('[data-i18n]');
+                            successElements.forEach(element => {
+                                const key = element.getAttribute('data-i18n');
+                                if (key) {
+                                    const translation = window.i18n.t(key);
+                                    // Only update if translation is found (not the same as key)
+                                    if (translation && translation !== key) {
+                                        // For h3 and p elements, just update text content
+                                        // They don't have icons in success messages
+                                        element.textContent = translation;
+                                    }
+                                }
+                            });
+                        }
+                        
                         // Re-initialize Lucide icons for success message
                         if (window.lucide && typeof window.lucide.createIcons === 'function') {
                             window.lucide.createIcons();
@@ -2582,7 +2605,19 @@ function initWholesaleContactForm() {
             const kvkkCheckbox = document.getElementById('contact-wholesale-kvkk');
             const kvkkError = document.getElementById('contact-wholesale-kvkk-error');
             if (!kvkkCheckbox || !kvkkCheckbox.checked) {
-                const errorMsg = t('contact.form.kvkkRequired') || 'Please accept the privacy policy to proceed.';
+                // Get translation function - use safe fallback
+                let errorMsg = 'Please accept the privacy policy to proceed.';
+                if (window.i18n && typeof window.i18n.t === 'function') {
+                    const translated = window.i18n.t('contact.form.kvkkRequired');
+                    if (translated && translated !== 'contact.form.kvkkRequired') {
+                        errorMsg = translated;
+                    }
+                } else if (typeof t === 'function') {
+                    const translated = t('contact.form.kvkkRequired');
+                    if (translated && translated !== 'contact.form.kvkkRequired') {
+                        errorMsg = translated;
+                    }
+                }
                 if (kvkkError) {
                     showError(kvkkError, errorMsg);
                 }
@@ -2620,6 +2655,24 @@ function initWholesaleContactForm() {
                     const formSuccess = document.getElementById('contact-form-success');
                     if (formSuccess) {
                         formSuccess.classList.remove('hidden');
+                        
+                        // Update translations for success message elements
+                        if (window.i18n && typeof window.i18n.t === 'function') {
+                            const successElements = formSuccess.querySelectorAll('[data-i18n]');
+                            successElements.forEach(element => {
+                                const key = element.getAttribute('data-i18n');
+                                if (key) {
+                                    const translation = window.i18n.t(key);
+                                    // Only update if translation is found (not the same as key)
+                                    if (translation && translation !== key) {
+                                        // For h3 and p elements, just update text content
+                                        // They don't have icons in success messages
+                                        element.textContent = translation;
+                                    }
+                                }
+                            });
+                        }
+                        
                         // Re-initialize Lucide icons for success message
                         if (window.lucide && typeof window.lucide.createIcons === 'function') {
                             window.lucide.createIcons();
