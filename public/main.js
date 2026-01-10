@@ -3,6 +3,36 @@
 // Bekleme döngüleri kaldırıldı, anında çalışır
 // ============================================
 
+// Import Lucide Icons and GSAP
+import { createIcons as lucideCreateIcons, icons } from 'lucide';
+import { gsap } from 'gsap';
+
+// Create a wrapper function that uses Lucide's createIcons with icons object
+function createIcons(options) {
+    // Lucide's createIcons requires an icons object
+    // If options is a string, treat it as selector
+    if (typeof options === 'string') {
+        lucideCreateIcons({ selector: options, icons });
+    } else if (options && typeof options === 'object') {
+        // If options object is provided, merge with icons
+        lucideCreateIcons({ ...options, icons });
+    } else {
+        // Default: create all icons with data-lucide attribute
+        lucideCreateIcons({ icons });
+    }
+}
+
+// Create lucide object with createIcons method for backward compatibility
+const lucide = {
+    createIcons,
+    icons
+};
+
+// Make Lucide available globally for backward compatibility
+if (typeof window !== 'undefined') {
+    window.lucide = lucide;
+}
+
 // Note: i18n.js is loaded via <script> tag in index.html
 // We use window.i18n object which is set by i18n.js
 
