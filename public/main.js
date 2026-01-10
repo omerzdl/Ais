@@ -1176,23 +1176,8 @@ function initApplicationForm() {
     }
     
     // ========================================
-    // KVKK CHECKBOX - Disable native validation
+    // FORM SUBMISSION - NETLIFY
     // ========================================
-    const kvkkCheckbox = document.getElementById('app-kvkk');
-    if (kvkkCheckbox) {
-        // Disable native validation messages
-        kvkkCheckbox.setCustomValidity('');
-        
-        kvkkCheckbox.addEventListener('change', function() {
-            this.setCustomValidity('');
-            hideError(this);
-        });
-        
-        kvkkCheckbox.addEventListener('invalid', function(e) {
-            e.preventDefault();
-            this.setCustomValidity('');
-        });
-    }
     
     // ========================================
     // FORM SUBMISSION - NETLIFY
