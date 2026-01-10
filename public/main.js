@@ -29,6 +29,11 @@
         window.gsap = gsap;
         
         console.log('[Lucide] Loaded from CDN');
+        
+        // Lucide yüklendikten sonra ikonları oluştur
+        if (typeof window.initIcons === 'function') {
+            window.initIcons();
+        }
     } catch (error) {
         console.error('[Lucide] Failed to load from CDN:', error);
         // Create stub if CDN fails
@@ -3117,4 +3122,7 @@ if (document.readyState === 'loading') {
 
 // Window load'da son bir ikon kontrolü
 window.addEventListener('load', initIcons);
+
+// Make initIcons globally available for Lucide loader
+window.initIcons = initIcons;
 
