@@ -130,7 +130,7 @@
       "title": "Asigurarea calității",
       "description": "Standarde de producție certificate ISO și GMP."
     },
-    "startPartnership": "Contactați-ne"
+    "startPartnership": "Începeți parteneriatul"
   },
   "production": {
     "label": "Producție",
@@ -160,11 +160,11 @@
     },
     "customerLine": {
       "title": "Linia pentru clienți",
-      "phone": "444 0 123"
+      "phone": "+90 538 207 66 67"
     }
   },
   "footer": {
-    "description": "Tehnologie de următoarea generație în curățare. Cele mai pure, cele mai eficiente soluții pentru casa și locul dvs. de muncă.",
+    "description": "Adâncimea Purității,<br>Noua Generație de Curățenie",
     "products": "Produse",
     "homeCleaning": "Curățenie casnică",
     "industrial": "Industrial",
@@ -177,6 +177,37 @@
     "title": "E-Catalog",
     "backToHome": "Înapoi acasă",
     "downloadPDF": "Descarcă PDF"
+  },
+  "kvkk": {
+    "consent": "Am citit și accept <a href=\"javascript:void(0)\" id=\"{{linkId}}\" class=\"underline text-[#FF8C00] hover:text-[#E67E00] transition-colors\">Politica de confidențialitate</a> privind prelucrarea datelor mele personale.",
+    "modal": {
+      "title": "Politica de confidențialitate și notificare privind protecția datelor",
+      "intro": "În conformitate cu Legea privind protecția datelor personale nr. 6698 (\"KVKK\"), ca RN Tarım (\"Companie\"), în calitatea noastră de operator de date, putem prelucra, înregistra, stoca, clasifica, actualiza datele dvs. personale în scopul descris mai jos și le putem dezvălui terților în cazurile permise de legislație, în conformitate cu legea și regulile onestității.",
+      "section1": {
+        "title": "1. Scopul prelucrării datelor personale",
+        "intro": "Datele dvs. personale colectate (Nume, Prenume, Telefon, E-mail, informații CV și conținutul mesajului);",
+        "items": [
+          "Pentru a vă oferi produsele și serviciile oferite de compania noastră,",
+          "Pentru a răspunde la solicitările dvs. când contactați compania noastră,",
+          "Pentru a evalua candidații în procesele de aplicare pentru locuri de muncă și pentru a desfășura procesele de resurse umane,",
+          "Pentru a determina și a implementa strategiile noastre comerciale și de afaceri,"
+        ],
+        "outro": "sunt prelucrate în cadrul activităților noastre comerciale."
+      },
+      "section2": {
+        "title": "2. Metoda de colectare și baza legală a datelor personale",
+        "content": "Datele dvs. personale sunt colectate electronic prin formularele de pe site-ul nostru web. Aceste date sunt prelucrate pe baza motivelor legale specificate în articolul 5 KVKK: \"încheierea sau executarea unui contract\", \"îndeplinirea obligației legale\" și \"interesele legitime ale operatorului de date cu condiția să nu prejudicieze drepturile și libertățile fundamentale ale persoanei vizate\"."
+      },
+      "section3": {
+        "title": "3. Drepturile persoanei vizate",
+        "content": "În conformitate cu articolul 11 din KVKK, persoanele vizate au dreptul să afle dacă datele lor sunt prelucrate, să solicite informații dacă sunt prelucrate, să afle scopul prelucrării și să solicite corectarea sau ștergerea datelor. Puteți să ne transmiteți solicitările dvs. prin canalele de comunicare de pe site-ul nostru web."
+      },
+      "close": "Închide"
+    }
+  },
+  "cookies": {
+    "message": "Cookie-urile sunt folosite pentru a vă asigura cea mai bună experiență de pe site-ul nostru web.",
+    "accept": "Acceptă"
   }
 }
 

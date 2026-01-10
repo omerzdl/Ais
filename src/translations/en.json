@@ -130,7 +130,7 @@
       "title": "Quality Assurance",
       "description": "ISO and GMP certified production standards."
     },
-    "startPartnership": "Contact Us"
+    "startPartnership": "Start Your Partnership"
   },
   "production": {
     "label": "Production",
@@ -160,11 +160,11 @@
     },
     "customerLine": {
       "title": "Customer Line",
-      "phone": "444 0 123"
+      "phone": "+90 538 207 66 67"
     }
   },
   "footer": {
-    "description": "Next generation technology in cleaning. The purest, most effective solutions for your home and workplace.",
+    "description": "Depth of Purity,<br>New Generation of Cleanliness",
     "products": "Products",
     "homeCleaning": "Home Cleaning",
     "industrial": "Industrial",
@@ -177,6 +177,37 @@
     "title": "E-Catalog",
     "backToHome": "Back to Home",
     "downloadPDF": "Download PDF"
+  },
+  "kvkk": {
+    "consent": "I have read and accept the <a href=\"javascript:void(0)\" id=\"{{linkId}}\" class=\"underline text-[#FF8C00] hover:text-[#E67E00] transition-colors\">Privacy Policy</a> regarding the processing of my personal data.",
+    "modal": {
+      "title": "Privacy Policy and Data Protection Notice",
+      "intro": "In accordance with the Personal Data Protection Law No. 6698 (\"KVKK\"), as RN Tarım (\"Company\"), in our capacity as data controller, we may process, record, store, classify, update your personal data within the scope of the purposes described below, and disclose them to third parties in cases permitted by the legislation, in accordance with the law and rules of honesty.",
+      "section1": {
+        "title": "1. Purpose of Processing Personal Data",
+        "intro": "Your collected personal data (Name, Surname, Phone, Email, CV information and Message content);",
+        "items": [
+          "To benefit you from the products and services offered by our company,",
+          "To respond to your requests when you contact our company,",
+          "To evaluate candidates in job application processes and to carry out human resources processes,",
+          "To determine and implement our commercial and business strategies,"
+        ],
+        "outro": "are processed within the scope of our commercial activities."
+      },
+      "section2": {
+        "title": "2. Method of Collection and Legal Basis of Personal Data",
+        "content": "Your personal data is collected electronically through the forms on our website. This data is processed based on the legal reasons specified in KVKK Article 5: \"establishment or performance of a contract\", \"fulfillment of legal obligation\" and \"legitimate interests of the data controller provided that it does not harm the fundamental rights and freedoms of the data subject\"."
+      },
+      "section3": {
+        "title": "3. Rights of the Data Subject",
+        "content": "In accordance with Article 11 of the KVKK, data subjects have the right to learn whether their data is processed, to request information if processed, to learn the purpose of processing, and to request correction or deletion of data. You can submit your requests to us through the communication channels on our website."
+      },
+      "close": "Close"
+    }
+  },
+  "cookies": {
+    "message": "Cookies are used to ensure you get the best experience from our website.",
+    "accept": "Accept"
   }
 }
 

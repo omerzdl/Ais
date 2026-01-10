@@ -3,6 +3,41 @@
 // Bekleme döngüleri kaldırıldı, anında çalışır
 // ============================================
 
+// Import Lucide Icons and GSAP
+import { createIcons as lucideCreateIcons, icons } from 'lucide';
+import { gsap } from 'gsap';
+
+// Create a wrapper function that uses Lucide's createIcons with icons object
+function createIcons(options) {
+    // Lucide's createIcons requires an icons object
+    // If options is a string, treat it as selector
+    if (typeof options === 'string') {
+        lucideCreateIcons({ selector: options, icons });
+    } else if (options && typeof options === 'object') {
+        // If options object is provided, merge with icons
+        lucideCreateIcons({ ...options, icons });
+    } else {
+        // Default: create all icons with data-lucide attribute
+        lucideCreateIcons({ icons });
+    }
+}
+
+// Create lucide object with createIcons method for backward compatibility
+const lucide = {
+    createIcons,
+    icons
+};
+
+// Make Lucide available globally for backward compatibility
+if (typeof window !== 'undefined') {
+    window.lucide = lucide;
+}
+
+// Make GSAP available globally for backward compatibility
+if (typeof window !== 'undefined') {
+    window.gsap = gsap;
+}
+
 // Note: i18n.js is loaded via <script> tag in index.html (production)
 // or imported in index.html script (development)
 // We use window.i18n object which is set by i18n.js
@@ -45,6 +80,62 @@ document.addEventListener('click', (e) => {
     `;
     document.head.appendChild(style);
 })();
+
+// ============================================
+// KVKK MODAL FUNCTIONS
+// ============================================
+function openKvkkModal(event) {
+    if (event) event.preventDefault();
+    const modal = document.getElementById('kvkk-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        // Update icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    }
+}
+
+function closeKvkkModal() {
+    const modal = document.getElementById('kvkk-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+}
+
+// Make functions globally available
+window.openKvkkModal = openKvkkModal;
+window.closeKvkkModal = closeKvkkModal;
+
+// ============================================
+// COOKIE BANNER
+// ============================================
+function initCookieBanner() {
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('cookie-accept-btn');
+    
+    // Check if user already accepted cookies
+    const cookieAccepted = localStorage.getItem('ais_cookie_accepted');
+    
+    if (!cookieAccepted && cookieBanner) {
+        cookieBanner.classList.remove('hidden');
+    }
+    
+    if (acceptBtn) {
+        acceptBtn.addEventListener('click', () => {
+            localStorage.setItem('ais_cookie_accepted', 'true');
+            if (cookieBanner) {
+                cookieBanner.classList.add('hidden');
+            }
+        });
+    }
+}
 
 // ============================================
 // GLOBAL CONSTANTS & HELPERS
@@ -863,10 +954,13 @@ function initApplicationForm() {
     const emailError = document.getElementById('app-email-error');
     const phoneInput = document.getElementById('app-phone');
     const phoneError = document.getElementById('app-phone-error');
-    const submitBtn = document.getElementById('app-submit-btn');
-    const submitText = document.getElementById('app-submit-text');
+    const submitBtn = document.querySelector('#application-form button[type="submit"]');
+    const submitText = submitBtn?.querySelector('span');
     const formSuccess = document.getElementById('app-form-success');
     const formError = document.getElementById('app-form-error');
+    const kvkkCheckbox = document.getElementById('app-kvkk');
+    const kvkkError = document.getElementById('app-kvkk-error');
+    const kvkkLink = document.getElementById('app-kvkk-link');
     
     // Helper functions to show/hide errors
     function showError(element, message) {
@@ -1101,6 +1195,15 @@ function initApplicationForm() {
                 hasErrors = true;
             }
             
+            // Validate KVKK consent
+            if (!kvkkCheckbox || !kvkkCheckbox.checked) {
+                showError(kvkkError, 'KVKK onayı gereklidir.');
+                if (!hasErrors && kvkkCheckbox) kvkkCheckbox.focus();
+                hasErrors = true;
+            } else {
+                hideError(kvkkError);
+            }
+            
             if (hasErrors) {
                 return false;
             }
@@ -1140,6 +1243,8 @@ function initApplicationForm() {
                     if (cvPlaceholder) {
                         cvPlaceholder.classList.remove('hidden');
                     }
+                    // Reset KVKK checkbox
+                    if (kvkkCheckbox) kvkkCheckbox.checked = false;
                     
                     // Scroll to success message
                     formSuccess?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1160,6 +1265,14 @@ function initApplicationForm() {
                 }
                 if (submitText) submitText.textContent = 'Submit Application';
             }
+        });
+    }
+    
+    // KVKK link click handler
+    if (kvkkLink) {
+        kvkkLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            openKvkkModal();
         });
     }
 }
@@ -1984,31 +2097,6 @@ function updateContactTexts() {
     }
 }
 
-// KVKK Modal Functions
-function openKvkkModal(event) {
-    if (event) event.preventDefault();
-    const kvkkModal = document.getElementById('kvkkModal');
-    if (kvkkModal) {
-        kvkkModal.classList.remove('hidden');
-        kvkkModal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        
-        // Re-initialize Lucide icons
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-        }
-    }
-}
-
-function closeKvkkModal() {
-    const kvkkModal = document.getElementById('kvkkModal');
-    if (kvkkModal) {
-        kvkkModal.classList.add('hidden');
-        kvkkModal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-    }
-}
-
 // Initialize Contact Form
 function initContactForm() {
     const form = document.getElementById('contactForm');
@@ -2023,7 +2111,7 @@ function initContactForm() {
     const formSuccess = document.getElementById('contact-form-success');
     const formError = document.getElementById('contact-form-error');
     const kvkkLink = document.getElementById('kvkkLink');
-    const kvkkModal = document.getElementById('kvkkModal');
+    const kvkkModal = document.getElementById('kvkk-modal');
     const kvkkModalClose = document.getElementById('kvkkModalClose');
     const kvkkModalAccept = document.getElementById('kvkkModalAccept');
     
@@ -2297,6 +2385,9 @@ function initWholesaleContactForm() {
     const emailError = document.getElementById('contact-wholesale-email-error');
     const phoneError = document.getElementById('contact-wholesale-phone-error');
     const messageError = document.getElementById('contact-wholesale-message-error');
+    const kvkkCheckbox = document.getElementById('contact-wholesale-kvkk');
+    const kvkkError = document.getElementById('contact-wholesale-kvkk-error');
+    const kvkkLink = document.getElementById('contact-wholesale-kvkk-link');
     
     function showError(errorElement, message) {
         if (errorElement) {
@@ -2349,6 +2440,7 @@ function initWholesaleContactForm() {
             hideError(emailError);
             hideError(phoneError);
             hideError(messageError);
+            hideError(kvkkError);
             
             // Get form values
             const name = nameInput?.value.trim() || '';
@@ -2405,6 +2497,13 @@ function initWholesaleContactForm() {
                 hasErrors = true;
             }
             
+            // Validate KVKK consent
+            if (!kvkkCheckbox || !kvkkCheckbox.checked) {
+                showError(kvkkError, 'KVKK onayı gereklidir.');
+                if (!hasErrors && kvkkCheckbox) kvkkCheckbox.focus();
+                hasErrors = true;
+            }
+            
             // If validation fails, stop submission
             if (hasErrors) {
                 return;
@@ -2421,6 +2520,8 @@ function initWholesaleContactForm() {
                 if (response.ok) {
                     // Success - reset form
                     form.reset();
+                    // Reset KVKK checkbox
+                    if (kvkkCheckbox) kvkkCheckbox.checked = false;
                     alert(t('contact.form.successTitle') || 'Form submitted successfully!');
                 } else {
                     throw new Error('Form submission failed');
@@ -2429,6 +2530,14 @@ function initWholesaleContactForm() {
                 console.error('Form submission error:', error);
                 alert(t('contact.form.errorTitle') || 'An error occurred. Please try again.');
             }
+        });
+    }
+    
+    // KVKK link click handler
+    if (kvkkLink) {
+        kvkkLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            openKvkkModal();
         });
     }
 }
@@ -2554,12 +2663,32 @@ let eventDelegationSetup = false;
 
 // Contact form and KVKK modal event delegation
 function setupContactFormDelegation() {
-    // KVKK link click
+    // KVKK link click - support dynamic IDs from translations
+    // Use event delegation to catch clicks on dynamically created KVKK links
     document.body.addEventListener('click', (e) => {
-        const kvkkLink = e.target.closest('#kvkkLink');
+        // Check if clicked element is a KVKK link by ID or if it's inside a KVKK link
+        let kvkkLink = null;
+        
+        // First, check if clicked element itself is a KVKK link
+        const targetId = e.target.id || (e.target.tagName === 'A' ? e.target.id : null);
+        if (targetId && (targetId === 'kvkkLink' || targetId === 'app-kvkk-link' || targetId === 'contact-wholesale-kvkk-link')) {
+            kvkkLink = e.target;
+        }
+        // Check if clicked element is inside a KVKK link (for nested elements like spans inside <a>)
+        else if (e.target.closest) {
+            kvkkLink = e.target.closest('#kvkkLink, #app-kvkk-link, #contact-wholesale-kvkk-link, a[href="#"]');
+            // Verify it's actually a KVKK link by checking the ID
+            if (kvkkLink && kvkkLink.id !== 'kvkkLink' && kvkkLink.id !== 'app-kvkk-link' && kvkkLink.id !== 'contact-wholesale-kvkk-link') {
+                kvkkLink = null;
+            }
+        }
+        
         if (kvkkLink) {
             e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
             openKvkkModal(e);
+            return false;
         }
         
         // KVKK modal close buttons
@@ -2570,8 +2699,8 @@ function setupContactFormDelegation() {
         }
         
         // KVKK modal backdrop click
-        const kvkkModal = e.target.closest('#kvkkModal');
-        if (kvkkModal && e.target === kvkkModal) {
+        const kvkkModal = document.getElementById('kvkk-modal');
+        if (kvkkModal && (e.target === kvkkModal || e.target.classList.contains('bg-black/50'))) {
             closeKvkkModal();
         }
     });
@@ -2579,7 +2708,7 @@ function setupContactFormDelegation() {
     // Close modal on Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            const kvkkModal = document.getElementById('kvkkModal');
+            const kvkkModal = document.getElementById('kvkk-modal');
             if (kvkkModal && !kvkkModal.classList.contains('hidden')) {
                 closeKvkkModal();
             }
@@ -2711,6 +2840,7 @@ function quickInit() {
     initProductParallax();
     initContactForm();
     initWholesaleContactForm();
+    initCookieBanner();
     
     // 5. İkonları bir kez daha çiz (dinamik içerik için)
     requestAnimationFrame(() => {

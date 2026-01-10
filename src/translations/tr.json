@@ -129,7 +129,7 @@
       "title": "Kalite Güvencesi",
       "description": "ISO ve GMP sertifikalı üretim standartları."
     },
-    "startPartnership": "Bize Ulaşın"
+    "startPartnership": "Ortaklığınızı Başlatın"
   },
   "production": {
     "label": "Üretim",
@@ -159,23 +159,54 @@
     },
     "customerLine": {
       "title": "Müşteri Hattı",
-      "phone": "444 0 123"
+      "phone": "+90 538 207 66 67"
     }
   },
   "footer": {
-    "description": "Temizlikte yeni nesil teknoloji. Eviniz ve iş yeriniz için en saf, en etkili çözümler.",
+    "description": "Saflığın Derinliği,<br>Temizliğin Yeni Nesli",
     "products": "Ürünler",
     "homeCleaning": "Ev Temizliği",
     "industrial": "Endüstriyel",
     "autoCare": "Oto Bakım",
     "newReleases": "Yeni Çıkanlar",
-    "copyright": "© 2026 Ais Temizlik A.Ş. Tüm hakları saklıdır.",
+    "copyright": "© 2026 RN Tarım. Tüm hakları saklıdır.",
     "poweredBy": "Praksis tarafından desteklenmektedir."
   },
   "catalog": {
     "title": "E-Katalog",
     "backToHome": "Ana Sayfaya Dön",
     "downloadPDF": "PDF İndir"
+  },
+  "kvkk": {
+    "consent": "Kişisel verilerimin işlenmesine ilişkin <a href=\"javascript:void(0)\" id=\"{{linkId}}\" class=\"underline text-[#FF8C00] hover:text-[#E67E00] transition-colors\">Aydınlatma Metnini</a> okudum ve kabul ediyorum.",
+    "modal": {
+      "title": "KVKK ve Gizlilik Aydınlatma Metni",
+      "intro": "6698 sayılı Kişisel Verilerin Korunması Kanunu (\"KVKK\") uyarınca, RN Tarım (\"Şirket\") olarak; veri sorumlusu sıfatıyla, kişisel verilerinizi aşağıda açıklanan amaçlar kapsamında; hukuka ve dürüstlük kurallarına uygun bir şekilde işleyebilecek, kaydedebilecek, saklayabilecek, sınıflandırabilecek, güncelleyebilecek ve mevzuatın izin verdiği hallerde üçüncü kişilere açıklayabileceğiz.",
+      "section1": {
+        "title": "1. Kişisel Verilerin İşlenme Amacı",
+        "intro": "Toplanan kişisel verileriniz (Ad, Soyad, Telefon, E-posta, CV bilgileri ve Mesaj içeriği);",
+        "items": [
+          "Şirketimiz tarafından sunulan ürün ve hizmetlerden sizleri faydalandırmak,",
+          "Şirketimizle iletişime geçmeniz halinde taleplerinizin cevaplanması,",
+          "İş başvurusu süreçlerinde adayların değerlendirilmesi ve insan kaynakları süreçlerinin yürütülmesi,",
+          "Ticari ve iş stratejilerimizin belirlenmesi ve uygulanması,"
+        ],
+        "outro": "amaçlarıyla ticari faaliyetlerimiz kapsamında işlenmektedir."
+      },
+      "section2": {
+        "title": "2. Kişisel Verilerin Toplanma Yöntemi ve Hukuki Sebebi",
+        "content": "Kişisel verileriniz, internet sitemizdeki formlar aracılığıyla elektronik ortamda toplanmaktadır. Bu veriler, KVKK Madde 5'te belirtilen \"bir sözleşmenin kurulması veya ifası\", \"hukuki yükümlülüğün yerine getirilmesi\" ve \"ilgili kişinin temel hak ve özgürlüklerine zarar vermemek kaydıyla veri sorumlusunun meşru menfaatleri\" hukuki sebeplerine dayalı olarak işlenmektedir."
+      },
+      "section3": {
+        "title": "3. Kişisel Veri Sahibinin Hakları",
+        "content": "KVKK'nın 11. maddesi uyarınca veri sahipleri; verilerinin işlenip işlenmediğini öğrenme, işlenmişse buna ilişkin bilgi talep etme, işlenme amacını öğrenme, verilerin düzeltilmesini veya silinmesini talep etme haklarına sahiptir. Taleplerinizi sitemizdeki iletişim kanalları üzerinden bize iletebilirsiniz."
+      },
+      "close": "Kapat"
+    }
+  },
+  "cookies": {
+    "message": "Sitemizden en iyi şekilde faydalanabilmeniz için çerezler kullanılmaktadır.",
+    "accept": "Kabul Et"
   }
 }
 

@@ -2,3 +2,4 @@
 # Redirect /catalog to catalog.html for QR code downloads
 /catalog /catalog.html 200
 
+

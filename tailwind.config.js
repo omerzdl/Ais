@@ -33,9 +33,18 @@ export default {
         'brand-anthracite': '#1E293B',
       },
       fontFamily: {
-        sans: ['Montserrat', 'sans-serif'],
-        heading: ['EB Garamond', 'serif'],
+        sans: ['Syne', 'sans-serif'],
+        heading: ['Syne', 'sans-serif'],
         subheading: ['EB Garamond', 'serif'],
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        }
       },
     },
   },

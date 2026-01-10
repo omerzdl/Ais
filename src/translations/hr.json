@@ -130,7 +130,7 @@
       "title": "Garancija kvalitete",
       "description": "ISO i GMP certificirani standardi proizvodnje."
     },
-    "startPartnership": "Kontaktirajte nas"
+    "startPartnership": "Započnite partnerstvo"
   },
   "production": {
     "label": "Proizvodnja",
@@ -160,11 +160,11 @@
     },
     "customerLine": {
       "title": "Linija za klijente",
-      "phone": "444 0 123"
+      "phone": "+90 538 207 66 67"
     }
   },
   "footer": {
-    "description": "Tehnologija sljedeće generacije u čišćenju. Najčišća, najučinkovitija rješenja za vaš dom i radno mjesto.",
+    "description": "Dubina Čistoće,<br>Nova Generacija Čistoće",
     "products": "Proizvodi",
     "homeCleaning": "Kućno čišćenje",
     "industrial": "Industrijsko",
@@ -177,6 +177,37 @@
     "title": "E-Katalog",
     "backToHome": "Natrag na početnu",
     "downloadPDF": "Preuzmi PDF"
+  },
+  "kvkk": {
+    "consent": "Pročitao sam i prihvaćam <a href=\"javascript:void(0)\" id=\"{{linkId}}\" class=\"underline text-[#FF8C00] hover:text-[#E67E00] transition-colors\">Politiku privatnosti</a> u vezi s obradom mojih osobnih podataka.",
+    "modal": {
+      "title": "Politika privatnosti i obavijest o zaštiti podataka",
+      "intro": "U skladu sa Zakonom o zaštiti osobnih podataka broj 6698 (\"KVKK\"), kao RN Tarım (\"Tvrtka\"), u našem svojstvu kontrolora podataka, možemo obraditi, zabilježiti, pohraniti, klasificirati, ažurirati vaše osobne podatke u okviru svrhe opisane u nastavku, i otkriti ih trećim stranama u slučajevima dopuštenim zakonom, u skladu sa zakonom i pravilima poštenja.",
+      "section1": {
+        "title": "1. Svrha obrade osobnih podataka",
+        "intro": "Vaši prikupljeni osobni podaci (Ime, Prezime, Telefon, E-pošta, informacije iz CV-a i sadržaj poruke);",
+        "items": [
+          "Da vas koristimo proizvodima i uslugama koje nudi naša tvrtka,",
+          "Da odgovorimo na vaše zahtjeve kada kontaktirate našu tvrtku,",
+          "Da procijenimo kandidate u procesima prijave za posao i da provedemo procese ljudskih resursa,",
+          "Da odredimo i primijenimo naše komercijalne i poslovne strategije,"
+        ],
+        "outro": "se obrađuju u okviru naših komercijalnih aktivnosti."
+      },
+      "section2": {
+        "title": "2. Način prikupljanja i pravna osnova osobnih podataka",
+        "content": "Vaši osobni podaci se prikupljaju elektronički putem obrazaca na našoj web stranici. Ovi podaci se obrađuju na temelju pravnih razloga navedenih u članku 5 KVKK: \"uspostavljanje ili izvršenje ugovora\", \"ispunjenje pravne obveze\" i \"legitimni interesi kontrolora podataka pod uvjetom da ne štete temeljnim pravima i slobodama subjekta podataka\"."
+      },
+      "section3": {
+        "title": "3. Prava subjekta podataka",
+        "content": "U skladu s člankom 11 KVKK-a, subjekti podataka imaju pravo saznati jesu li njihovi podaci obrađeni, zatražiti informacije ako su obrađeni, saznati svrhu obrade i zatražiti ispravku ili brisanje podataka. Možete nam dostaviti svoje zahtjeve putem komunikacijskih kanala na našoj web stranici."
+      },
+      "close": "Zatvori"
+    }
+  },
+  "cookies": {
+    "message": "Kolačići se koriste kako biste imali najbolje iskustvo s naše web stranice.",
+    "accept": "Prihvati"
   }
 }
 

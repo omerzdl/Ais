@@ -373,7 +373,14 @@ function updatePageContent() {
         const key = element.getAttribute('data-i18n-html');
         if (!key) return;
         
-        const translation = t(key);
+        // Check for data-link-id attribute to pass as parameter
+        const params = {};
+        const linkId = element.getAttribute('data-link-id');
+        if (linkId) {
+            params.linkId = linkId;
+        }
+        
+        const translation = t(key, params);
         updateWithHTML(element, translation);
     });
     

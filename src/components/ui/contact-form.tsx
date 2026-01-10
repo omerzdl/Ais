@@ -269,14 +269,20 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
           htmlFor="contact-kvkk" 
           className="text-sm text-[#1E293B] leading-relaxed cursor-pointer"
         >
-          I have read and accept the{' '}
+          Kişisel verilerimin işlenmesine ilişkin{' '}
           <a 
-            href="#kvkk" 
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              if (typeof window !== 'undefined' && (window as any).openKvkkModal) {
+                (window as any).openKvkkModal();
+              }
+            }}
             className="underline text-[#FF8C00] hover:text-[#E67E00] transition-colors"
           >
-            KVKK Disclosure Text
+            Aydınlatma Metnini
           </a>
-          .
+          {' '}okudum ve kabul ediyorum.
         </label>
       </div>
       {errors.kvkkConsent && (
@@ -284,18 +290,6 @@ export function ContactForm({ onSubmit }: ContactFormProps) {
           {errors.kvkkConsent}
         </p>
       )}
-
-      {/* KVKK Info */}
-      <p className="text-xs text-[#64748B]">
-        Your personal data will be processed in accordance with the{' '}
-        <a 
-          href="#kvkk" 
-          className="underline text-[#FF8C00] hover:text-[#E67E00] transition-colors"
-        >
-          KVKK Disclosure Text
-        </a>
-        .
-      </p>
 
       {/* Submit Button */}
       <button
