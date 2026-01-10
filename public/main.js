@@ -1152,6 +1152,24 @@ function initApplicationForm() {
                 hasErrors = true;
             }
             
+            // Validate KVKK consent
+            const kvkkCheckbox = document.getElementById('app-kvkk');
+            const kvkkError = document.getElementById('app-kvkk-error');
+            if (!kvkkCheckbox || !kvkkCheckbox.checked) {
+                // Get translation function
+                const t = window.i18n && typeof window.i18n.t === 'function' ? window.i18n.t : (key) => key;
+                const errorMsg = t('corporate.application.form.kvkkRequired') || 'Please accept the privacy policy to proceed.';
+                if (kvkkError) {
+                    showError(kvkkError, errorMsg);
+                }
+                if (!hasErrors && kvkkCheckbox) kvkkCheckbox.focus();
+                hasErrors = true;
+            } else {
+                if (kvkkError) {
+                    hideError(kvkkError);
+                }
+            }
+            
             if (hasErrors) {
                 return false;
             }
@@ -1186,6 +1204,18 @@ function initApplicationForm() {
                         if (window.lucide && typeof window.lucide.createIcons === 'function') {
                             window.lucide.createIcons();
                         }
+                        
+                        // Scroll to success message
+                        setTimeout(() => {
+                            formSuccess?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 100);
+                        
+                        // Hide success message after 3 seconds
+                        setTimeout(() => {
+                            if (formSuccess) {
+                                formSuccess.classList.add('hidden');
+                            }
+                        }, 3000);
                     }
                     
                     // Reset form
@@ -1199,11 +1229,6 @@ function initApplicationForm() {
                     if (cvPlaceholder) {
                         cvPlaceholder.classList.remove('hidden');
                     }
-                    
-                    // Scroll to success message
-                    setTimeout(() => {
-                        formSuccess?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 100);
                 } else {
                     throw new Error('Form submission failed');
                 }
@@ -2553,6 +2578,24 @@ function initWholesaleContactForm() {
                 hasErrors = true;
             }
             
+            // Validate KVKK consent
+            const kvkkCheckbox = document.getElementById('contact-wholesale-kvkk');
+            const kvkkError = document.getElementById('contact-wholesale-kvkk-error');
+            if (!kvkkCheckbox || !kvkkCheckbox.checked) {
+                const errorMsg = t('contact.form.kvkkRequired') || 'Please accept the privacy policy to proceed.';
+                if (kvkkError) {
+                    showError(kvkkError, errorMsg);
+                }
+                if (!hasErrors && kvkkCheckbox) {
+                    kvkkCheckbox.focus();
+                }
+                hasErrors = true;
+            } else {
+                if (kvkkError) {
+                    hideError(kvkkError);
+                }
+            }
+            
             // If validation fails, stop submission
             if (hasErrors) {
                 return;
@@ -2581,15 +2624,22 @@ function initWholesaleContactForm() {
                         if (window.lucide && typeof window.lucide.createIcons === 'function') {
                             window.lucide.createIcons();
                         }
+                        
+                        // Scroll to success message
+                        setTimeout(() => {
+                            formSuccess?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 100);
+                        
+                        // Hide success message after 3 seconds
+                        setTimeout(() => {
+                            if (formSuccess) {
+                                formSuccess.classList.add('hidden');
+                            }
+                        }, 3000);
                     }
                     
                     // Reset form
                     form.reset();
-                    
-                    // Scroll to success message
-                    setTimeout(() => {
-                        formSuccess?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 100);
                 } else {
                     throw new Error('Form submission failed');
                 }

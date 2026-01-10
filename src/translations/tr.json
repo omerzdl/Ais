@@ -80,7 +80,8 @@
         "successTitle": "Başvuru Başarıyla Gönderildi!",
         "successMessage": "Başvurunuz alınmıştır. En kısa sürede size geri dönüş sağlayacağız.",
         "errorTitle": "Gönderim Başarısız",
-        "errorMessage": "Başvurunuz gönderilirken bir hata oluştu. Lütfen tekrar deneyin."
+        "errorMessage": "Başvurunuz gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
+        "kvkkRequired": "İlerlemek istiyorsanız lütfen bu kutuyu işaretleyin."
       }
     }
   },
@@ -159,7 +160,8 @@
       "successTitle": "Mesaj Başarıyla Gönderildi!",
       "successMessage": "Mesajınız alınmıştır. En kısa sürede size geri dönüş sağlayacağız.",
       "errorTitle": "Gönderim Başarısız",
-      "errorMessage": "Mesajınız gönderilirken bir hata oluştu. Lütfen tekrar deneyin."
+      "errorMessage": "Mesajınız gönderilirken bir hata oluştu. Lütfen tekrar deneyin.",
+      "kvkkRequired": "İlerlemek istiyorsanız lütfen bu kutuyu işaretleyin."
     },
     "factory": {
       "title": "RN Tarım HQ",
