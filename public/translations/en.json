@@ -77,7 +77,12 @@
         "characters": "characters",
         "submit": "Submit Application",
         "submitting": "Submitting...",
-        "fileFormat": "PDF, DOC or DOCX format, max 10MB"
+        "fileFormat": "PDF, DOC or DOCX format, max 10MB",
+        "successTitle": "Application Submitted Successfully!",
+        "successMessage": "Your application has been received. We will get back to you as soon as possible.",
+        "errorTitle": "Submission Failed",
+        "errorMessage": "An error occurred while submitting your application. Please try again.",
+        "kvkkRequired": "Please accept the privacy policy to proceed."
       }
     }
   },
@@ -152,7 +157,12 @@
       "placeholderName": "Your Name",
       "placeholderEmail": "example@company.com",
       "placeholderPhone": "Your Phone Number",
-      "placeholderMessage": "Write your request here..."
+      "placeholderMessage": "Write your request here...",
+      "successTitle": "Message Sent Successfully!",
+      "successMessage": "Your message has been received. We will get back to you as soon as possible.",
+      "errorTitle": "Sending Failed",
+      "errorMessage": "An error occurred while sending your message. Please try again.",
+      "kvkkRequired": "Please accept the privacy policy to proceed."
     },
     "factory": {
       "title": "RN Tarım HQ",
