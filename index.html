@@ -114,7 +114,7 @@
         <div id="mobile-menu-backdrop" class="absolute inset-0 bg-black/20 backdrop-blur-sm"></div>
         
         <!-- Menu Content -->
-        <div class="absolute top-20 right-4 left-4 bg-white rounded-3xl p-6 shadow-xl border border-[#8FA895]/30 animate-fade-in-down max-h-[calc(100vh-7rem)] overflow-y-auto">
+        <div class="absolute top-20 right-4 left-4 bg-white rounded-3xl p-6 pr-8 shadow-xl border border-[#8FA895]/30 animate-fade-in-down max-h-[calc(100vh-7rem)] overflow-y-auto">
             <!-- Mobile Language Switcher (Top of Menu) -->
             <div id="language-switcher-mobile" class="mb-6 pb-6 border-b border-[#E2E8F0]">
                 <div class="flex items-center gap-2 flex-wrap">
@@ -167,7 +167,7 @@
     </div>
 
     <!-- HERO SECTION -->
-    <section id="hero" class="relative w-full min-h-[600px] lg:min-h-screen pt-28 md:pt-32 pb-20 overflow-hidden flex items-center z-10" style="background-image: url('/hero-background.png?v=3'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <section id="hero" class="relative w-full min-h-[600px] lg:min-h-screen pt-28 md:pt-32 pb-20 overflow-x-hidden overflow-y-visible flex items-center z-10" style="background-image: url('/hero-background.png?v=3'); background-size: cover; background-position: center; background-repeat: no-repeat;">
         <!-- Overlay for readability -->
         <div class="absolute inset-0 bg-white/10 z-0"></div>
 
@@ -381,7 +381,7 @@
                                 <div class="glassmorphism-button glassmorphism-button-lg glassmorphism-button-full relative w-full flex items-center justify-center gap-3">
                                     <i data-lucide="upload" class="w-5 h-5 flex-shrink-0"></i>
                                     <span id="app-cv-placeholder" class="text-base font-semibold" data-i18n="corporate.application.form.selectFile">Select File...</span>
-                                    <span id="app-cv-text" class="text-base font-semibold hidden"></span>
+                                    <span id="app-cv-text" class="text-base font-semibold hidden block min-w-0 max-w-full overflow-hidden text-ellipsis whitespace-nowrap"></span>
                                 </div>
                             </label>
                             <input type="file" id="app-cv" name="cv" autocomplete="off" required accept=".pdf,.doc,.docx" class="sr-only">
@@ -561,7 +561,7 @@
                             Molecular Power Deep Within Fibers: Ais's signature powder technology takes cleaning beyond the surface and into the heart of the fabric. It breaks down the toughest stains at a molecular level without compromising fiber integrity, leaving behind a visible purity and a renewed softness. Professional washing power is now your home's new standard.
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
-                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
+                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center" style="padding: 8px;">
                             <img src="/Powder Detergent.png?v=3" alt="Powder Detergent Product" width="400" height="500" loading="lazy" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.surface-cleaners">
                         </div>
                         <div class="flex flex-col items-center gap-3">
@@ -601,7 +601,7 @@
                             Flawless Clean Through Fluid Dynamics: Developed with advanced production technologies, our liquid formula activates instantly upon contact with water to penetrate fabric pores. Optimized for both colors and whites, it preserves color vibrancy with laboratory precision. Deep cleaning and lasting freshness meet in the smart cleaning formula of Ais.
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
-                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
+                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center" style="padding: 8px;">
                             <img src="/Liquid Detergent.png?v=3" alt="Liquid Detergent Product" width="400" height="500" loading="lazy" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.concentrated-detergents">
                         </div>
                         <div class="flex flex-col items-center gap-3">
@@ -646,7 +646,7 @@
                             Breathable Hygiene for Your Skin: We've blended the soft texture of nature with scientific purity. Our pH-balanced Ais wet wipes create a "breathable cleaning" effect on your skin and every surface they touch. With an eco-friendly structure and a refreshing touch, it is the most elegant form of hygiene, always by your side.
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
-                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
+                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center" style="padding: 8px;">
                             <img src="/Wet Wipe.png?v=3" alt="Wet Wipe Product" width="400" height="500" loading="lazy" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.disinfectants">
                         </div>
                         <div class="flex flex-col items-center gap-3">
@@ -691,7 +691,7 @@
                             Botanical Care & Molecular Moisture Balance: More than just soap; it's a moisture bath for your hands. Combining the purest ingredients of nature with technology, our formula purifies your skin while nourishing and renewing its barrier. It offers a refreshing and restorative hygiene experience that awakens your senses with every use.
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
-                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
+                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center" style="padding: 8px;">
                             <img src="/Liquid Soap.png?v=3" alt="Liquid Soap Product" width="400" height="500" loading="lazy" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.liquid-soap">
                         </div>
                         <div class="flex flex-col items-center gap-3">
@@ -731,7 +731,7 @@
                             Scientific Radiance from Root to Tip: Our specialized formula allows the scalp to breathe while deeply purifying hair strands without weighing them down. Optimized with scientific data, its nourishing structure protects the hair's natural balance while providing the signature Ais glow. Professional hair care, in its purest form, is now in your bathroom.
                         </p>
                         <!-- Mobile Image (hidden on desktop) -->
-                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center">
+                        <div class="lg:hidden relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] mb-8 h-[400px] md:h-[500px] flex items-center justify-center" style="padding: 8px;">
                             <img src="/Shampoo.png?v=3" alt="Shampoo Product" width="400" height="500" loading="lazy" class="w-full h-full object-contain object-center product-image" data-parallax="true" data-i18n-alt="products.shampoo">
                         </div>
                         <div class="flex flex-col items-center gap-3">
@@ -748,7 +748,7 @@
                 <div class="hidden lg:block flex flex-col min-h-0 h-full">
                     <!-- Surface Cleaners Image -->
                     <div id="product-image-surface-cleaners" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
-                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
+                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%; padding: 8px;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
                                 <img src="/Powder Detergent.png?v=2" alt="Powder Detergent Product" width="400" height="500" loading="lazy" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.surface-cleaners">
                             </div>
@@ -756,7 +756,7 @@
                     </div>
                     <!-- Concentrated Detergents Image -->
                     <div id="product-image-concentrated-detergents" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
-                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
+                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%; padding: 8px;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
                                 <img src="/Liquid Detergent.png?v=2" alt="Liquid Detergent Product" width="400" height="500" loading="lazy" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.concentrated-detergents">
                             </div>
@@ -764,7 +764,7 @@
                     </div>
                     <!-- Disinfectants Image -->
                     <div id="product-image-disinfectants" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
-                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
+                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%; padding: 8px;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
                                 <img src="/Wet Wipe.png?v=2" alt="Wet Wipe Product" width="400" height="500" loading="lazy" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.disinfectants">
                             </div>
@@ -772,7 +772,7 @@
                     </div>
                     <!-- Liquid Soap Image -->
                     <div id="product-image-liquid-soap" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
-                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
+                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%; padding: 8px;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
                                 <img src="/Liquid Soap.png?v=2" alt="Liquid Soap Product" width="400" height="500" loading="lazy" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.liquid-soap">
                             </div>
@@ -780,7 +780,7 @@
                     </div>
                     <!-- Shampoo Image -->
                     <div id="product-image-shampoo" class="product-image-container hidden sticky top-24 h-full flex flex-col min-h-0">
-                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%;">
+                        <div class="relative rounded-3xl overflow-hidden w-full flex items-center justify-center bg-white/20 backdrop-blur-md border border-white/30 shadow-[0_8px_32px_rgba(128,224,255,0.2)]" style="height: 0; min-height: 100%; padding: 8px;">
                             <div class="w-full h-full flex items-center justify-center" style="mix-blend-mode: multiply;">
                                 <img src="/Shampoo.png?v=2" alt="Shampoo Product" width="400" height="500" loading="lazy" class="w-full h-full object-contain object-center product-image" data-i18n-alt="products.shampoo">
                             </div>
@@ -846,7 +846,7 @@
                 
                 <!-- Right Column: Image -->
                 <div class="relative">
-                    <div class="relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] border border-white/30">
+                    <div class="relative rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] border border-white/30" style="padding: 8px;">
                         <img src="/production.png?v=3" alt="Private Label Manufacturing Facility" width="800" height="600" loading="lazy" class="w-full h-full object-cover min-h-[500px]">
                     </div>
                 </div>
@@ -938,15 +938,15 @@
                         </form>
                             </div>
 
-                <div class="relative h-full min-h-[500px] rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] border border-[#E2E8F0]">
-                    <div class="absolute top-6 left-6 z-10 glass-panel p-6 rounded-2xl max-w-xs shadow-lg">
-                        <div class="flex items-start gap-3">
-                            <div class="bg-[#F8FAFC] p-2 rounded-lg text-[#FF8C00] shadow-[0_4px_16px_rgba(128,224,255,0.2)]">
+                <div class="relative h-full min-h-[500px] rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(128,224,255,0.2)] border border-[#E2E8F0]" style="padding: 8px;">
+                    <div class="absolute top-6 left-6 z-10 glass-panel rounded-2xl max-w-xs shadow-lg contact-card" style="padding: 12px 16px 4px 16px !important; overflow: hidden;">
+                        <div class="flex items-start gap-3" style="margin-bottom: 0 !important; padding-bottom: 0 !important;">
+                            <div class="bg-[#F8FAFC] p-2 rounded-lg text-[#FF8C00] shadow-[0_4px_16px_rgba(128,224,255,0.2)]" style="flex-shrink: 0;">
                                 <i data-lucide="map-pin" class="w-5 h-5"></i>
                             </div>
-                            <div>
-                                <h4 class="font-semibold text-[#153A60]" data-i18n="contact.factory.title">Factory & Headquarters</h4>
-                                <p class="text-sm text-[#64748B] mt-1" data-i18n-html="contact.factory.address">Islamsaray Mah. 929 Sk. No: 17<br>Bergama, Izmir/TURKIYE</p>
+                            <div class="flex-1" style="padding-bottom: 0 !important; margin-bottom: 0 !important;">
+                                <h4 class="font-semibold text-[#153A60] mb-1" style="margin-bottom: 4px !important;" data-i18n="contact.factory.title">Factory & Headquarters</h4>
+                                <p class="text-sm text-[#64748B] contact-address" style="line-height: 1.25 !important; margin-top: 0 !important; margin-bottom: 0 !important; padding-bottom: 0 !important; white-space: pre-line;" data-i18n-html="contact.factory.address">RN Tarım HQ: Islamsaray Mah.<br>929 Sk. No: 17<br>Bergama, Izmir/TURKIYE<br><br>Branch Office: Ikitelli OSB,<br>Demirciler Sitesi, C3 Blok<br>No: 222/B<br>Basaksehir, Istanbul/TURKIYE<br><br>sales@aischemicals.com<br>Ömer Kaya: +90 538 207 66 67</p>
                             </div>
                         </div>
                     </div>
@@ -959,7 +959,7 @@
     <!-- FOOTER -->
     <footer class="bg-[#153A60] pt-20 pb-10 px-6 relative z-10">
         <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 gap-10 mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
                 <div>
                     <a href="#" class="flex items-center gap-2 mb-6">
                         <img src="/Ais.png?v=3" alt="AIS Chemicals Logo" width="120" height="40" loading="eager" class="h-10 w-auto object-contain" style="aspect-ratio: auto;">
@@ -972,6 +972,20 @@
                             <i data-lucide="linkedin" class="w-5 h-5"></i>
                         </a>
                     </div>
+                </div>
+                <div class="md:ml-auto md:text-right">
+                    <h4 class="text-white font-semibold mb-4 md:text-right" data-i18n="footer.contact">İletişim</h4>
+                    <p class="text-white/90 text-sm leading-relaxed md:text-right">
+                        RN Tarım HQ: Islamsaray Mah.<br>
+                        929 Sk. No: 17<br>
+                        Bergama, Izmir/TURKIYE<br><br>
+                        Branch Office: Ikitelli OSB,<br>
+                        Demirciler Sitesi, C3 Blok<br>
+                        No: 222/B<br>
+                        Basaksehir, Istanbul/TURKIYE<br><br>
+                        <a href="mailto:sales@aischemicals.com" class="text-white hover:text-white/80 transition">sales@aischemicals.com</a><br>
+                        Ömer Kaya: <a href="tel:+905382076667" class="text-white hover:text-white/80 transition">+90 538 207 66 67</a>
+                    </p>
                 </div>
 
             </div>
@@ -1062,7 +1076,7 @@
     <!-- KVKK Aydınlatma Metni Modal -->
     <div id="kvkk-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4">
         <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" onclick="closeKvkkModal()"></div>
-        <div class="relative bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+        <div class="relative bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col" style="margin: 16px;">
             <!-- Modal Header -->
             <div class="flex items-center justify-between p-6 border-b border-[#E2E8F0]">
                 <h3 class="text-2xl font-bold text-[#153A60]" data-i18n="kvkk.modal.title">KVKK ve Gizlilik Aydınlatma Metni</h3>

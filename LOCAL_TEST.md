@@ -63,3 +63,4 @@ npm install -g netlify-cli
 - `netlify dev` kullandığınızdan emin olun
 - `npm run dev` ile form gönderimi çalışmaz
 
+

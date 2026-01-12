@@ -86,6 +86,48 @@ section[id] {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
 
+/* Contact address - remove trailing whitespace */
+.contact-address {
+    white-space: pre-line;
+}
+
+.contact-address::after {
+    content: '';
+    display: none;
+}
+
+/* Contact card - fixed height on desktop, limited height on mobile */
+.contact-card {
+    height: 250px;
+}
+
+@media (max-width: 768px) {
+    .contact-card {
+        height: 250px !important;
+        max-height: 250px !important;
+        overflow: hidden !important;
+    }
+}
+
+/* Prevent shadow clipping on mobile - add padding to shadowed elements */
+@media (max-width: 768px) {
+    /* Product cards with shadows */
+    [class*="shadow-"] {
+        margin: 8px;
+    }
+    
+    /* Sections with overflow-hidden that contain shadows */
+    section[class*="overflow-hidden"] {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    
+    /* Cards with both overflow-hidden and shadow */
+    [class*="overflow-hidden"][class*="shadow-"] {
+        margin: 8px;
+    }
+}
+
 .glass-button {
     background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(8px);
@@ -1303,6 +1345,49 @@ label.error .glassmorphism-button {
         position: relative;
     }
     
+    /* Box Model Fix: Force border-box for all form elements */
+    input,
+    textarea,
+    select {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+    }
+    
+    /* File upload filename text ellipsis */
+    #app-cv-text {
+        display: block !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+    }
+    
+    /* Ensure parent container allows ellipsis */
+    #app-cv-label .glassmorphism-button {
+        min-width: 0 !important;
+    }
+    
+    #app-cv-label .glassmorphism-button > span {
+        min-width: 0 !important;
+        flex: 1 1 auto !important;
+    }
+    
+    /* Ensure form containers don't clip content */
+    form,
+    .space-y-6,
+    .space-y-2 {
+        min-width: 0 !important;
+    }
+    
+    /* Grid and flex containers for forms */
+    .grid,
+    .flex {
+        min-width: 0 !important;
+    }
+    
     /* Ensure droplets don't extend beyond viewport */
     .water-droplet[class*="-right-"],
     .water-droplet.right-0 {
@@ -1324,9 +1409,7 @@ label.error .glassmorphism-button {
     .max-w-7xl,
     .max-w-4xl,
     .max-w-2xl {
-        max-width: calc(100vw - 2rem) !important;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        max-width: 100% !important;
     }
     
     /* Hero section fixes */
@@ -1473,12 +1556,14 @@ label.error .glassmorphism-button {
 #language-switcher-mobile {
     overflow-x: hidden !important;
     overflow-y: visible !important;
+    padding-right: 4px !important;
 }
 
 #language-switcher-mobile > div {
     overflow-x: hidden !important;
     width: 100%;
     max-width: 100%;
+    padding-right: 4px !important;
 }
 
 #language-switcher-mobile .lang-btn {

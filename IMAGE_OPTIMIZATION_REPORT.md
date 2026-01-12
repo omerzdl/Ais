@@ -172,3 +172,4 @@ const path = require('path');
 
 Sadece sıkıştırma yapmak isterseniz, aynı isimle değiştirmeniz yeterli. Ancak WebP'ye geçiş yaparsanız, HTML'de `<picture>` elementi kullanmanız gerekecek.
 
+

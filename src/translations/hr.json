@@ -165,8 +165,8 @@
       "kvkkRequired": "Molimo prihvatite politiku privatnosti da biste nastavili."
     },
     "factory": {
-      "title": "RN Tarım HQ",
-      "address": "Islamsaray Mah. 929 Sk. No: 17<br>Bergama, Izmir/TURKIYE"
+      "title": "Kontakt",
+      "address": "RN Tarım HQ: Islamsaray Mah.<br>929 Sk. No: 17<br>Bergama, Izmir/TURKIYE<br><br>Branch Office: Ikitelli OSB,<br>Demirciler Sitesi, C3 Blok<br>No: 222/B<br>Basaksehir, Istanbul/TURKIYE<br><br>sales@aischemicals.com<br>Ömer Kaya: +90 538 207 66 67"
     },
     "customerLine": {
       "title": "Linija za klijente",
@@ -180,6 +180,7 @@
     "industrial": "Industrijsko",
     "autoCare": "Njega automobila",
     "newReleases": "Nova izdanja",
+    "contact": "Kontakt",
     "copyright": "© 2026 Ais Cleaning Inc. Sva prava pridržana.",
     "poweredBy": "Pokreće Praksis."
   },

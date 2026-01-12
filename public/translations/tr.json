@@ -164,8 +164,8 @@
       "kvkkRequired": "İlerlemek istiyorsanız lütfen bu kutuyu işaretleyin."
     },
     "factory": {
-      "title": "RN Tarım HQ",
-      "address": "Islamsaray Mah. 929 Sk. No: 17<br>Bergama, Izmir/TURKIYE"
+      "title": "İletişim",
+      "address": "RN Tarım HQ: Islamsaray Mah.<br>929 Sk. No: 17<br>Bergama, Izmir/TURKIYE<br><br>Branch Office: Ikitelli OSB,<br>Demirciler Sitesi, C3 Blok<br>No: 222/B<br>Basaksehir, Istanbul/TURKIYE<br><br>sales@aischemicals.com<br>Ömer Kaya: +90 538 207 66 67"
     },
     "customerLine": {
       "title": "Müşteri Hattı",
@@ -179,6 +179,7 @@
     "industrial": "Endüstriyel",
     "autoCare": "Oto Bakım",
     "newReleases": "Yeni Çıkanlar",
+    "contact": "İletişim",
     "copyright": "© 2026 RN Tarım. Tüm hakları saklıdır.",
     "poweredBy": "Praksis tarafından desteklenmektedir."
   },

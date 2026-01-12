@@ -1093,10 +1093,9 @@ function initApplicationForm() {
                     return;
                 }
                 
-                // Success - show file name
-                const fileName = file.name.length > 50 ? file.name.substring(0, 47) + '...' : file.name;
+                // Success - show file name (full name, CSS will handle ellipsis)
                 if (cvText) {
-                    cvText.textContent = fileName;
+                    cvText.textContent = file.name;
                     cvText.classList.remove('hidden');
                 }
                 if (cvPlaceholder) {
@@ -1367,13 +1366,13 @@ function updateMobileProductDropdown(productId) {
         const isSelected = item.getAttribute('data-value') === productId;
         item.setAttribute('aria-selected', String(isSelected));
         
-        // Remove all state classes first
-        item.classList.remove('selected', 'bg-[#0061FF]', 'text-white', 'text-[#1A2F25]/80', 'hover:bg-[#EDF2FB]', 'hover:text-[#0061FF]');
+        // Remove all state classes first - including orange background from HTML
+        item.classList.remove('selected', 'bg-[#0061FF]', 'bg-[#FF8C00]', 'text-white', 'text-[#1A2F25]/80', 'text-[#1E293B]', 'hover:bg-[#EDF2FB]', 'hover:bg-[#F8FAFC]', 'hover:text-[#0061FF]', 'hover:text-[#FF8C00]');
         
         if (isSelected) {
-            item.classList.add('selected', 'bg-[#0061FF]', 'text-white');
+            item.classList.add('selected', 'bg-[#FF8C00]', 'text-white');
         } else {
-            item.classList.add('text-[#1A2F25]/80', 'hover:bg-[#EDF2FB]', 'hover:text-[#0061FF]');
+            item.classList.add('text-[#1E293B]', 'hover:bg-[#F8FAFC]', 'hover:text-[#FF8C00]');
         }
     });
 }

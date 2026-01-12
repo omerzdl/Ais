@@ -276,6 +276,9 @@ function updateTextNodes(element, translation) {
  * @param {string} translation - Translation text (may contain HTML like <b>bold</b>)
  */
 function updateWithHTML(element, translation) {
+    // Trim trailing whitespace and newlines from translation
+    translation = translation.trim().replace(/\s+$/, '');
+    
     // First, remove all direct text node children to prevent duplication
     // Keep only element nodes (like icons, etc.)
     const childNodes = Array.from(element.childNodes);
